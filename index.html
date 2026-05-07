@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>安達產物旅平險報價系統</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f0eb;--ink:#1a1410;--ink-light:#5a4f47;--ink-muted:#9a8a80;--blue:#2d5a8e;--blue-pale:#e8f0f9;--red:#8b2635;--red-pale:#f9e8eb;--accent:#c8a96e;--border:#d4c8be;--stripe:#efe9e2;--white:#fff;--shadow:0 4px 24px rgba(26,20,16,.10)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'Noto Serif TC',serif;min-height:100vh;padding-bottom:60px}
+
+/* ── HEADER ── */
+.site-header{background:var(--ink);color:var(--bg);padding:16px 20px 12px;text-align:center}
+.site-header .logo-text{font-size:10px;font-family:'DM Mono',monospace;color:var(--accent);letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px}
+.site-header h1{font-size:19px;font-weight:600;letter-spacing:.06em}
+.site-header .disclaimer{font-size:10px;color:rgba(245,240,235,.5);margin-top:6px;font-weight:300}
+
+/* ── STEP NAV ── */
+.step-nav{background:var(--ink);border-top:1px solid rgba(255,255,255,.1);padding:10px 20px;display:flex;justify-content:center}
+.step-item{display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(245,240,235,.4);font-family:'DM Mono',monospace;letter-spacing:.08em}
+.step-item.active{color:var(--accent)}
+.step-item.done{color:rgba(245,240,235,.6)}
+.step-dot{width:18px;height:18px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0}
+.step-item.active .step-dot{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.step-sep{width:24px;height:1px;background:rgba(255,255,255,.15);margin:0 8px}
+
+/* ── PAGES ── */
+.page{display:none;max-width:900px;margin:0 auto;padding:22px 16px}
+.page.active{display:block}
+
+/* ── COMMON ── */
+.sec-label{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.sec-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.15em;border:1px solid var(--accent);padding:2px 8px;flex-shrink:0}
+.sec-title{font-size:16px;font-weight:600;letter-spacing:.05em}
+.sec-divider{border:none;border-top:1px solid var(--border);margin:22px 0}
+.form-card{background:var(--white);border-radius:12px;padding:20px 18px;margin-bottom:16px;box-shadow:var(--shadow)}
+.form-row{margin-bottom:18px}
+.form-row:last-child{margin-bottom:0}
+label{display:block;font-size:13px;font-weight:500;color:var(--ink-light);letter-spacing:.04em;margin-bottom:7px}
+.hint{font-size:11px;color:var(--ink-muted);margin-top:5px;font-weight:400;line-height:1.6}
+
+select{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:11px 36px 11px 14px;font-family:'Noto Serif TC',serif;font-size:14px;color:var(--ink);outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239a8a80' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+select:focus{border-color:var(--accent)}
+select:disabled{opacity:.5;cursor:not-allowed}
+
+/* ── CALENDAR ── */
+.date-input-wrap{position:relative}
+.date-display{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;font-family:'Noto Serif TC',serif;font-size:14px;color:var(--ink-muted);cursor:pointer;transition:border-color .2s;display:flex;align-items:center;justify-content:space-between;user-select:none}
+.date-display.has-val{color:var(--ink)}
+.date-display:hover,.date-display:focus{border-color:var(--accent);outline:none}
+.date-icon{font-size:14px;opacity:.5}
+.cal-popup{display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:14px;z-index:200;box-shadow:0 8px 32px rgba(26,20,16,.15);animation:popIn .15s ease}
+.cal-popup.open{display:block}
+@keyframes popIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.cal-nav-btn{background:none;border:none;font-size:16px;cursor:pointer;color:var(--ink-light);padding:4px 8px;border-radius:6px;transition:background .15s}
+.cal-nav-btn:hover{background:var(--stripe)}
+.cal-month-label{font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--ink)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-dow{font-family:'DM Mono',monospace;font-size:9px;text-align:center;padding:4px 0;color:var(--ink-muted);letter-spacing:.06em}
+.cal-day{font-family:'DM Mono',monospace;font-size:12px;text-align:center;padding:7px 2px;border-radius:6px;cursor:pointer;color:var(--ink);transition:background .12s}
+.cal-day:hover{background:var(--stripe)}
+.cal-day.today{font-weight:700;color:var(--accent)}
+.cal-day.selected{background:var(--ink);color:var(--bg);font-weight:600}
+.cal-day.disabled{color:var(--border);cursor:not-allowed}
+.cal-day.disabled:hover{background:none}
+.cal-day.other-month{color:var(--border)}
+
+/* ── DATE + TIME ROW ── */
+.datetime-row{display:flex;gap:8px;align-items:flex-start}
+.datetime-row .date-input-wrap{flex:1}
+.time-sel-wrap{flex:0 0 108px}
+
+/* ── AGE WARNING ── */
+.age-warning{background:#fff3cd;border-left:3px solid #e8a000;border-radius:4px;padding:9px 12px;font-size:12px;color:#7a5800;margin-top:8px;display:none;line-height:1.6}
+.age-warn-red{background:var(--red-pale);border-left-color:var(--red);color:var(--red)}
+
+/* ── LABELS ── */
+.label-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;flex-wrap:wrap}
+.label-row label{margin-bottom:0}
+.recommend-tag{font-size:10px;color:var(--red);background:var(--red-pale);border-radius:4px;padding:2px 7px;margin-left:4px;vertical-align:middle;font-weight:500;white-space:nowrap}
+.info-btn{background:none;border:1px solid var(--border);border-radius:12px;padding:3px 10px;font-size:10px;color:var(--ink-muted);cursor:pointer;font-family:'Noto Serif TC',serif;transition:all .15s;flex-shrink:0}
+.info-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── TI RADIO ── */
+.ti-group{display:flex;gap:10px}
+.ti-btn{flex:1;position:relative}
+.ti-btn input[type="radio"]{display:none}
+.ti-btn label{display:block;cursor:pointer;border:2px solid var(--border);border-radius:10px;padding:13px 10px 11px;text-align:center;font-size:13px;font-weight:600;color:var(--ink-muted);transition:all .18s;margin:0;line-height:1.4}
+.ti-btn.blue input[type="radio"]:checked+label{border-color:var(--blue);background:var(--blue-pale);color:var(--blue)}
+.ti-btn.red input[type="radio"]:checked+label{border-color:var(--red);background:var(--red-pale);color:var(--red)}
+.ti-btn input[type="radio"]:disabled+label{opacity:.4;cursor:not-allowed}
+.ti-badge{font-family:'DM Mono',monospace;font-size:9px;display:block;margin-top:3px;opacity:.7}
+
+/* ── TI PREVIEW TABLE ── */
+.ti-preview{margin-top:10px;border-radius:8px;overflow:hidden;border:1.5px solid var(--border);display:none}
+.ti-preview.show{display:block}
+.ti-preview-header{padding:8px 12px;font-size:11px;font-weight:600;letter-spacing:.05em}
+.ti-preview-header.blue{background:var(--blue);color:var(--white)}
+.ti-preview-header.red{background:var(--red);color:var(--white)}
+.ti-preview table{width:100%;border-collapse:collapse}
+.ti-preview td{padding:7px 12px;font-size:11.5px;border-bottom:1px solid var(--border);color:var(--ink-light)}
+.ti-preview tr:last-child td{border-bottom:none}
+.ti-preview td:last-child{text-align:right;font-family:'DM Mono',monospace;font-size:11px;color:var(--ink);white-space:nowrap}
+.preview-thick-sep td{padding:0!important;border-top:3px solid var(--ink)!important;border-bottom:none!important;height:3px;line-height:0;font-size:0}
+
+/* ── DAYS DISPLAY ── */
+.calc-days-display{background:var(--stripe);border-radius:8px;padding:9px 14px;font-size:13px;color:var(--ink-light);margin-top:8px;display:none}
+.calc-days-display strong{font-family:'DM Mono',monospace;font-size:16px;color:var(--ink)}
+
+/* ── BUTTONS ── */
+.btn-quote,.btn-next{width:100%;background:var(--ink);color:var(--bg);border:none;border-radius:10px;padding:15px;font-family:'Noto Serif TC',serif;font-size:15px;font-weight:600;letter-spacing:.08em;cursor:pointer;transition:background .18s}
+.btn-quote:hover,.btn-next:hover{background:#2d2520}
+.btn-back{background:none;border:1.5px solid var(--border);border-radius:8px;padding:10px 18px;font-family:'Noto Serif TC',serif;font-size:13px;cursor:pointer;color:var(--ink-light);margin-bottom:18px;display:inline-flex;align-items:center;gap:6px}
+.btn-back:hover{border-color:var(--ink);color:var(--ink)}
+
+/* ── PAGE 1 FEATURES ── */
+.features-intro{font-size:13px;line-height:1.9;color:var(--ink-light);margin-bottom:18px;background:var(--white);border-radius:10px;padding:16px 18px;box-shadow:var(--shadow)}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.feat-card{background:var(--white);border-radius:10px;padding:16px 12px 13px;cursor:pointer;transition:transform .18s,box-shadow .18s;box-shadow:0 2px 10px rgba(26,20,16,.07);text-align:center}
+.feat-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,20,16,.12)}
+.feat-icon{font-size:24px;margin-bottom:8px}
+.feat-short{font-size:11.5px;font-weight:600;color:var(--ink);line-height:1.5}
+.feat-tap{font-size:9px;color:var(--ink-muted);margin-top:5px}
+.page1-nav{margin-top:20px}
+.features-tag-row{margin-top:12px}
+.features-tag{display:inline-block;background:var(--white);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:6px;padding:10px 14px;font-size:12px;color:var(--ink-light);line-height:1.6;box-shadow:0 2px 8px rgba(26,20,16,.06)}
+
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,20,16,.55);z-index:999;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--white);border-radius:16px;padding:28px 22px;max-width:430px;width:100%;position:relative;animation:popIn .2s ease;max-height:85vh;overflow-y:auto}
+.modal-icon{font-size:34px;margin-bottom:10px}
+.modal-title{font-size:16px;font-weight:700;margin-bottom:10px}
+.modal-body{font-size:13px;color:var(--ink-light);line-height:1.9}
+.modal-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink-muted)}
+.age-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:12px}
+.age-table th{background:var(--ink);color:var(--bg);padding:8px 10px;text-align:left;font-weight:500}
+.age-table td{padding:8px 10px;border-bottom:1px solid var(--border)}
+.age-table tr:nth-child(even) td{background:var(--stripe)}
+.age-table td:last-child{font-family:'DM Mono',monospace;text-align:right}
+
+/* ── PAGE 3 RESULT ── */
+/* Total premium at top */
+.total-box{border-radius:12px;padding:18px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;background:var(--accent)}
+.total-label{font-size:13px;font-weight:600;color:var(--ink);letter-spacing:.04em}
+.total-price{font-family:'DM Mono',monospace;font-size:26px;font-weight:500;color:var(--ink)}
+.total-price span{font-size:13px;opacity:.6}
+
+/* trip info bar */
+.result-trip-bar{background:var(--ink);color:var(--bg);border-radius:12px;padding:16px 20px;margin-bottom:18px}
+.trip-info-line{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--accent);letter-spacing:.04em;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trip-detail-line{font-size:15px;font-weight:600;line-height:1.5}
+
+/* section titles */
+.result-section-title{display:flex;align-items:center;gap:10px;margin:18px 0 10px}
+.result-section-tag{font-size:10px;font-family:'DM Mono',monospace;letter-spacing:.12em;padding:3px 10px;border-radius:3px;font-weight:500}
+.rst-base{background:var(--ink);color:var(--accent)}
+.rst-blue{background:var(--blue);color:var(--white)}
+.rst-red{background:var(--red);color:var(--white)}
+.result-section-name{font-size:15px;font-weight:600}
+
+/* plan card */
+.plan-card{background:var(--white);border-radius:12px;margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow)}
+.plan-card-head{padding:13px 18px;font-size:12px;font-weight:700;letter-spacing:.06em}
+.plan-card-head.base{background:var(--ink);color:var(--bg)}
+.plan-card-head.blue{background:var(--blue);color:var(--white)}
+.plan-card-head.red{background:var(--red);color:var(--white)}
+.plan-body{padding:14px 18px}
+
+/* coverage table */
+.ct{width:100%;border-collapse:collapse;font-size:12.5px}
+.ct th{background:#2e2820;color:var(--bg);padding:8px 10px;text-align:left;font-weight:500;letter-spacing:.04em;font-size:11px}
+.ct td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.ct tr:nth-child(even) td{background:var(--stripe)}
+.ct td:last-child{font-family:'DM Mono',monospace;text-align:right;font-size:11.5px;white-space:nowrap;color:var(--ink)}
+.ct-sub{font-size:11px;color:var(--ink-muted);font-weight:400}
+/* TI separator row in result table — just a thick line */
+.ct .grp-sep td{padding:0!important;border-top:3px solid var(--ink)!important;border-bottom:none!important;height:3px;line-height:0;font-size:0;background:transparent!important}
+
+/* Screenshot button */
+.btn-screenshot{width:100%;background:var(--white);color:var(--ink);border:2px solid var(--ink);border-radius:10px;padding:13px;font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;letter-spacing:.06em;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px}
+.btn-screenshot:hover{background:var(--ink);color:var(--bg)}
+.btn-screenshot-top{margin-bottom:16px;margin-top:0}
+.btn-screenshot-bot{margin-top:6px;margin-bottom:0}
+
+.insight-box{background:var(--ink);color:var(--bg);border-radius:10px;padding:16px 18px;font-size:12.5px;line-height:1.9;margin-bottom:16px}
+.insight-box strong{color:var(--accent)}
+.small-note{font-size:11px;color:var(--ink-muted);line-height:1.8;margin-top:6px}
+.age-limit-note{background:var(--red-pale);border-left:3px solid var(--red);border-radius:4px;padding:10px 14px;font-size:12px;color:var(--red);margin-bottom:14px;line-height:1.7}
+
+@media(max-width:480px){.features-grid{grid-template-columns:repeat(3,1fr)}.ti-group{flex-direction:column}.total-price{font-size:22px}}
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <div class="logo-text">CHUBB Travel Insurance</div>
+  <h1>美商安達 旅平險報價試算</h1>
+  <div class="disclaimer">本系統的內容及保費僅供參考使用，詳細內容以官方公佈之內容為主</div>
+</div>
+<div class="step-nav">
+  <div class="step-item active" id="step1"><div class="step-dot">1</div>產品特色</div>
+  <div class="step-sep"></div>
+  <div class="step-item" id="step2"><div class="step-dot">2</div>輸入條件</div>
+  <div class="step-sep"></div>
+  <div class="step-item" id="step3"><div class="step-dot">3</div>報價結果</div>
+</div>
+
+<!-- ══ PAGE 1 ══ -->
+<div class="page active" id="page1">
+  <div style="height:4px"></div>
+  <div class="sec-label"><span class="sec-num">WHY</span><span class="sec-title">為什麼選擇安達旅平險</span></div>
+  <div class="features-intro">安達（CHUBB）為全球最大的上市產險公司之一，旅平險保障設計業界領先。<br>點擊下方各項特色卡片，了解安達旅平險的核心優勢。</div>
+  <div class="features-grid">
+    <div class="feat-card" onclick="openModal('m1')"><div class="feat-icon">🏥</div><div class="feat-short">突發疾病<br>觀察期最短</div><div class="feat-tap">▸ 點擊了解</div></div>
+    <div class="feat-card" onclick="openModal('m2')"><div class="feat-icon">🚁</div><div class="feat-short">緊急醫療運送<br>業界最高額度</div><div class="feat-tap">▸ 點擊了解</div></div>
+    <div class="feat-card" onclick="openModal('m3')"><div class="feat-icon">⚖️</div><div class="feat-short">第三責任險<br>業界最高額度</div><div class="feat-tap">▸ 點擊了解</div></div>
+    <div class="feat-card" onclick="openModal('m4')"><div class="feat-icon">🍱</div><div class="feat-short">食物中毒<br>定額補償</div><div class="feat-tap">▸ 點擊了解</div></div>
+    <div class="feat-card" onclick="openModal('m6')"><div class="feat-icon">📋</div><div class="feat-short">海外單據<br>免翻譯理賠</div><div class="feat-tap">▸ 點擊了解</div></div>
+    <div class="feat-card" onclick="openModal('m7')"><div class="feat-icon">💳</div><div class="feat-short">理賠免健保<br>局核退手續</div><div class="feat-tap">▸ 點擊了解</div></div>
+  </div>
+  <div class="features-tag-row">
+    <span class="features-tag">🦠 突發疾病保障含新冠肺炎併發重症、猴痘等法定傳染病，旅程取消/更改亦適用</span>
+  </div>
+  <div class="page1-nav"><button class="btn-next" onclick="goPage(2)">開始試算保費 →</button></div>
+</div>
+
+<!-- ══ PAGE 2 ══ -->
+<div class="page" id="page2">
+  <div style="height:4px"></div>
+  <button class="btn-back" onclick="goPage(1)">← 返回</button>
+
+  <!-- 01 日期 -->
+  <div class="sec-label"><span class="sec-num">01</span><span class="sec-title">旅遊日期與天數</span></div>
+  <div class="form-card">
+    <div class="form-row">
+      <label>出發日期　時間</label>
+      <div class="datetime-row">
+        <div class="date-input-wrap" id="startWrap">
+          <div class="date-display" id="startDisplay" tabindex="0" onclick="toggleCal('start')" onkeydown="if(event.key==='Enter')toggleCal('start')">
+            <span id="startDisplayText" style="color:var(--ink-muted)">選擇日期</span>
+            <span class="date-icon">📅</span>
+          </div>
+          <div class="cal-popup" id="startCal"></div>
+        </div>
+        <div class="time-sel-wrap">
+          <select id="startTime" onchange="onStartTimeChange()">
+            <option value="">時間</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>返回日期　時間</label>
+      <div class="datetime-row">
+        <div class="date-input-wrap" id="endWrap">
+          <div class="date-display" id="endDisplay" tabindex="0" onclick="toggleCal('end')" onkeydown="if(event.key==='Enter')toggleCal('end')">
+            <span id="endDisplayText" style="color:var(--ink-muted)">選擇日期</span>
+            <span class="date-icon">📅</span>
+          </div>
+          <div class="cal-popup" id="endCal"></div>
+        </div>
+        <div class="time-sel-wrap">
+          <select id="endTime" onchange="calcDays()" disabled>
+            <option value="">時間</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="calc-days-display" id="daysDisplay">
+      投保天數：<strong id="daysNum">—</strong> 天
+      <span style="font-size:10px;color:var(--ink-muted);margin-left:6px">（不足24小時以1日計算）</span>
+    </div>
+  </div>
+
+  <hr class="sec-divider">
+
+  <!-- 02 年齡 -->
+  <div class="sec-label"><span class="sec-num">02</span><span class="sec-title">被保險人年齡</span></div>
+  <div class="form-card">
+    <div class="form-row">
+      <label>投保年齡區間</label>
+      <select id="ageGroup" onchange="onAgeGroupChange()">
+        <option value="a15">15 – 75歲（含）</option>
+        <option value="u15">0 – 未滿15歲</option>
+        <option value="a75">超過75 – 80歲（含）</option>
+        <option value="a80">超過80 – 85歲（含）</option>
+        <option value="over85">超過85歲（謝絕承保）</option>
+      </select>
+      <div class="age-warning" id="ageWarning"></div>
+    </div>
+  </div>
+
+  <hr class="sec-divider">
+
+  <!-- 03 保額 -->
+  <div class="sec-label"><span class="sec-num">03</span><span class="sec-title">意外身故保險金額</span></div>
+  <div class="form-card">
+    <div class="form-row">
+      <div class="label-row">
+        <label style="margin-bottom:0">身故保額（萬元）<span class="recommend-tag">建議500萬以上＋尊榮型</span></label>
+        <button class="info-btn" onclick="openModal('mAge')">年齡投保上限 ↗</button>
+      </div>
+      <select id="addAmount" onchange="onAddChange()">
+        <option value="200">200 萬</option>
+        <option value="300">300 萬</option>
+        <option value="500">500 萬</option>
+        <option value="1000">1,000 萬</option>
+        <option value="1500">1,500 萬</option>
+        <option value="2000">2,000 萬</option>
+      </select>
+    </div>
+  </div>
+
+  <hr class="sec-divider">
+
+  <!-- 04 不便險 -->
+  <div class="sec-label"><span class="sec-num">04</span><span class="sec-title">旅行不便險方案</span></div>
+  <div class="form-card">
+    <div class="form-row">
+      <label>附加不便險種類　<span style="font-size:11px;color:var(--red);font-weight:400">（推薦尊榮型，額度較完善）</span></label>
+      <div class="ti-group">
+        <div class="ti-btn blue">
+          <input type="radio" name="ti" id="ti_super" value="super" onchange="onTiChange()">
+          <label for="ti_super">超值型 TI<span class="ti-badge">ADD 200萬以上適用</span></label>
+        </div>
+        <div class="ti-btn red">
+          <input type="radio" name="ti" id="ti_premium" value="premium" disabled onchange="onTiChange()">
+          <label for="ti_premium">尊榮型 TI<span class="ti-badge">ADD 500萬以上適用</span></label>
+        </div>
+      </div>
+      <div class="hint" id="tiHint" style="margin-top:8px">可選擇超值型不便險</div>
+
+      <!-- 超值型預覽 -->
+      <div class="ti-preview" id="previewSuper">
+        <div class="ti-preview-header blue">超值型 TI　主要保障項目（供參考）</div>
+        <table>
+          <tr><td>旅程取消保險</td><td>最高 12萬</td></tr>
+          <tr><td>班機延誤（每滿4小時）</td><td>每次 3,000，最高 6,000</td></tr>
+          <tr><td>旅程更改保險</td><td>最高 12萬</td></tr>
+          <tr class="preview-thick-sep"><td colspan="2"></td></tr>
+          <tr><td>行李延誤（超過6小時）</td><td>定額 3,000</td></tr>
+          <tr><td>行李損失保險</td><td>定額 3,000</td></tr>
+          <tr><td>旅行文件損失保險</td><td>定額 3,000</td></tr>
+          <tr><td>第三人責任保險</td><td>最高 300萬</td></tr>
+          <tr><td>劫機補償（每次10日）</td><td>每日 3,000</td></tr>
+          <tr><td>等待返國住宿（每次5日）</td><td>每日 3,000</td></tr>
+          <tr><td>傳染病旅程取消/更改</td><td>各最高 12萬</td></tr>
+        </table>
+      </div>
+
+      <!-- 尊榮型預覽 -->
+      <div class="ti-preview" id="previewPremium">
+        <div class="ti-preview-header red">尊榮型 TI　主要保障項目（供參考）</div>
+        <table>
+          <tr><td>旅程取消保險</td><td>最高 15萬</td></tr>
+          <tr><td>班機延誤（每滿4小時）</td><td>每次 6,000，最高 1.2萬</td></tr>
+          <tr><td>旅程更改保險</td><td>最高 15萬</td></tr>
+          <tr class="preview-thick-sep"><td colspan="2"></td></tr>
+          <tr><td>行李延誤（超過6小時）</td><td>定額 6,000</td></tr>
+          <tr><td>行李損失保險</td><td>定額 6,000</td></tr>
+          <tr><td>旅行文件損失保險</td><td>定額 3,000</td></tr>
+          <tr><td>第三人責任保險</td><td>最高 600萬</td></tr>
+          <tr><td>劫機補償（每次10日）</td><td>每日 6,000</td></tr>
+          <tr><td>等待返國住宿（每次5日）</td><td>每日 6,000</td></tr>
+          <tr><td>傳染病旅程取消/更改</td><td>各最高 15萬</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- live premium preview -->
+  <div id="previewPremiumPrice" style="display:none;background:var(--ink);border-radius:10px;padding:14px 18px;margin-bottom:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px">
+    <div style="font-size:12px;color:var(--accent);letter-spacing:.04em;font-weight:500">目前選擇的試算保費</div>
+    <div class="pp-amount" style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--bg)">—</div>
+  </div>
+
+  <button class="btn-quote" onclick="doQuote()">查看完整報價結果 →</button>
+  <div class="small-note" style="margin-top:10px">
+    ※ 80–85歲最長投保30天；超過85歲婉謝承保<br>
+    ※ 費率表版本：2026.04.01 製 CHUBBITA139
+  </div>
+</div>
+
+<!-- ══ PAGE 3 ══ -->
+<div class="page" id="page3">
+  <div style="height:4px"></div>
+  <button class="btn-back" onclick="goPage(2)">← 修改條件</button>
+
+  <!-- 截圖按鈕（上） -->
+  <button class="btn-screenshot btn-screenshot-top" onclick="doScreenshot()">📸 截圖投保內容給業務</button>
+
+  <!-- 截圖目標區域 -->
+  <div id="screenshotTarget">
+
+  <!-- 總保費（最上方） -->
+  <div id="totalPremiumBox"></div>
+
+  <!-- 旅程資訊 -->
+  <div class="result-trip-bar">
+    <div class="trip-info-line" id="resultTripInfo">—</div>
+    <div class="trip-detail-line" id="resultTitle">—</div>
+  </div>
+
+  </div><!-- end screenshotTarget -->
+
+  <div id="ageLimitNoteBox"></div>
+
+  <div id="planBase"></div>
+  <div id="planTI"></div>
+
+  <div class="insight-box">
+    <strong>重要提醒</strong><br>
+    • 海外突發疾病觀察期僅 <strong>90天</strong>（業界多為180天），保障起始更早<br>
+    • 本報價僅供參考，實際承保依保險公司審核為準<br>
+    • 海外急難援助服務係免費提供之服務，非保險契約之權利義務
+  </div>
+
+  <!-- 截圖按鈕（下） -->
+  <button class="btn-screenshot btn-screenshot-bot" onclick="doScreenshot()">📸 截圖投保內容給業務</button>
+</div>
+
+<!-- ══ MODAL ══ -->
+<div class="modal-overlay" id="modal" onclick="closeModalBg(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-icon" id="modalIcon"></div>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════
+//  CALENDAR
+// ════════════════════════════════
+const calState = { start: { year:0, month:0, value:'' }, end: { year:0, month:0, value:'' } };
+const today = new Date();
+today.setHours(0,0,0,0);
+
+function pad(n){ return String(n).padStart(2,'0'); }
+function dateStr(d){ return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
+function displayDate(s){ // s = 'YYYY-MM-DD'
+  if(!s) return null;
+  const [y,m,d] = s.split('-');
+  return `${y}/${m}/${d}`;
+}
+
+function initCalState(id){
+  const t = new Date();
+  calState[id].year = t.getFullYear();
+  calState[id].month = t.getMonth();
+}
+initCalState('start');
+initCalState('end');
+
+function renderCal(id){
+  const s = calState[id];
+  const firstDay = new Date(s.year, s.month, 1);
+  const lastDay  = new Date(s.year, s.month+1, 0);
+  // Determine minimum allowed date for this calendar
+  let minDate = new Date(today); // default: today
+  if(id === 'end' && calState.start.value){
+    // end must be AFTER start date (not same day)
+    const sd = calState.start.value;
+    const sparts = sd.split('-');
+    const startDt = new Date(parseInt(sparts[0]), parseInt(sparts[1])-1, parseInt(sparts[2]));
+    startDt.setDate(startDt.getDate() + 1); // at least 1 day after
+    if(startDt > minDate) minDate = startDt;
+  }
+  const dows = ['日','一','二','三','四','五','六'];
+  let html = `<div class="cal-nav">
+    <button class="cal-nav-btn" onclick="shiftMonth('${id}',-1)">‹</button>
+    <div class="cal-month-label">${s.year} 年 ${s.month+1} 月</div>
+    <button class="cal-nav-btn" onclick="shiftMonth('${id}',1)">›</button>
+  </div><div class="cal-grid">`;
+  dows.forEach(d => html += `<div class="cal-dow">${d}</div>`);
+  for(let i=0;i<firstDay.getDay();i++) html += '<div></div>';
+  for(let d=1;d<=lastDay.getDate();d++){
+    const cur = new Date(s.year, s.month, d);
+    const curStr = dateStr(cur);
+    let cls = 'cal-day';
+    if(cur < minDate) cls += ' disabled';
+    if(curStr === dateStr(today)) cls += ' today';
+    if(curStr === s.value) cls += ' selected';
+    if(cur < minDate)
+      html += `<div class="${cls}">${d}</div>`;
+    else
+      html += `<div class="${cls}" onclick="selectDate('${id}','${curStr}')">${d}</div>`;
+  }
+  html += '</div>';
+  document.getElementById(id+'Cal').innerHTML = html;
+}
+
+function shiftMonth(id, delta){
+  const s = calState[id];
+  s.month += delta;
+  if(s.month<0){s.month=11;s.year--;}
+  if(s.month>11){s.month=0;s.year++;}
+  renderCal(id);
+}
+
+function toggleCal(id){
+  const pop = document.getElementById(id+'Cal');
+  const isOpen = pop.classList.contains('open');
+  // close all
+  ['start','end'].forEach(k => document.getElementById(k+'Cal').classList.remove('open'));
+  if(!isOpen){
+    renderCal(id);
+    pop.classList.add('open');
+  }
+}
+
+function selectDate(id, val){
+  // If start date changes and end date is <= new start, clear end
+  if(id === 'start' && calState.end.value){
+    const es = calState.end.value.split('-');
+    const ss = val.split('-');
+    const endDt  = new Date(parseInt(es[0]),parseInt(es[1])-1,parseInt(es[2]));
+    const startDt = new Date(parseInt(ss[0]),parseInt(ss[1])-1,parseInt(ss[2]));
+    if(endDt <= startDt){
+      // Clear end
+      calState.end.value = '';
+      document.getElementById('endDisplayText').textContent = '選擇日期';
+      document.getElementById('endDisplayText').style.color = 'var(--ink-muted)';
+      document.getElementById('endDisplay').classList.remove('has-val');
+      document.getElementById('endTime').disabled = true;
+      document.getElementById('endTime').value = '';
+      document.getElementById('daysDisplay').style.display = 'none';
+    }
+  }
+  calState[id].value = val;
+  document.getElementById(id+'Cal').classList.remove('open');
+  const dispText = document.getElementById(id+'DisplayText');
+  dispText.textContent = displayDate(val);
+  dispText.style.color = 'var(--ink)';
+  document.getElementById(id+'Display').classList.add('has-val');
+
+  if(id === 'start'){
+    const st = document.getElementById('startTime').value;
+    if(st) onStartTimeChange();
+  }
+  calcDays();
+}
+
+// Close calendar on outside click
+document.addEventListener('click', e => {
+  if(!e.target.closest('.date-input-wrap')) {
+    ['start','end'].forEach(k => document.getElementById(k+'Cal').classList.remove('open'));
+  }
+});
+
+// ════════════════════════════════
+//  TIME SELECTORS — init
+// ════════════════════════════════
+(function initTimes(){
+  ['startTime','endTime'].forEach(id => {
+    const s = document.getElementById(id);
+    for(let h=0;h<24;h++){
+      const hh=pad(h);
+      s.add(new Option(`${hh}:00`, `${hh}:00`));
+    }
+    // default 00:00
+    s.value = '00:00';
+  });
+  // enable endTime immediately (default same time as start)
+  document.getElementById('endTime').disabled = false;
+  // default age = 15to75, trigger population
+  onAgeGroupChange();
+  // default add = 500 to allow premium
+  document.getElementById('addAmount').value = '500';
+  onAddChange();
+})();
+
+function onStartTimeChange(){
+  const st = document.getElementById('startTime').value;
+  const et = document.getElementById('endTime');
+  if(st){
+    et.disabled = false;
+    et.value = st;
+  }
+  calcDays();
+  updatePreviewPremium();
+}
+
+// ════════════════════════════════
+//  CALC DAYS
+// ════════════════════════════════
+function calcDays(){
+  const sd = calState.start.value;
+  const st = document.getElementById('startTime').value;
+  const ed = calState.end.value;
+  const et = document.getElementById('endTime').value;
+  const disp = document.getElementById('daysDisplay');
+  if(!sd||!st||!ed||!et){ disp.style.display='none'; updatePreviewPremium(); return 0; }
+  const start = new Date(`${sd}T${st}`), end = new Date(`${ed}T${et}`);
+  const diff = (end - start)/3600000;
+  if(diff<=0){ disp.style.display='none'; updatePreviewPremium(); return 0; }
+  const days = Math.ceil(diff/24);
+  document.getElementById('daysNum').textContent = days;
+  disp.style.display = 'block';
+  updatePreviewPremium();
+  return days;
+}
+
+// ── live premium preview on page 2 ──
+function updatePreviewPremium(){
+  const box = document.getElementById('previewPremiumPrice');
+  if(!box) return;
+  const days = calcDaysOnly();
+  const add  = parseInt(document.getElementById('addAmount').value);
+  const tiEl = document.querySelector('input[name="ti"]:checked');
+  const ti   = tiEl ? tiEl.value : null;
+  if(!days || !add || !ti){ box.style.display='none'; return; }
+  const p = lookup(days, add, ti);
+  if(!p){ box.style.display='none'; return; }
+  box.style.display='flex';
+  box.querySelector('.pp-amount').textContent = `NT$ ${p.toLocaleString()} 元`;
+}
+
+function calcDaysOnly(){
+  const sd=calState.start.value, st=document.getElementById('startTime').value;
+  const ed=calState.end.value,   et=document.getElementById('endTime').value;
+  if(!sd||!st||!ed||!et) return 0;
+  const diff=(new Date(`${ed}T${et}`) - new Date(`${sd}T${st}`))/3600000;
+  return diff<=0?0:Math.ceil(diff/24);
+}
+
+// ════════════════════════════════
+//  AGE GROUP
+// ════════════════════════════════
+function onAgeGroupChange(){
+  const g = document.getElementById('ageGroup').value;
+  const warn = document.getElementById('ageWarning');
+  const addSel = document.getElementById('addAmount');
+  warn.style.display='none'; warn.className='age-warning';
+  if(!g) return;
+  if(g==='over85'){
+    warn.style.display='block'; warn.className='age-warning age-warn-red';
+    warn.textContent='超過85歲婉謝承保，無法辦理投保'; return;
+  }
+  const configs = {
+    u15:[{v:69,l:'69萬（喪葬費用上限）'}],
+    a15:[{v:200,l:'200萬'},{v:300,l:'300萬'},{v:500,l:'500萬'},{v:1000,l:'1,000萬'},{v:1500,l:'1,500萬'},{v:2000,l:'2,000萬'}],
+    a75:[{v:200,l:'200萬'},{v:300,l:'300萬'}],
+    a80:[{v:100,l:'100萬（上限）'}]
+  };
+  const msgs = {
+    u15:'未滿15歲：身故/喪葬費用上限69萬；傷害醫療及突發疾病醫療各最高100萬',
+    a15:'',
+    a75:'超過75–80歲：身故/喪葬費用上限300萬，最長180天',
+    a80:'超過80–85歲：身故/喪葬費用上限100萬，最長投保30天'
+  };
+  const curVal = addSel.value;
+  addSel.innerHTML = '';
+  (configs[g]||[]).forEach(o => addSel.add(new Option(o.l, o.v)));
+  // try keep current value
+  if([...addSel.options].some(o=>o.value===curVal)) addSel.value = curVal;
+  if(msgs[g]){ warn.style.display='block'; warn.textContent=msgs[g]; }
+  onAddChange();
+}
+
+function onAddChange(){
+  const add = parseInt(document.getElementById('addAmount').value);
+  const prem = document.getElementById('ti_premium');
+  const hint = document.getElementById('tiHint');
+  if(add>=500){
+    prem.disabled=false; hint.textContent='可選擇超值型或尊榮型不便險';
+  } else if(add>=200){
+    prem.disabled=true; hint.textContent='200–499萬僅可選擇超值型；尊榮型需500萬以上';
+    if(prem.checked){ document.getElementById('ti_super').checked=true; onTiChange(); }
+  } else {
+    prem.disabled=true; hint.textContent='請先選擇身故保額';
+  }
+  updatePreviewPremium();
+}
+
+function onTiChange(){
+  const ti = document.querySelector('input[name="ti"]:checked')?.value;
+  document.getElementById('previewSuper').classList.toggle('show', ti==='super');
+  document.getElementById('previewPremium').classList.toggle('show', ti==='premium');
+  updatePreviewPremium();
+}
+
+// ════════════════════════════════
+//  RATE DATA
+// ════════════════════════════════
+const RATE_BASE={1:{a200:174,a300:263,a500:436,a1000:870,a1500:1305,a2000:1737},2:{a200:191,a300:288,a500:475,a1000:950,a1500:1426,a2000:1895},3:{a200:205,a300:310,a500:514,a1000:1032,a1500:1547,a2000:2059},4:{a200:268,a300:404,a500:668,a1000:1339,a1500:2011,a2000:2677},5:{a200:331,a300:496,a500:823,a1000:1650,a1500:2474,a2000:3296},6:{a200:356,a300:535,a500:891,a1000:1777,a1500:2666,a2000:3553},7:{a200:382,a300:569,a500:956,a1000:1905,a1500:2859,a2000:3809},8:{a200:401,a300:594,a500:995,a1000:1973,a1500:2962,a2000:3947},9:{a200:418,a300:623,a500:1035,a1000:2043,a1500:3063,a2000:4081},10:{a200:436,a300:648,a500:1076,a1000:2110,a1500:3166,a2000:4219},11:{a200:457,a300:675,a500:1115,a1000:2181,a1500:3272,a2000:4358},12:{a200:476,a300:701,a500:1156,a1000:2248,a1500:3374,a2000:4497},13:{a200:492,a300:728,a500:1196,a1000:2317,a1500:3476,a2000:4630},14:{a200:511,a300:755,a500:1236,a1000:2384,a1500:3578,a2000:4768},15:{a200:529,a300:781,a500:1279,a1000:2467,a1500:3702,a2000:4935},16:{a200:546,a300:807,a500:1319,a1000:2549,a1500:3823,a2000:5097},17:{a200:566,a300:834,a500:1362,a1000:2631,a1500:3946,a2000:5263},18:{a200:582,a300:859,a500:1406,a1000:2712,a1500:4069,a2000:5423},19:{a200:602,a300:884,a500:1447,a1000:2795,a1500:4191,a2000:5590},20:{a200:618,a300:911,a500:1490,a1000:2876,a1500:4315,a2000:5750},21:{a200:637,a300:937,a500:1532,a1000:2957,a1500:4437,a2000:5917},22:{a200:650,a300:955,a500:1561,a1000:3013,a1500:4520,a2000:6026},23:{a200:663,a300:972,a500:1589,a1000:3069,a1500:4602,a2000:6137},24:{a200:677,a300:992,a500:1619,a1000:3124,a1500:4685,a2000:6246},25:{a200:688,a300:1008,a500:1647,a1000:3178,a1500:4767,a2000:6357},26:{a200:702,a300:1030,a500:1677,a1000:3234,a1500:4850,a2000:6466},27:{a200:714,a300:1047,a500:1704,a1000:3289,a1500:4933,a2000:6576},28:{a200:728,a300:1066,a500:1734,a1000:3343,a1500:5015,a2000:6688},29:{a200:740,a300:1084,a500:1763,a1000:3398,a1500:5098,a2000:6797},30:{a200:753,a300:1102,a500:1793,a1000:3454,a1500:5180,a2000:6906},40:{a200:891,a300:1304,a500:2117,a1000:4079,a1500:6119,a2000:8152},50:{a200:1032,a300:1506,a500:2450,a1000:4720,a1500:7078,a2000:9433},60:{a200:1175,a300:1711,a500:2785,a1000:5365,a1500:8046,a2000:10725},90:{a200:1459,a300:2132,a500:3469,a1000:6687,a1500:10029,a2000:13371},120:{a200:1705,a300:2493,a500:4061,a1000:7830,a1500:11744,a2000:15655},150:{a200:1874,a300:2739,a500:4461,a1000:8600,a1500:12898,a2000:17194},180:{a200:1995,a300:2915,a500:4750,a1000:9162,a1500:13741,a2000:18320}};
+const RATE_SUPER={1:{a200:411,a300:500,a500:673,a1000:1107,a1500:1542,a2000:1974},2:{a200:446,a300:543,a500:730,a1000:1205,a1500:1681,a2000:2150},3:{a200:482,a300:587,a500:791,a1000:1309,a1500:1824,a2000:2336},4:{a200:564,a300:700,a500:964,a1000:1635,a1500:2307,a2000:2973},5:{a200:646,a300:811,a500:1138,a1000:1965,a1500:2789,a2000:3611},6:{a200:693,a300:872,a500:1228,a1000:2114,a1500:3003,a2000:3890},7:{a200:738,a300:925,a500:1312,a1000:2261,a1500:3215,a2000:4165},8:{a200:776,a300:969,a500:1370,a1000:2348,a1500:3337,a2000:4322},9:{a200:815,a300:1020,a500:1432,a1000:2440,a1500:3460,a2000:4478},10:{a200:848,a300:1060,a500:1488,a1000:2522,a1500:3578,a2000:4631},11:{a200:887,a300:1105,a500:1545,a1000:2611,a1500:3702,a2000:4788},12:{a200:922,a300:1147,a500:1602,a1000:2694,a1500:3820,a2000:4943},13:{a200:953,a300:1189,a500:1657,a1000:2778,a1500:3937,a2000:5091},14:{a200:991,a300:1235,a500:1716,a1000:2864,a1500:4058,a2000:5248},15:{a200:1022,a300:1274,a500:1772,a1000:2960,a1500:4195,a2000:5428},16:{a200:1139,a300:1400,a500:1912,a1000:3142,a1500:4416,a2000:5690},17:{a200:1161,a300:1429,a500:1957,a1000:3226,a1500:4541,a2000:5858},18:{a200:1179,a300:1456,a500:2003,a1000:3309,a1500:4666,a2000:6020},19:{a200:1201,a300:1483,a500:2046,a1000:3394,a1500:4790,a2000:6189},20:{a200:1219,a300:1512,a500:2091,a1000:3477,a1500:4916,a2000:6351},21:{a200:1240,a300:1540,a500:2135,a1000:3560,a1500:5040,a2000:6520},22:{a200:1255,a300:1560,a500:2166,a1000:3618,a1500:5125,a2000:6631},23:{a200:1270,a300:1579,a500:2196,a1000:3676,a1500:5209,a2000:6744},24:{a200:1286,a300:1601,a500:2228,a1000:3733,a1500:5294,a2000:6855},25:{a200:1299,a300:1619,a500:2258,a1000:3789,a1500:5378,a2000:6968},26:{a200:1315,a300:1643,a500:2290,a1000:3847,a1500:5463,a2000:7079},27:{a200:1329,a300:1662,a500:2319,a1000:3904,a1500:5548,a2000:7191},28:{a200:1345,a300:1683,a500:2351,a1000:3960,a1500:5632,a2000:7305},29:{a200:1359,a300:1703,a500:2382,a1000:4017,a1500:5717,a2000:7416},30:{a200:1374,a300:1723,a500:2414,a1000:4075,a1500:5801,a2000:7527},40:{a200:1541,a300:1954,a500:2767,a1000:4729,a1500:6769,a2000:8802},50:{a200:1782,a300:2256,a500:3200,a1000:5470,a1500:7828,a2000:10183},60:{a200:1954,a300:2490,a500:3564,a1000:6144,a1500:8825,a2000:11504},90:{a200:2325,a300:2998,a500:4335,a1000:7553,a1500:10895,a2000:14237},120:{a200:2657,a300:3445,a500:5013,a1000:8782,a1500:12696,a2000:16607},150:{a200:2913,a300:3778,a500:5500,a1000:9639,a1500:13937,a2000:18233},180:{a200:3121,a300:4041,a500:5876,a1000:10288,a1500:14867,a2000:19446}};
+const RATE_PREMIUM={1:{a500:743,a600:830,a800:1005,a1000:1177,a1500:1612,a2000:2044},2:{a500:819,a600:916,a800:1105,a1000:1294,a1500:1770,a2000:2239},3:{a500:902,a600:1007,a800:1211,a1000:1420,a1500:1935,a2000:2447},4:{a500:1093,a600:1230,a800:1496,a1000:1764,a1500:2436,a2000:3102},5:{a500:1285,a600:1453,a800:1779,a1000:2112,a1500:2936,a2000:3758},6:{a500:1397,a600:1573,a800:1927,a1000:2283,a1500:3172,a2000:4059},7:{a500:1500,a600:1687,a800:2072,a1000:2449,a1500:3403,a2000:4353},8:{a500:1576,a600:1773,a800:2168,a1000:2554,a1500:3543,a2000:4528},9:{a500:1660,a600:1863,a800:2268,a1000:2668,a1500:3688,a2000:4706},10:{a500:1731,a600:1939,a800:2359,a1000:2765,a1500:3821,a2000:4874},11:{a500:1807,a600:2021,a800:2452,a1000:2873,a1500:3964,a2000:5050},12:{a500:1879,a600:2102,a800:2542,a1000:2971,a1500:4097,a2000:5220},13:{a500:1949,a600:2178,a800:2628,a1000:3070,a1500:4229,a2000:5383},14:{a500:2026,a600:2261,a800:2726,a1000:3174,a1500:4368,a2000:5558},15:{a500:2096,a600:2339,a800:2818,a1000:3284,a1500:4519,a2000:5752},16:{a500:2335,a600:2588,a800:3085,a1000:3565,a1500:4839,a2000:6113},17:{a500:2382,a600:2643,a800:3155,a1000:3651,a1500:4966,a2000:6283},18:{a500:2430,a600:2695,a800:3227,a1000:3736,a1500:5093,a2000:6447},19:{a500:2475,a600:2750,a800:3296,a1000:3823,a1500:5219,a2000:6618},20:{a500:2522,a600:2804,a800:3368,a1000:3908,a1500:5347,a2000:6782},21:{a500:2568,a600:2858,a800:3438,a1000:3993,a1500:5473,a2000:6953},22:{a500:2601,a600:2896,a800:3488,a1000:4053,a1500:5560,a2000:7066},23:{a500:2633,a600:2937,a800:3536,a1000:4113,a1500:5646,a2000:7181},24:{a500:2667,a600:2974,a800:3585,a1000:4172,a1500:5733,a2000:7294},25:{a500:2699,a600:3014,a800:3633,a1000:4230,a1500:5819,a2000:7409},26:{a500:2733,a600:3053,a800:3683,a1000:4290,a1500:5906,a2000:7522},27:{a500:2764,a600:3089,a800:3729,a1000:4349,a1500:5993,a2000:7636},28:{a500:2798,a600:3128,a800:3778,a1000:4407,a1500:6079,a2000:7752},29:{a500:2831,a600:3166,a800:3827,a1000:4466,a1500:6166,a2000:7865},30:{a500:2865,a600:3205,a800:3876,a1000:4526,a1500:6252,a2000:7978},40:{a500:3245,a600:3651,a800:4439,a1000:5207,a1500:7247,a2000:9280},50:{a500:3778,a600:4246,a800:5160,a1000:6048,a1500:8406,a2000:10761},60:{a500:4170,a600:4702,a800:5738,a1000:6750,a1500:9431,a2000:12110},90:{a500:5023,a600:5686,a800:6978,a1000:8241,a1500:11583,a2000:14925},120:{a500:5785,a600:6562,a800:8078,a1000:9554,a1500:13468,a2000:17379},150:{a500:6355,a600:7206,a800:8875,a1000:10494,a1500:14792,a2000:19088},180:{a500:6814,a600:7720,a800:9499,a1000:11226,a1500:15805,a2000:20384}};
+
+// TI items for result page — use {sep:true} to mark thick divider position
+const TI_SUPER=[
+  {name:'旅程取消保險',val:'最高 12萬'},
+  {name:'班機延誤保險<br><span class="ct-sub">（每滿4小時，最高2次）</span>',val:'每次 3,000，最高 6,000'},
+  {name:'旅程更改保險',val:'最高 12萬'},
+  {sep:true},
+  {name:'行李延誤保險<br><span class="ct-sub">（超過6小時，不含返國）</span>',val:'定額 3,000'},
+  {name:'行李損失保險',val:'定額 3,000'},
+  {name:'旅行文件損失保險',val:'定額 3,000'},
+  {name:'班機改降補償保險',val:'定額 3,000'},
+  {name:'劫機補償保險<br><span class="ct-sub">（每次10日為限）</span>',val:'每日 3,000'},
+  {name:'第三人責任保險',val:'最高 300萬'},
+  {name:'旅行期間居家竊盜保險',val:'最高 3萬'},
+  {name:'現金竊盜損失保險',val:'最高 3,000'},
+  {name:'信用卡盜用損失保險',val:'最高 3萬'},
+  {name:'等待返國住宿費用<br><span class="ct-sub">（每次5日為限）</span>',val:'每日 3,000'},
+  {name:'旅行期間居家火災臨時住宿補償',val:'定額 1萬'},
+  {name:'行動電話被竊損失保險<br><span class="ct-sub">（限1次）</span>',val:'定額 3,000'},
+  {name:'旅程取消/更改費用傳染病及檢疫給付',val:'各最高 12萬'},
+];
+const TI_PREMIUM=[
+  {name:'旅程取消保險',val:'最高 15萬'},
+  {name:'班機延誤保險<br><span class="ct-sub">（每滿4小時，最高2次）</span>',val:'每次 6,000，最高 1.2萬'},
+  {name:'旅程更改保險',val:'最高 15萬'},
+  {sep:true},
+  {name:'行李延誤保險<br><span class="ct-sub">（超過6小時，不含返國）</span>',val:'定額 6,000'},
+  {name:'行李損失保險',val:'定額 6,000'},
+  {name:'旅行文件損失保險',val:'定額 3,000'},
+  {name:'班機改降補償保險',val:'定額 6,000'},
+  {name:'劫機補償保險<br><span class="ct-sub">（每次10日為限）</span>',val:'每日 6,000'},
+  {name:'第三人責任保險',val:'最高 600萬'},
+  {name:'旅行期間居家竊盜保險',val:'最高 6萬'},
+  {name:'現金竊盜損失保險',val:'最高 6,000'},
+  {name:'信用卡盜用損失保險',val:'最高 6萬'},
+  {name:'等待返國住宿費用<br><span class="ct-sub">（每次5日為限）</span>',val:'每日 6,000'},
+  {name:'旅行期間居家火災臨時住宿補償',val:'定額 2萬'},
+  {name:'行動電話被竊損失保險<br><span class="ct-sub">（限1次）</span>',val:'定額 3,000'},
+  {name:'旅程取消/更改費用傳染病及檢疫給付',val:'各最高 15萬'},
+];
+
+// ════════════════════════════════
+//  FORMAT helper: show 萬 if >= 10000
+// ════════════════════════════════
+function fmtWan(n){
+  // n is in NT$ dollars
+  if(n >= 10000){
+    const w = n / 10000;
+    // if round, show integer
+    return (w === Math.floor(w)) ? `${w}萬` : `${w.toFixed(1)}萬`;
+  }
+  return `${Math.round(n).toLocaleString()}`;
+}
+
+// ════════════════════════════════
+//  NAVIGATION
+// ════════════════════════════════
+function goPage(n){
+  [1,2,3].forEach(i=>{
+    document.getElementById('page'+i).classList.toggle('active',i===n);
+    const s=document.getElementById('step'+i);
+    s.classList.remove('active','done');
+    if(i<n) s.classList.add('done');
+    if(i===n) s.classList.add('active');
+  });
+  window.scrollTo(0,0);
+}
+
+// ════════════════════════════════
+//  LOOKUP
+// ════════════════════════════════
+function findNearestDays(d){const bp=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,40,50,60,90,120,150,180];for(let i=0;i<bp.length;i++){if(d<=bp[i])return bp[i];}return 180;}
+function lookup(days,add,ti){
+  const d=findNearestDays(days);
+  const row=ti==='super'?RATE_SUPER[d]:ti==='premium'?RATE_PREMIUM[d]:RATE_BASE[d];
+  return row?(row['a'+add]||null):null;
+}
+
+// ════════════════════════════════
+//  QUOTE
+// ════════════════════════════════
+function doQuote(){
+  const days = calcDays();
+  const ag = document.getElementById('ageGroup').value;
+  const add = parseInt(document.getElementById('addAmount').value);
+  const tiEl = document.querySelector('input[name="ti"]:checked');
+  const ti = tiEl ? tiEl.value : null;
+  if(!days||days<=0){ alert('請選擇正確的旅遊日期區間'); return; }
+  if(!ag||ag==='over85'){ alert('超過85歲婉謝承保'); return; }
+  if(!add){ alert('請選擇身故保額'); return; }
+  if(!ti){ alert('請選擇不便險方案（超值型或尊榮型）'); return; }
+  if(ag==='a80'&&days>30){ alert('80–85歲最長投保30天'); return; }
+  buildResult(days,ag,add,ti);
+  goPage(3);
+}
+
+// ════════════════════════════════
+//  BUILD RESULT
+// ════════════════════════════════
+function buildResult(days,ag,add,ti){
+  const sd=calState.start.value, st=document.getElementById('startTime').value;
+  const ed=calState.end.value,   et=document.getElementById('endTime').value;
+
+  // Trip info bar — compact single line
+  const fmtDate = s => s.replace(/-/g,'/');
+  document.getElementById('resultTripInfo').textContent =
+    `${fmtDate(sd)} ${st} → ${fmtDate(ed)} ${et}　共 ${days} 天`;
+  const agLbl={u15:'0–未滿15歲',a15:'15–75歲',a75:'超過75–80歲',a80:'超過80–85歲'}[ag]||'';
+  const tiLbl = ti==='super'?'超值型 TI':'尊榮型 TI';
+  document.getElementById('resultTitle').innerHTML =
+    `身故保額 <span style="font-family:'DM Mono';color:var(--accent)">${add.toLocaleString()}萬</span>　${tiLbl}　年齡：${agLbl}`;
+
+  // Age note
+  const nb = document.getElementById('ageLimitNoteBox');
+  if(ag==='u15') nb.innerHTML='<div class="age-limit-note">⚠ 未滿15歲：身故/喪葬費用上限69萬；傷害醫療及突發疾病醫療各最高100萬。</div>';
+  else if(ag==='a80') nb.innerHTML='<div class="age-limit-note">⚠ 80–85歲：身故/喪葬費用上限100萬；最長投保30天。</div>';
+  else nb.innerHTML='';
+
+  // Amounts
+  const emrWan = Math.min(add*0.2, 200); // in 萬
+  const mrWan  = Math.min(add*0.2, 200);
+
+  // 旅平險 rows — split bracketed notes to next line for readability
+  const baseItems=[
+    ['意外身故或喪葬費用保險金',                                      fmtWan(add*10000)],
+    ['搭乘大眾運輸工具意外身故增額保險金<br><span class="ct-sub">（保額20%）</span>',    fmtWan(add*10000*0.2)],
+    ['重大燒燙傷保險金<br><span class="ct-sub">（保額25%）</span>',                      fmtWan(add*10000*0.25)],
+    ['旅行傷害醫療保險金<br><span class="ct-sub">（海外加值型，保額20%）</span>',        fmtWan(mrWan*10000)],
+    ['食物中毒慰問保險金<br><span class="ct-sub">（最高2次）</span>',                    '3,000'],
+    ['海外突發疾病住院醫療保險金<br><span class="ct-sub">（保額20%，最高200萬）</span>', fmtWan(emrWan*10000)],
+    ['海外突發疾病門診醫療保險金<br><span class="ct-sub">（住院醫療額3%）</span>',       fmtWan(emrWan*0.03*10000)],
+    ['海外突發疾病急診醫療保險金<br><span class="ct-sub">（住院醫療額10%）</span>',      fmtWan(emrWan*0.1*10000)],
+    ['特定地區限額調整<br><span class="ct-sub">（美加300%／歐日韓澳紐200%）</span>',     '✓ 已附加'],
+    ['全球海外急難援助服務',                                          '12萬美金'],
+  ];
+  const baseRows = baseItems.map(([n,v])=>`<tr><td>${n}</td><td>${v}</td></tr>`).join('');
+  document.getElementById('planBase').innerHTML=`
+    <div class="plan-card">
+      <div class="plan-card-head base">旅行平安險　海外加值型</div>
+      <div class="plan-body">
+        <table class="ct">
+          <thead><tr><th>保障項目</th><th style="text-align:right">保險金額</th></tr></thead>
+          <tbody>${baseRows}</tbody>
+        </table>
+        <div class="small-note" style="margin-top:8px">※ 突發疾病觀察期：出發前90天內未曾接受該疾病診療（業界最短）</div>
+      </div>
+    </div>`;
+
+  // 不便險
+  const isSuper = ti==='super';
+
+  const tiItems = isSuper ? TI_SUPER : TI_PREMIUM;
+  let tiRows = '';
+  tiItems.forEach(c=>{
+    if(c.sep){ tiRows += `<tr class="grp-sep"><td colspan="2"></td></tr>`; }
+    else { tiRows += `<tr><td>${c.name}</td><td>${c.val}</td></tr>`; }
+  });
+  const tiHdrCls = isSuper?'blue':'red';
+  const tiHdrLbl = isSuper?'旅行不便險　超值型 TI':'旅行不便險　尊榮型 TI';
+  document.getElementById('planTI').innerHTML=`
+    <div class="plan-card">
+      <div class="plan-card-head ${tiHdrCls}">${tiHdrLbl}</div>
+      <div class="plan-body">
+        <table class="ct">
+          <thead><tr><th>保障項目</th><th style="text-align:right">保險金額</th></tr></thead>
+          <tbody>${tiRows}</tbody>
+        </table>
+        <div class="small-note" style="margin-top:8px">※ 班機延誤、行李延誤、行李損失、旅行文件損失、班機改降：最高給付2次 ｜ 行動電話被竊：限給付1次</div>
+      </div>
+    </div>`;
+
+  // 總保費 at top
+  const premTotal = lookup(days, add, ti);
+  const totalStr = premTotal ? `NT$ ${premTotal.toLocaleString()}` : '— 請洽業務員';
+  document.getElementById('totalPremiumBox').innerHTML=`
+    <div class="total-box">
+      <div class="total-label">試算總保費</div>
+      <div class="total-price">${totalStr} <span>元</span></div>
+    </div>`;
+}
+
+// ════════════════════════════════
+//  MODALS
+// ════════════════════════════════
+const MODALS={
+  m1:{icon:'🏥',title:'突發疾病觀察期最短',body:'安達旅平險的海外突發疾病觀察期僅 <strong>90天</strong>，遠低於業界常見的180天。<br><br>只要出發前90天內未曾就診的疾病，即可列為突發疾病保障。若疾病已完全治癒後再度發生，亦視同突發疾病，保障更完整。'},
+  m2:{icon:'🚁',title:'緊急醫療運送額度業界最高',body:'安達提供高達 <strong>美金 $120,000（約新台幣380萬）</strong> 的緊急醫療轉送及遺體骨灰運回服務，為業界最高水準。<br><br>無論身在世界何處，都能安心享有最完整的緊急援助。'},
+  m3:{icon:'⚖️',title:'第三人責任險額度業界最高',body:'尊榮型不便險附加的第三人責任保險最高達 <strong>新台幣 600萬</strong>，超值型亦有300萬，遠超同業水準。<br><br>旅遊期間若不慎造成他人人身傷害或財物損失，可獲得充分的法律責任保障。'},
+  m4:{icon:'🍱',title:'食物中毒定額慰問保險金',body:'旅遊期間若不幸發生食物中毒，安達提供 <strong>定額新台幣3,000元</strong> 的慰問保險金，保險期間內最高給付2次。<br><br>這是許多保險公司沒有的特色保障，讓您吃得安心、玩得放心。'},
+  m5:{icon:'🦠',title:'含法定傳染病完整保障',body:'安達旅平險的海外突發疾病保障 <strong>含新冠肺炎併發重症、猴痘等法定傳染病</strong>。<br><br>旅程取消、旅程更改及等待返國住宿費用亦包含法定傳染病所致的保險事故，後疫情時代出遊更安心。'},
+  m6:{icon:'📋',title:'海外單據無需翻譯即可理賠',body:'在海外就醫取得的醫療收據，<strong>無需翻譯成中文或英文</strong>，即可直接申請理賠。<br><br>相較於部分同業要求將外文單據翻譯成英文才受理，安達大幅簡化理賠流程，節省您的時間與翻譯費用。'},
+  m7:{icon:'💳',title:'理賠免健保局核退手續',body:'申請海外突發疾病醫療保險金時，<strong>無需先向健保局申請核退</strong>，可直接向安達申請理賠。<br><br>許多保險公司要求必須先取得健保局的核退文件才能理賠，安達省去此繁瑣手續，讓您迅速取得理賠款。'},
+  mAge:{icon:'📊',title:'年齡投保上限說明',body:`<table class="age-table"><thead><tr><th>投保年齡</th><th>身故/喪葬費用上限</th><th>最長天數</th></tr></thead><tbody><tr><td>0–未滿15歲</td><td>69萬（喪葬費用）</td><td>180天</td></tr><tr><td>15–65歲（含）</td><td>2,000萬</td><td>180天</td></tr><tr><td>超過65–70歲</td><td>1,500萬</td><td>180天</td></tr><tr><td>超過70–75歲</td><td>500萬</td><td>180天</td></tr><tr><td>超過75–80歲</td><td>300萬</td><td>180天</td></tr><tr><td>超過80–85歲</td><td>100萬</td><td>30天</td></tr><tr><td>超過85歲</td><td colspan="2" style="text-align:center">婉謝承保</td></tr></tbody></table><div style="margin-top:12px;font-size:11px;color:#9a8a80;line-height:1.7">※ 未滿15歲：傷害醫療及突發疾病醫療各最高100萬<br>※ 尊榮型TI需身故保額500萬以上方可附加</div>`}
+};
+
+// ════════════════════════════════
+//  SCREENSHOT — 2100×2970 portrait card
+// ════════════════════════════════
+async function doScreenshot(){
+  const totalBox = document.getElementById('totalPremiumBox');
+  if(!totalBox || !totalBox.innerHTML){ alert('請先完成試算再截圖'); return; }
+
+  const btns = document.querySelectorAll('.btn-screenshot');
+  btns.forEach(b=>{ b.textContent='⏳ 製作中…'; b.disabled=true; });
+
+  try {
+    // ── collect data ──
+    const tripRaw   = document.getElementById('resultTripInfo').textContent.trim();
+    const titleRaw  = document.getElementById('resultTitle').textContent.trim();
+    const rawTotal  = totalBox.querySelector('.total-price')?.textContent?.trim() || '';
+
+    // parse title fields
+    const addMatch = titleRaw.match(/身故保額\s*([\d,]+萬)/);
+    const tiMatch  = titleRaw.match(/(超值型 TI|尊榮型 TI)/);
+    const ageMatch = titleRaw.match(/年齡[：:]\s*(.+)/);
+    const addText  = addMatch ? addMatch[1] : '';
+    const tiText   = tiMatch  ? tiMatch[1]  : '';
+    const ageText  = ageMatch ? ageMatch[1] : '';
+
+    // parse trip: "2026/05/21 00:30 → 2026/05/31 00:30　共 10 天"
+    const tripMatch = tripRaw.match(/(.+?)\s*→\s*(.+?)\s*共\s*(\d+)\s*天/);
+    const depText   = tripMatch ? tripMatch[1].trim() : tripRaw;
+    const retText   = tripMatch ? tripMatch[2].trim() : '';
+    const daysText  = tripMatch ? `共 ${tripMatch[3]} 天` : '';
+
+    // ── canvas setup ──
+    const W = 2100, H = 2970;
+    const cv  = document.createElement('canvas');
+    cv.width  = W;
+    cv.height = H;
+    const ctx = cv.getContext('2d');
+
+    // ── background ──
+    const bgGrad = ctx.createLinearGradient(0,0,0,H);
+    bgGrad.addColorStop(0,   '#1a1410');
+    bgGrad.addColorStop(0.5, '#231a13');
+    bgGrad.addColorStop(1,   '#1a1410');
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0,0,W,H);
+
+    // subtle dot texture
+    ctx.fillStyle = 'rgba(200,169,110,.022)';
+    for(let x=0;x<W;x+=70) for(let y=0;y<H;y+=70){
+      ctx.beginPath(); ctx.arc(x,y,1.2,0,Math.PI*2); ctx.fill();
+    }
+
+    // corner ornaments
+    const drawCorner=(x,y,sx,sy)=>{
+      ctx.strokeStyle='rgba(200,169,110,.32)'; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.moveTo(x+sx*100,y); ctx.lineTo(x,y); ctx.lineTo(x,y+sy*100); ctx.stroke();
+      ctx.strokeStyle='rgba(200,169,110,.12)'; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.moveTo(x+sx*150,y+sy*18); ctx.lineTo(x+sx*18,y+sy*18); ctx.lineTo(x+sx*18,y+sy*150); ctx.stroke();
+    };
+    drawCorner(70,70,1,1); drawCorner(W-70,70,-1,1);
+    drawCorner(70,H-70,1,-1); drawCorner(W-70,H-70,-1,-1);
+
+    // helper: gold rule
+    const drawRule=(y,alpha=.35)=>{
+      const g=ctx.createLinearGradient(140,0,W-140,0);
+      g.addColorStop(0,'transparent');
+      g.addColorStop(0.2,`rgba(200,169,110,${alpha})`);
+      g.addColorStop(0.8,`rgba(200,169,110,${alpha})`);
+      g.addColorStop(1,'transparent');
+      ctx.strokeStyle=g; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.moveTo(140,y); ctx.lineTo(W-140,y); ctx.stroke();
+    };
+
+    drawRule(200);
+
+    // ── 我想投保 ──
+    ctx.textAlign='center';
+    ctx.fillStyle='#f5f0eb';
+    ctx.font='bold 200px "Noto Serif TC", serif';
+    ctx.fillText('我想投保', W/2, 420);
+
+    // CHUBB sub
+    ctx.font='500 52px "Noto Serif TC", serif';
+    ctx.fillStyle='#c8a96e';
+    ctx.fillText('CHUBB  TRAVEL  INSURANCE', W/2, 500);
+
+    drawRule(560);
+
+    // ── info rows ──
+    const PAD=180, ROW_H=170;
+    const infoRows=[
+      {label:'出發時間', value:depText},
+      {label:'返回時間', value:retText},
+      {label:'旅遊天數', value:daysText},
+      {label:'意外身故保額', value:addText},
+      {label:'不便險方案', value:tiText},
+      {label:'被保人年齡', value:ageText},
+    ];
+
+    let iy=600;
+    infoRows.forEach((r,i)=>{
+      ctx.fillStyle = i%2===0 ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.06)';
+      ctx.fillRect(PAD, iy, W-PAD*2, ROW_H);
+
+      ctx.font='bold 44px "Noto Serif TC", serif';
+      ctx.fillStyle='#c8a96e';
+      ctx.textAlign='left';
+      ctx.fillText(r.label, PAD+50, iy+ROW_H*0.6);
+
+      ctx.font='bold 58px "Noto Serif TC", serif';
+      ctx.fillStyle='#f5f0eb';
+      ctx.textAlign='right';
+      ctx.fillText(r.value, W-PAD-50, iy+ROW_H*0.72);
+      iy+=ROW_H;
+    });
+
+    drawRule(iy+30);
+
+    // ── total premium box ──
+    const bx=PAD, by=iy+80, bw=W-PAD*2, bh=280;
+    ctx.save();
+    ctx.shadowColor='rgba(200,169,110,.4)'; ctx.shadowBlur=50;
+    const bGrad=ctx.createLinearGradient(bx,by,bx+bw,by+bh);
+    bGrad.addColorStop(0,'#c8a96e'); bGrad.addColorStop(1,'#a07838');
+    ctx.fillStyle=bGrad;
+    roundRect(ctx,bx,by,bw,bh,28); ctx.fill();
+    ctx.restore();
+
+    ctx.font='bold 60px "Noto Serif TC", serif'; ctx.fillStyle='#1a1410';
+    ctx.textAlign='left';
+    ctx.fillText('試算總保費', bx+70, by+110);
+
+    ctx.font='bold 120px "Noto Serif TC", serif'; ctx.fillStyle='#1a1410';
+    ctx.textAlign='right';
+    ctx.fillText(rawTotal, bx+bw-70, by+bh-50);
+
+    drawRule(by+bh+70, .2);
+
+    // ── blessing ──
+    const blessY = by+bh+160;
+    ctx.textAlign='center';
+    ctx.font='500 52px "Noto Serif TC", serif';
+    ctx.fillStyle='rgba(245,240,235,.55)';
+    ctx.fillText('誠摯為您服務，祝福您旅途愉快、平安歸來', W/2, blessY);
+
+    // CHUBB watermark
+    ctx.font='300 32px "Noto Serif TC", serif';
+    ctx.fillStyle='rgba(200,169,110,.22)';
+    ctx.fillText('CHUBB', W/2, H-90);
+
+    // ── share / download ──
+    cv.toBlob(async (blob)=>{
+      const file=new File([blob],'安達旅平險投保需求.png',{type:'image/png'});
+      if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
+        try{ await navigator.share({files:[file],title:'我想投保安達旅平險',text:'旅平險試算內容'}); }
+        catch(e){ dlCanvas(cv); }
+      } else { dlCanvas(cv); }
+    },'image/png');
+
+  } catch(e){
+    console.error(e);
+    alert('截圖失敗，請嘗試手動截圖');
+  } finally {
+    btns.forEach(b=>{ b.textContent='📸 截圖投保內容給業務'; b.disabled=false; });
+  }
+}
+
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.lineTo(x+w-r,y); ctx.arcTo(x+w,y,x+w,y+r,r);
+  ctx.lineTo(x+w,y+h-r); ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
+  ctx.lineTo(x+r,y+h); ctx.arcTo(x,y+h,x,y+h-r,r);
+  ctx.lineTo(x,y+r); ctx.arcTo(x,y,x+r,y,r);
+  ctx.closePath();
+}
+
+function dlCanvas(cv){
+  const a=document.createElement('a');
+  a.download='安達旅平險投保需求.png';
+  a.href=cv.toDataURL('image/png');
+  a.click();
+}
+
+function openModal(id){
+  const m=MODALS[id]; if(!m) return;
+  document.getElementById('modalIcon').textContent=m.icon;
+  document.getElementById('modalTitle').textContent=m.title;
+  document.getElementById('modalBody').innerHTML=m.body;
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(){ document.getElementById('modal').classList.remove('open'); }
+function closeModalBg(e){ if(e.target===document.getElementById('modal')) closeModal(); }
+</script>
+</body>
+</html>
