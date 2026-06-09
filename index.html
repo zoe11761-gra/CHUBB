@@ -50,7 +50,9 @@ select:disabled{opacity:.5;cursor:not-allowed}
 .date-display.has-val{color:var(--ink)}
 .date-display:hover,.date-display:focus{border-color:var(--accent);outline:none}
 .date-icon{font-size:14px;opacity:.5}
-.cal-popup{display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:14px;z-index:200;box-shadow:0 8px 32px rgba(26,20,16,.15);animation:popIn .15s ease}
+/* cal-popup anchors to .form-row so it spans full card width on mobile */
+.form-row{position:relative}
+.cal-popup{display:none;position:absolute;top:calc(100% - 4px);left:0;right:0;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:14px;z-index:200;box-shadow:0 8px 32px rgba(26,20,16,.15);animation:popIn .15s ease}
 .cal-popup.open{display:block}
 @keyframes popIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
 .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
@@ -252,11 +254,14 @@ select:disabled{opacity:.5;cursor:not-allowed}
     display:grid !important;
     grid-template-columns:1fr 1fr;
     gap:0 28px;
-    align-items:start;
+    align-items:stretch;
   }
   .page2-col-full{grid-column:1 / -1 !important}
   .page2-grid .sec-divider{display:none}
   .page2-grid .sec-label{margin-top:4px}
+  /* Right column: make the TI form-card fill remaining height */
+  .page2-grid > div:last-of-type{display:flex; flex-direction:column}
+  .page2-grid > div:last-of-type .form-card:last-of-type{flex:1}
   .form-card{padding:22px 22px}
   select, input[type="text"]{font-size:14px}
   .ti-group{gap:14px}
