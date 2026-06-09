@@ -71,6 +71,27 @@ select:disabled{opacity:.5;cursor:not-allowed}
 .datetime-row{display:flex;gap:8px;align-items:flex-start}
 .datetime-row .date-input-wrap{flex:1}
 .date-input-combo{display:flex;flex:1;align-items:stretch}
+/* Date text input — narrower on mobile so cal button is easy to tap */
+.date-text-input{
+  flex:1;min-width:0;
+  background:var(--bg);border:1.5px solid var(--border);
+  border-radius:8px 0 0 8px;
+  padding:11px 8px;
+  font-family:'Noto Serif TC',serif;font-size:13px;
+  color:var(--ink);outline:none;border-right:none;
+  width:0; /* let flex handle it */
+}
+.date-text-input:focus{border-color:var(--accent)}
+/* Cal toggle button — generous tap area */
+.cal-toggle-btn{
+  flex-shrink:0;width:48px;
+  background:var(--bg);border:1.5px solid var(--border);
+  border-radius:0 8px 8px 0;
+  cursor:pointer;font-size:18px;
+  color:var(--ink-muted);transition:background .15s;
+  display:flex;align-items:center;justify-content:center;
+}
+.cal-toggle-btn:hover{background:var(--stripe)}
 .time-sel-wrap{flex:0 0 108px}
 
 /* ── AGE WARNING ── */
@@ -322,7 +343,7 @@ select:disabled{opacity:.5;cursor:not-allowed}
 
   <div class="page2-grid">
 
-    <!-- 左欄：日期 + 年齡 -->
+    <!-- 左欄：日期 + 年齡 + 保額 -->
     <!-- 01 日期 -->
     <div>
       <div class="sec-label"><span class="sec-num">01</span><span class="sec-title">旅遊日期與天數</span></div>
@@ -334,10 +355,8 @@ select:disabled{opacity:.5;cursor:not-allowed}
               <div class="date-input-combo">
                 <input type="text" id="startDateInput" placeholder="YYYY/MM/DD" maxlength="10"
                   oninput="onDateTextInput('start')" autocomplete="off"
-                  style="flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:8px 0 0 8px;padding:11px 12px;font-family:'Noto Serif TC',serif;font-size:14px;color:var(--ink);outline:none;border-right:none">
-                <button type="button" onclick="toggleCal('start')" tabindex="0"
-                  style="background:var(--bg);border:1.5px solid var(--border);border-radius:0 8px 8px 0;padding:0 13px;cursor:pointer;font-size:16px;color:var(--ink-muted);transition:background .15s"
-                  onmouseover="this.style.background='var(--stripe)'" onmouseout="this.style.background='var(--bg)'">📅</button>
+                  class="date-text-input">
+                <button type="button" onclick="toggleCal('start')" tabindex="0" class="cal-toggle-btn">📅</button>
               </div>
               <div class="cal-popup" id="startCal"></div>
             </div>
@@ -355,10 +374,8 @@ select:disabled{opacity:.5;cursor:not-allowed}
               <div class="date-input-combo">
                 <input type="text" id="endDateInput" placeholder="YYYY/MM/DD" maxlength="10"
                   oninput="onDateTextInput('end')" autocomplete="off"
-                  style="flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:8px 0 0 8px;padding:11px 12px;font-family:'Noto Serif TC',serif;font-size:14px;color:var(--ink);outline:none;border-right:none">
-                <button type="button" onclick="toggleCal('end')" tabindex="0"
-                  style="background:var(--bg);border:1.5px solid var(--border);border-radius:0 8px 8px 0;padding:0 13px;cursor:pointer;font-size:16px;color:var(--ink-muted);transition:background .15s"
-                  onmouseover="this.style.background='var(--stripe)'" onmouseout="this.style.background='var(--bg)'">📅</button>
+                  class="date-text-input">
+                <button type="button" onclick="toggleCal('end')" tabindex="0" class="cal-toggle-btn">📅</button>
               </div>
               <div class="cal-popup" id="endCal"></div>
             </div>
@@ -391,11 +408,8 @@ select:disabled{opacity:.5;cursor:not-allowed}
           <div class="age-warning" id="ageWarning"></div>
         </div>
       </div>
-    </div><!-- end 左欄 -->
 
-    <!-- 右欄：保額 + 不便險 -->
-    <div>
-      <!-- 03 保額 -->
+      <!-- 03 保額（移至左欄） -->
       <div class="sec-label"><span class="sec-num">03</span><span class="sec-title">意外身故保險金額</span></div>
       <div class="form-card">
         <div class="form-row">
@@ -422,7 +436,10 @@ select:disabled{opacity:.5;cursor:not-allowed}
           <div class="hint">同時適用於傷害醫療及海外突發疾病住院醫療保險金（上限各100萬）</div>
         </div>
       </div>
+    </div><!-- end 左欄 -->
 
+    <!-- 右欄：不便險 -->
+    <div>
       <!-- 04 不便險 -->
       <div class="sec-label"><span class="sec-num">04</span><span class="sec-title">旅行不便險方案</span></div>
       <div class="form-card">
