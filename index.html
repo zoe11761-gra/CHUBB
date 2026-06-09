@@ -486,17 +486,17 @@ function renderCal(id){
   const s = calState[id];
   const firstDay = new Date(s.year, s.month, 1);
   const lastDay  = new Date(s.year, s.month+1, 0);
-  // Determine minimum allowed date for this calendar
-  let minDate = new Date(today); // default: today
+  // Minimum allowed date
+  // start: today + 3 days (today, today+1, today+2 all blocked)
+  const minStart = new Date(today);
+  minStart.setDate(today.getDate() + 3);
+  let minDate = new Date(minStart);
   if(id === 'end' && calState.start.value){
-    // end must be at least 1 day after start
     const sd = calState.start.value;
     const sparts = sd.split('-');
     const startDt = new Date(parseInt(sparts[0]), parseInt(sparts[1])-1, parseInt(sparts[2]));
-    startDt.setDate(startDt.getDate() + 1);
+    startDt.setDate(startDt.getDate() + 1); // at least 1 day after start
     if(startDt > minDate) minDate = startDt;
-    // also set maxDate: end must NOT result in ≥181 days (≥181 blocked)
-    // We don't block visually but label will show warning. Allow selection; doQuote blocks.
   }
   const dows = ['日','一','二','三','四','五','六'];
   let html = `<div class="cal-nav">
@@ -557,7 +557,9 @@ function onDateTextInput(id){
       const yr=parseInt(parts[0]),mo=parseInt(parts[1]),dy=parseInt(parts[2]);
       const d = new Date(yr,mo-1,dy);
       const today = new Date(); today.setHours(0,0,0,0);
-      if(!isNaN(d.getTime()) && d >= today){
+      const minStart = new Date(today); minStart.setDate(today.getDate()+3);
+      const minAllowed = (id==='start') ? minStart : today;
+      if(!isNaN(d.getTime()) && d >= minAllowed){
         const ds = `${yr}-${String(mo).padStart(2,'0')}-${String(dy).padStart(2,'0')}`;
         calState[id].year = yr; calState[id].month = mo-1;
         selectDateSilent(id, ds);
@@ -670,28 +672,45 @@ function calcDays(){
   const ed = calState.end.value;
   const et = document.getElementById('endTime').value;
   const disp = document.getElementById('daysDisplay');
-  if(!sd||!st||!ed||!et){ disp.style.display='none'; updatePreviewPremium(); return 0; }
-  const start = new Date(`${sd}T${st}`), end = new Date(`${ed}T${et}`);
-  const diff = (end - start)/3600000;
-  if(diff<=0){ disp.style.display='none'; updatePreviewPremium(); return 0; }
-  const days = Math.ceil(diff/24);
-  document.getElementById('daysNum').textContent = days;
-  // Show warning badge based on days range
   const badge = document.getElementById('daysBadge');
-  if(days >= 181){
-    badge.textContent = '⚠ 181日以上需專案報價，請洽業務';
-    badge.className = 'days-badge days-badge-block';
-  } else if(days >= 51){
-    badge.textContent = '⚠ 51-180日報價請洽業務';
-    badge.className = 'days-badge days-badge-warn';
-  } else {
-    badge.textContent = `共 ${days} 天`;
-    badge.className = 'days-badge days-badge-ok';
+
+  // If we have both dates (even without times), show a day count estimate
+  if(sd && ed){
+    const startDt = new Date(sd+'T00:00');
+    const endDt   = new Date(ed+'T00:00');
+    const dateDiff = Math.round((endDt - startDt) / 86400000);
+    if(dateDiff > 0){
+      // If times are also set, compute exact; otherwise show date-based count
+      let days;
+      if(st && et){
+        const exact = (new Date(`${ed}T${et}`) - new Date(`${sd}T${st}`)) / 3600000;
+        days = exact > 0 ? Math.ceil(exact / 24) : dateDiff;
+      } else {
+        days = dateDiff;
+      }
+      document.getElementById('daysNum').textContent = days;
+      disp.style.display = 'block';
+
+      // Badge
+      if(days >= 181){
+        badge.textContent = '⚠ 181日（含）以上需專案報價，請直接洽業務辦理';
+        badge.className = 'days-badge days-badge-block';
+        badge.style.display = 'inline-block';
+      } else if(days >= 51){
+        badge.textContent = '⚠ 51-180日報價金額請洽業務，逾181日需專案報價';
+        badge.className = 'days-badge days-badge-warn';
+        badge.style.display = 'inline-block';
+      } else {
+        badge.style.display = 'none';
+      }
+      updatePreviewPremium();
+      return days;
+    }
   }
-  badge.style.display = 'inline-block';
-  disp.style.display = 'block';
+  disp.style.display = 'none';
+  badge.style.display = 'none';
   updatePreviewPremium();
-  return days;
+  return 0;
 }
 
 // ── live premium preview on page 2 ──
@@ -721,9 +740,14 @@ function updatePreviewPremium(){
 function calcDaysOnly(){
   const sd=calState.start.value, st=document.getElementById('startTime').value;
   const ed=calState.end.value,   et=document.getElementById('endTime').value;
-  if(!sd||!st||!ed||!et) return 0;
-  const diff=(new Date(`${ed}T${et}`) - new Date(`${sd}T${st}`))/3600000;
-  return diff<=0?0:Math.ceil(diff/24);
+  if(!sd||!ed) return 0;
+  if(st && et){
+    const diff=(new Date(`${ed}T${et}`) - new Date(`${sd}T${st}`))/3600000;
+    return diff<=0?0:Math.ceil(diff/24);
+  }
+  // date-only fallback
+  const diff = Math.round((new Date(ed+'T00:00') - new Date(sd+'T00:00'))/86400000);
+  return diff>0?diff:0;
 }
 
 // ════════════════════════════════
@@ -1096,7 +1120,10 @@ function doQuote(){
   const ti = tiEl ? tiEl.value : null;
   if(!days||days<=0){ alert('請選擇正確的旅遊日期區間'); return; }
   if(days>=181){ alert('181日（含）以上需專案報價，請直接洽業務辦理。'); return; }
-  if(days>=51){ const go=confirm('51–180日報價金額請洽業務，\n逾181日需專案報價。\n\n目前天數：'+days+'天\n\n確定繼續查看保障內容（保費欄位將顯示 NA）？'); if(!go) return; }
+  if(days>=51){
+    const go=confirm(`51–180日報價金額請洽業務，逾181日需專案報價。\n\n目前天數：${days}天\n\n確定繼續查看保障內容（保費欄位將顯示 NA）？`);
+    if(!go) return;
+  }
   if(!ag||ag==='over85'){ alert('超過85歲婉謝承保'); return; }
   if(ag!=='u15' && !add){ alert('請選擇身故保額'); return; }
   if(!ti){ alert('請選擇不便險方案（超值型或尊榮型）'); return; }
