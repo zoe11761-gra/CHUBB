@@ -197,7 +197,10 @@ select:disabled{opacity:.5;cursor:not-allowed}
 .small-note{font-size:11px;color:var(--ink-muted);line-height:1.8;margin-top:6px}
 .age-limit-note{background:var(--red-pale);border-left:3px solid var(--red);border-radius:4px;padding:10px 14px;font-size:12px;color:var(--red);margin-bottom:14px;line-height:1.7}
 
-/* ── MOBILE BASE (default, < 768px) ── */
+/* ── GRIDS: single-column by default (mobile-first) ── */
+.page2-grid, .page3-grid{display:block}
+
+/* ── MOBILE tweaks (< 480px) ── */
 @media(max-width:480px){
   .features-grid{grid-template-columns:repeat(3,1fr)}
   .ti-group{flex-direction:column}
@@ -225,13 +228,12 @@ select:disabled{opacity:.5;cursor:not-allowed}
 
   /* Page 2: two-column form layout */
   .page2-grid{
-    display:grid;
+    display:grid !important;
     grid-template-columns:1fr 1fr;
     gap:0 28px;
     align-items:start;
   }
-  .page2-col-full{grid-column:1 / -1}
-  /* Hide section dividers on desktop — columns provide the separation */
+  .page2-col-full{grid-column:1 / -1 !important}
   .page2-grid .sec-divider{display:none}
   .page2-grid .sec-label{margin-top:4px}
   .form-card{padding:22px 22px}
@@ -241,12 +243,12 @@ select:disabled{opacity:.5;cursor:not-allowed}
 
   /* Page 3: two-column result layout */
   .page3-grid{
-    display:grid;
+    display:grid !important;
     grid-template-columns:1fr 1fr;
     gap:0 28px;
     align-items:start;
   }
-  .page3-col-full{grid-column:1 / -1}
+  .page3-col-full{grid-column:1 / -1 !important}
   .result-trip-bar h2, .trip-detail-line{font-size:18px}
 
   /* Coverage table larger text */
@@ -747,49 +749,57 @@ function onStartTimeChange(){
 // ════════════════════════════════
 function calcDays(){
   const sd = calState.start.value;
-  const st = document.getElementById('startTime').value;
   const ed = calState.end.value;
-  const et = document.getElementById('endTime').value;
-  const disp = document.getElementById('daysDisplay');
-  const badge = document.getElementById('daysBadge');
-
-  // If we have both dates (even without times), show a day count estimate
-  if(sd && ed){
-    const startDt = new Date(sd+'T00:00');
-    const endDt   = new Date(ed+'T00:00');
-    const dateDiff = Math.round((endDt - startDt) / 86400000);
-    if(dateDiff > 0){
-      // If times are also set, compute exact; otherwise show date-based count
-      let days;
-      if(st && et){
-        const exact = (new Date(`${ed}T${et}`) - new Date(`${sd}T${st}`)) / 3600000;
-        days = exact > 0 ? Math.ceil(exact / 24) : dateDiff;
-      } else {
-        days = dateDiff;
-      }
-      document.getElementById('daysNum').textContent = days;
-      disp.style.display = 'block';
-
-      // Badge
-      if(days >= 181){
-        badge.textContent = '⚠ 181日（含）以上需專案報價，請直接洽業務辦理';
-        badge.className = 'days-badge days-badge-block';
-        badge.style.display = 'inline-block';
-      } else if(days >= 51){
-        badge.textContent = '⚠ 51-180日報價金額請洽業務，逾181日需專案報價';
-        badge.className = 'days-badge days-badge-warn';
-        badge.style.display = 'inline-block';
-      } else {
-        badge.style.display = 'none';
-      }
-      updatePreviewPremium();
-      return days;
-    }
+  // Need at least both dates
+  if(!sd || !ed) {
+    var disp = document.getElementById('daysDisplay');
+    var badge = document.getElementById('daysBadge');
+    if(disp) disp.style.display = 'none';
+    if(badge) badge.style.display = 'none';
+    updatePreviewPremium();
+    return 0;
   }
-  disp.style.display = 'none';
-  badge.style.display = 'none';
+
+  var st = document.getElementById('startTime').value || '00:00';
+  var et = document.getElementById('endTime').value || '00:00';
+
+  var startMs = new Date(sd + 'T' + st).getTime();
+  var endMs   = new Date(ed + 'T' + et).getTime();
+  var diffH   = (endMs - startMs) / 3600000;
+  var days    = diffH > 0 ? Math.ceil(diffH / 24) : 0;
+
+  // Also try pure date diff as fallback
+  if(days <= 0) {
+    var dStart = new Date(sd + 'T00:00').getTime();
+    var dEnd   = new Date(ed + 'T00:00').getTime();
+    days = Math.round((dEnd - dStart) / 86400000);
+  }
+
+  var disp  = document.getElementById('daysDisplay');
+  var num   = document.getElementById('daysNum');
+  var badge = document.getElementById('daysBadge');
+
+  if(days > 0 && disp && num && badge) {
+    num.textContent = days;
+    disp.style.display = 'block';
+
+    if(days >= 181){
+      badge.textContent = '⚠ 181日（含）以上需專案報價，請洽業務';
+      badge.style.cssText = 'display:inline-block;padding:5px 12px;border-radius:6px;font-size:12px;font-weight:600;margin-top:8px;background:#f9e8eb;color:#8b2635';
+    } else if(days >= 51){
+      badge.textContent = '⚠ 51-180日報價請洽業務，逾181日需專案報價';
+      badge.style.cssText = 'display:inline-block;padding:5px 12px;border-radius:6px;font-size:12px;font-weight:600;margin-top:8px;background:#fff3cd;color:#7a5800';
+    } else {
+      badge.style.display = 'none';
+    }
+  } else {
+    if(disp) disp.style.display = 'none';
+    if(badge) badge.style.display = 'none';
+    days = 0;
+  }
+
   updatePreviewPremium();
-  return 0;
+  return days;
 }
 
 // ── live premium preview on page 2 ──
