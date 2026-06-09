@@ -45,14 +45,14 @@ select:focus{border-color:var(--accent)}
 select:disabled{opacity:.5;cursor:not-allowed}
 
 /* ── CALENDAR ── */
-.date-input-wrap{position:relative}
+/* cal-popup anchors to .form-row so it spans full card width on mobile */
+.form-row{position:relative}
+.date-input-wrap{/* no position:relative — form-row is the anchor */}
 .date-display{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;font-family:'Noto Serif TC',serif;font-size:14px;color:var(--ink-muted);cursor:pointer;transition:border-color .2s;display:flex;align-items:center;justify-content:space-between;user-select:none}
 .date-display.has-val{color:var(--ink)}
 .date-display:hover,.date-display:focus{border-color:var(--accent);outline:none}
 .date-icon{font-size:14px;opacity:.5}
-/* cal-popup anchors to .form-row so it spans full card width on mobile */
-.form-row{position:relative}
-.cal-popup{display:none;position:absolute;top:calc(100% - 4px);left:0;right:0;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:14px;z-index:200;box-shadow:0 8px 32px rgba(26,20,16,.15);animation:popIn .15s ease}
+.cal-popup{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:14px;z-index:200;box-shadow:0 8px 32px rgba(26,20,16,.15);animation:popIn .15s ease}
 .cal-popup.open{display:block}
 @keyframes popIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
 .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
@@ -259,9 +259,9 @@ select:disabled{opacity:.5;cursor:not-allowed}
   .page2-col-full{grid-column:1 / -1 !important}
   .page2-grid .sec-divider{display:none}
   .page2-grid .sec-label{margin-top:4px}
-  /* Right column: make the TI form-card fill remaining height */
-  .page2-grid > div:last-of-type{display:flex; flex-direction:column}
-  .page2-grid > div:last-of-type .form-card:last-of-type{flex:1}
+  /* Right column: stretch the TI form-card to fill height */
+  .p2-right{display:flex; flex-direction:column}
+  .p2-right .form-card{flex:1}
   .form-card{padding:22px 22px}
   select, input[type="text"]{font-size:14px}
   .ti-group{gap:14px}
@@ -350,7 +350,7 @@ select:disabled{opacity:.5;cursor:not-allowed}
 
     <!-- 左欄：日期 + 年齡 + 保額 -->
     <!-- 01 日期 -->
-    <div>
+    <div class="p2-left">
       <div class="sec-label"><span class="sec-num">01</span><span class="sec-title">旅遊日期與天數</span></div>
       <div class="form-card">
         <div class="form-row">
@@ -363,7 +363,6 @@ select:disabled{opacity:.5;cursor:not-allowed}
                   class="date-text-input">
                 <button type="button" onclick="toggleCal('start')" tabindex="0" class="cal-toggle-btn">📅</button>
               </div>
-              <div class="cal-popup" id="startCal"></div>
             </div>
             <div class="time-sel-wrap">
               <select id="startTime" onchange="onStartTimeChange()">
@@ -371,6 +370,7 @@ select:disabled{opacity:.5;cursor:not-allowed}
               </select>
             </div>
           </div>
+          <div class="cal-popup" id="startCal"></div>
         </div>
         <div class="form-row">
           <label>返回日期　時間</label>
@@ -382,7 +382,6 @@ select:disabled{opacity:.5;cursor:not-allowed}
                   class="date-text-input">
                 <button type="button" onclick="toggleCal('end')" tabindex="0" class="cal-toggle-btn">📅</button>
               </div>
-              <div class="cal-popup" id="endCal"></div>
             </div>
             <div class="time-sel-wrap">
               <select id="endTime" onchange="calcDays()" disabled>
@@ -390,6 +389,7 @@ select:disabled{opacity:.5;cursor:not-allowed}
               </select>
             </div>
           </div>
+          <div class="cal-popup" id="endCal"></div>
         </div>
         <div class="calc-days-display" id="daysDisplay">
           投保天數：<strong id="daysNum">—</strong> 天
@@ -444,7 +444,7 @@ select:disabled{opacity:.5;cursor:not-allowed}
     </div><!-- end 左欄 -->
 
     <!-- 右欄：不便險 -->
-    <div>
+    <div class="p2-right">
       <!-- 04 不便險 -->
       <div class="sec-label"><span class="sec-num">04</span><span class="sec-title">旅行不便險方案</span></div>
       <div class="form-card">
@@ -726,9 +726,13 @@ function selectDate(id, val){
   calcDays();
 }
 
-// Close calendar on outside click — exclude the popup itself and combo inputs
+// Close calendar on outside click — form-row now contains the popup, so exclude it
 document.addEventListener('click', e => {
-  if(!e.target.closest('.date-input-wrap') && !e.target.closest('.cal-popup') && !e.target.closest('.date-input-combo')) {
+  const inDateRow = e.target.closest('.form-row') &&
+    (e.target.closest('#startWrap') || e.target.closest('#endWrap') ||
+     e.target.closest('#startCal') || e.target.closest('#endCal') ||
+     e.target.closest('.cal-toggle-btn'));
+  if(!inDateRow && !e.target.closest('.cal-popup')) {
     ['start','end'].forEach(k => document.getElementById(k+'Cal').classList.remove('open'));
   }
 });
