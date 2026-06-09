@@ -596,25 +596,19 @@ function selectDate(id, val){
   if(id === 'start' && calState.end.value){
     const es = calState.end.value.split('-');
     const ss = val.split('-');
-    const endDt  = new Date(parseInt(es[0]),parseInt(es[1])-1,parseInt(es[2]));
+    const endDt   = new Date(parseInt(es[0]),parseInt(es[1])-1,parseInt(es[2]));
     const startDt = new Date(parseInt(ss[0]),parseInt(ss[1])-1,parseInt(ss[2]));
     if(endDt <= startDt){
-      // Clear end
       calState.end.value = '';
-      document.getElementById('endDisplayText').textContent = '選擇日期';
-      document.getElementById('endDisplayText').style.color = 'var(--ink-muted)';
-      document.getElementById('endDisplay').classList.remove('has-val');
+      const ei = document.getElementById('endDateInput'); if(ei) ei.value = '';
       document.getElementById('endTime').disabled = true;
-      document.getElementById('endTime').value = '';
+      document.getElementById('endTime').value = '00:00';
       document.getElementById('daysDisplay').style.display = 'none';
+      document.getElementById('daysBadge').style.display = 'none';
     }
   }
   calState[id].value = val;
   document.getElementById(id+'Cal').classList.remove('open');
-  const dispText = document.getElementById(id+'DisplayText');
-  dispText.textContent = displayDate(val);
-  dispText.style.color = 'var(--ink)';
-  document.getElementById(id+'Display').classList.add('has-val');
 
   if(id === 'start'){
     const st = document.getElementById('startTime').value;
@@ -1113,15 +1107,29 @@ function lookup(days,add,ti,mr){
 //  QUOTE
 // ════════════════════════════════
 function doQuote(){
-  const days = calcDays();
+  // Compute days directly from calState
+  const sd = calState.start.value;
+  const ed = calState.end.value;
+  const st = document.getElementById('startTime').value;
+  const et = document.getElementById('endTime').value;
+  let days = 0;
+  if(sd && ed){
+    if(st && et){
+      const diff = (new Date(`${ed}T${et}`) - new Date(`${sd}T${st}`)) / 3600000;
+      days = diff > 0 ? Math.ceil(diff / 24) : 0;
+    } else {
+      const diff = Math.round((new Date(ed+'T00:00') - new Date(sd+'T00:00')) / 86400000);
+      days = diff > 0 ? diff : 0;
+    }
+  }
   const ag = document.getElementById('ageGroup').value;
   const add = parseInt(document.getElementById('addAmount').value);
   const tiEl = document.querySelector('input[name="ti"]:checked');
   const ti = tiEl ? tiEl.value : null;
-  if(!days||days<=0){ alert('請選擇正確的旅遊日期區間'); return; }
+  if(!days||days<=0){ alert('請選擇正確的旅遊日期區間（返回需晚於出發）'); return; }
   if(days>=181){ alert('181日（含）以上需專案報價，請直接洽業務辦理。'); return; }
   if(days>=51){
-    const go=confirm(`51–180日報價金額請洽業務，逾181日需專案報價。\n\n目前天數：${days}天\n\n確定繼續查看保障內容（保費欄位將顯示 NA）？`);
+    const go = confirm('51–180日報價金額請洽業務，逾181日需專案報價。\n\n目前天數：'+days+'天\n\n確定繼續查看保障內容（保費欄位將顯示 NA）？');
     if(!go) return;
   }
   if(!ag||ag==='over85'){ alert('超過85歲婉謝承保'); return; }
