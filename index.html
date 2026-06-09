@@ -197,7 +197,86 @@ select:disabled{opacity:.5;cursor:not-allowed}
 .small-note{font-size:11px;color:var(--ink-muted);line-height:1.8;margin-top:6px}
 .age-limit-note{background:var(--red-pale);border-left:3px solid var(--red);border-radius:4px;padding:10px 14px;font-size:12px;color:var(--red);margin-bottom:14px;line-height:1.7}
 
-@media(max-width:480px){.features-grid{grid-template-columns:repeat(3,1fr)}.ti-group{flex-direction:column}.total-price{font-size:22px}}
+/* ── MOBILE BASE (default, < 768px) ── */
+@media(max-width:480px){
+  .features-grid{grid-template-columns:repeat(3,1fr)}
+  .ti-group{flex-direction:column}
+  .total-price{font-size:22px}
+  .datetime-row{flex-direction:column; gap:6px}
+  .time-sel-wrap{flex:0 0 auto; width:100%}
+  .ct td,.ct th{padding:6px 8px; font-size:11.5px}
+}
+
+/* ── TABLET / DESKTOP (≥ 768px) ── */
+@media(min-width:768px){
+  /* Header */
+  .site-header h1{font-size:24px}
+  .site-header .logo-text{font-size:11px}
+
+  /* Pages: two-column layout on page2 + page3 */
+  .page{padding:28px 32px}
+
+  /* Page 1: wider feature grid */
+  .features-grid{grid-template-columns:repeat(4,1fr); gap:14px}
+  .feat-card{padding:20px 14px 16px}
+  .feat-icon{font-size:28px}
+  .feat-short{font-size:12.5px}
+  .features-intro{font-size:14px}
+
+  /* Page 2: two-column form layout */
+  .page2-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0 28px;
+    align-items:start;
+  }
+  .page2-col-full{grid-column:1 / -1}
+  /* Hide section dividers on desktop — columns provide the separation */
+  .page2-grid .sec-divider{display:none}
+  .page2-grid .sec-label{margin-top:4px}
+  .form-card{padding:22px 22px}
+  select, input[type="text"]{font-size:14px}
+  .ti-group{gap:14px}
+  .ti-btn label{padding:16px 14px 13px; font-size:14px}
+
+  /* Page 3: two-column result layout */
+  .page3-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0 28px;
+    align-items:start;
+  }
+  .page3-col-full{grid-column:1 / -1}
+  .result-trip-bar h2, .trip-detail-line{font-size:18px}
+
+  /* Coverage table larger text */
+  .ct td{padding:9px 12px; font-size:13px}
+  .ct th{font-size:12px; padding:9px 12px}
+  .ct-sub{font-size:12px}
+
+  /* Total box */
+  .total-box{padding:22px 28px}
+  .total-price{font-size:30px}
+  .total-label{font-size:15px}
+
+  /* Plan card */
+  .plan-card-head{padding:15px 22px; font-size:13px}
+  .plan-body{padding:18px 22px}
+
+  /* Buttons */
+  .btn-quote,.btn-next{font-size:16px; padding:17px; max-width:420px; display:block; margin-left:auto; margin-right:auto}
+  .btn-screenshot{max-width:420px; margin:0 auto 14px}
+
+  /* Insight box */
+  .insight-box{font-size:13.5px; padding:20px 24px}
+
+  /* Section label */
+  .sec-title{font-size:17px}
+
+  /* Step nav */
+  .step-item{font-size:12px; gap:8px}
+  .step-sep{width:36px}
+}
 </style>
 </head>
 <body>
@@ -239,175 +318,177 @@ select:disabled{opacity:.5;cursor:not-allowed}
   <div style="height:4px"></div>
   <button class="btn-back" onclick="goPage(1)">← 返回</button>
 
-  <!-- 01 日期 -->
-  <div class="sec-label"><span class="sec-num">01</span><span class="sec-title">旅遊日期與天數</span></div>
-  <div class="form-card">
-    <div class="form-row">
-      <label>出發日期　時間</label>
-      <div class="datetime-row">
-        <div class="date-input-wrap" id="startWrap">
-          <div class="date-input-combo">
-            <input type="text" id="startDateInput" placeholder="YYYY/MM/DD" maxlength="10"
-              oninput="onDateTextInput('start')" autocomplete="off"
-              style="flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:8px 0 0 8px;padding:11px 12px;font-family:'Noto Serif TC',serif;font-size:14px;color:var(--ink);outline:none;border-right:none">
-            <button type="button" onclick="toggleCal('start')" tabindex="0"
-              style="background:var(--bg);border:1.5px solid var(--border);border-radius:0 8px 8px 0;padding:0 13px;cursor:pointer;font-size:16px;color:var(--ink-muted);transition:background .15s"
-              onmouseover="this.style.background='var(--stripe)'" onmouseout="this.style.background='var(--bg)'">📅</button>
+  <div class="page2-grid">
+
+    <!-- 左欄：日期 + 年齡 -->
+    <!-- 01 日期 -->
+    <div>
+      <div class="sec-label"><span class="sec-num">01</span><span class="sec-title">旅遊日期與天數</span></div>
+      <div class="form-card">
+        <div class="form-row">
+          <label>出發日期　時間</label>
+          <div class="datetime-row">
+            <div class="date-input-wrap" id="startWrap">
+              <div class="date-input-combo">
+                <input type="text" id="startDateInput" placeholder="YYYY/MM/DD" maxlength="10"
+                  oninput="onDateTextInput('start')" autocomplete="off"
+                  style="flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:8px 0 0 8px;padding:11px 12px;font-family:'Noto Serif TC',serif;font-size:14px;color:var(--ink);outline:none;border-right:none">
+                <button type="button" onclick="toggleCal('start')" tabindex="0"
+                  style="background:var(--bg);border:1.5px solid var(--border);border-radius:0 8px 8px 0;padding:0 13px;cursor:pointer;font-size:16px;color:var(--ink-muted);transition:background .15s"
+                  onmouseover="this.style.background='var(--stripe)'" onmouseout="this.style.background='var(--bg)'">📅</button>
+              </div>
+              <div class="cal-popup" id="startCal"></div>
+            </div>
+            <div class="time-sel-wrap">
+              <select id="startTime" onchange="onStartTimeChange()">
+                <option value="">時間</option>
+              </select>
+            </div>
           </div>
-          <div class="cal-popup" id="startCal"></div>
         </div>
-        <div class="time-sel-wrap">
-          <select id="startTime" onchange="onStartTimeChange()">
-            <option value="">時間</option>
+        <div class="form-row">
+          <label>返回日期　時間</label>
+          <div class="datetime-row">
+            <div class="date-input-wrap" id="endWrap">
+              <div class="date-input-combo">
+                <input type="text" id="endDateInput" placeholder="YYYY/MM/DD" maxlength="10"
+                  oninput="onDateTextInput('end')" autocomplete="off"
+                  style="flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:8px 0 0 8px;padding:11px 12px;font-family:'Noto Serif TC',serif;font-size:14px;color:var(--ink);outline:none;border-right:none">
+                <button type="button" onclick="toggleCal('end')" tabindex="0"
+                  style="background:var(--bg);border:1.5px solid var(--border);border-radius:0 8px 8px 0;padding:0 13px;cursor:pointer;font-size:16px;color:var(--ink-muted);transition:background .15s"
+                  onmouseover="this.style.background='var(--stripe)'" onmouseout="this.style.background='var(--bg)'">📅</button>
+              </div>
+              <div class="cal-popup" id="endCal"></div>
+            </div>
+            <div class="time-sel-wrap">
+              <select id="endTime" onchange="calcDays()" disabled>
+                <option value="">時間</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="calc-days-display" id="daysDisplay">
+          投保天數：<strong id="daysNum">—</strong> 天
+          <span style="font-size:10px;color:var(--ink-muted);margin-left:6px">（不足24小時以1日計算）</span>
+        </div>
+        <div id="daysBadge" class="days-badge" style="display:none"></div>
+      </div>
+
+      <!-- 02 年齡 -->
+      <div class="sec-label"><span class="sec-num">02</span><span class="sec-title">被保險人年齡</span></div>
+      <div class="form-card">
+        <div class="form-row">
+          <label>投保年齡區間</label>
+          <select id="ageGroup" onchange="onAgeGroupChange()">
+            <option value="a15">15 – 75歲（含）</option>
+            <option value="u15">0 – 未滿15歲</option>
+            <option value="a75">超過75 – 80歲（含）</option>
+            <option value="a80">超過80 – 85歲（含）</option>
+            <option value="over85">超過85歲（謝絕承保）</option>
+          </select>
+          <div class="age-warning" id="ageWarning"></div>
+        </div>
+      </div>
+    </div><!-- end 左欄 -->
+
+    <!-- 右欄：保額 + 不便險 -->
+    <div>
+      <!-- 03 保額 -->
+      <div class="sec-label"><span class="sec-num">03</span><span class="sec-title">意外身故保險金額</span></div>
+      <div class="form-card">
+        <div class="form-row">
+          <div class="label-row">
+            <label id="addLabel" style="margin-bottom:0">身故保額（萬元）<span class="recommend-tag" id="recommendTag">建議500萬以上＋尊榮型</span></label>
+            <button class="info-btn" onclick="openModal('mAge')">年齡投保上限 ↗</button>
+          </div>
+          <select id="addAmount" onchange="onAddChange()">
+            <option value="200">200 萬</option>
+            <option value="300">300 萬</option>
+            <option value="500">500 萬</option>
+            <option value="1000">1,000 萬</option>
+            <option value="1500">1,500 萬</option>
+            <option value="2000">2,000 萬</option>
           </select>
         </div>
-      </div>
-    </div>
-    <div class="form-row">
-      <label>返回日期　時間</label>
-      <div class="datetime-row">
-        <div class="date-input-wrap" id="endWrap">
-          <div class="date-input-combo">
-            <input type="text" id="endDateInput" placeholder="YYYY/MM/DD" maxlength="10"
-              oninput="onDateTextInput('end')" autocomplete="off"
-              style="flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:8px 0 0 8px;padding:11px 12px;font-family:'Noto Serif TC',serif;font-size:14px;color:var(--ink);outline:none;border-right:none">
-            <button type="button" onclick="toggleCal('end')" tabindex="0"
-              style="background:var(--bg);border:1.5px solid var(--border);border-radius:0 8px 8px 0;padding:0 13px;cursor:pointer;font-size:16px;color:var(--ink-muted);transition:background .15s"
-              onmouseover="this.style.background='var(--stripe)'" onmouseout="this.style.background='var(--bg)'">📅</button>
-          </div>
-          <div class="cal-popup" id="endCal"></div>
-        </div>
-        <div class="time-sel-wrap">
-          <select id="endTime" onchange="calcDays()" disabled>
-            <option value="">時間</option>
+        <div class="form-row" id="mrRow" style="display:none">
+          <label>傷害醫療 ＝ 海外突發疾病住院醫療保額（萬元）</label>
+          <select id="mrAmount" onchange="updatePreviewPremium()">
+            <option value="30">30 萬</option>
+            <option value="60">60 萬</option>
+            <option value="100">100 萬</option>
           </select>
+          <div class="hint">同時適用於傷害醫療及海外突發疾病住院醫療保險金（上限各100萬）</div>
         </div>
       </div>
-    </div>
-    <div class="calc-days-display" id="daysDisplay">
-      投保天數：<strong id="daysNum">—</strong> 天
-      <span style="font-size:10px;color:var(--ink-muted);margin-left:6px">（不足24小時以1日計算）</span>
-    </div>
-    <div id="daysBadge" class="days-badge" style="display:none"></div>
-  </div>
 
-  <hr class="sec-divider">
+      <!-- 04 不便險 -->
+      <div class="sec-label"><span class="sec-num">04</span><span class="sec-title">旅行不便險方案</span></div>
+      <div class="form-card">
+        <div class="form-row">
+          <label>附加不便險種類　<span style="font-size:11px;color:var(--red);font-weight:400">（推薦尊榮型，額度較完善）</span></label>
+          <div class="ti-group">
+            <div class="ti-btn blue">
+              <input type="radio" name="ti" id="ti_super" value="super" onchange="onTiChange()">
+              <label for="ti_super">超值型 TI<span class="ti-badge">ADD 200萬以上適用</span></label>
+            </div>
+            <div class="ti-btn red">
+              <input type="radio" name="ti" id="ti_premium" value="premium" disabled onchange="onTiChange()">
+              <label for="ti_premium">尊榮型 TI<span class="ti-badge">ADD 500萬以上適用</span></label>
+            </div>
+          </div>
+          <div class="hint" id="tiHint" style="margin-top:8px">可選擇超值型不便險</div>
 
-  <!-- 02 年齡 -->
-  <div class="sec-label"><span class="sec-num">02</span><span class="sec-title">被保險人年齡</span></div>
-  <div class="form-card">
-    <div class="form-row">
-      <label>投保年齡區間</label>
-      <select id="ageGroup" onchange="onAgeGroupChange()">
-        <option value="a15">15 – 75歲（含）</option>
-        <option value="u15">0 – 未滿15歲</option>
-        <option value="a75">超過75 – 80歲（含）</option>
-        <option value="a80">超過80 – 85歲（含）</option>
-        <option value="over85">超過85歲（謝絕承保）</option>
-      </select>
-      <div class="age-warning" id="ageWarning"></div>
-    </div>
-  </div>
+          <div class="ti-preview" id="previewSuper">
+            <div class="ti-preview-header blue">超值型 TI　主要保障項目（供參考）</div>
+            <table>
+              <tr><td>旅程取消保險</td><td>最高 12萬</td></tr>
+              <tr><td>班機延誤（每滿4小時）</td><td>每次 3,000，最高 6,000</td></tr>
+              <tr><td>旅程更改保險</td><td>最高 12萬</td></tr>
+              <tr class="preview-thick-sep"><td colspan="2"></td></tr>
+              <tr><td>行李延誤（超過6小時）</td><td>定額 3,000</td></tr>
+              <tr><td>行李損失保險</td><td>定額 3,000</td></tr>
+              <tr><td>旅行文件損失保險</td><td>定額 3,000</td></tr>
+              <tr><td>第三人責任保險</td><td>最高 300萬</td></tr>
+              <tr><td>劫機補償（每次10日）</td><td>每日 3,000</td></tr>
+              <tr><td>等待返國住宿（每次5日）</td><td>每日 3,000</td></tr>
+              <tr><td>傳染病旅程取消/更改</td><td>各最高 12萬</td></tr>
+            </table>
+          </div>
 
-  <hr class="sec-divider">
-
-  <!-- 03 保額 -->
-  <div class="sec-label"><span class="sec-num">03</span><span class="sec-title">意外身故保險金額</span></div>
-  <div class="form-card">
-    <div class="form-row">
-      <div class="label-row">
-        <label id="addLabel" style="margin-bottom:0">身故保額（萬元）<span class="recommend-tag" id="recommendTag">建議500萬以上＋尊榮型</span></label>
-        <button class="info-btn" onclick="openModal('mAge')">年齡投保上限 ↗</button>
-      </div>
-      <select id="addAmount" onchange="onAddChange()">
-        <option value="200">200 萬</option>
-        <option value="300">300 萬</option>
-        <option value="500">500 萬</option>
-        <option value="1000">1,000 萬</option>
-        <option value="1500">1,500 萬</option>
-        <option value="2000">2,000 萬</option>
-      </select>
-    </div>
-    <!-- u15: MR selector (hidden by default) -->
-    <div class="form-row" id="mrRow" style="display:none">
-      <label>傷害醫療 ＝ 海外突發疾病住院醫療保額（萬元）</label>
-      <select id="mrAmount" onchange="updatePreviewPremium()">
-        <option value="30">30 萬</option>
-        <option value="60">60 萬</option>
-        <option value="100">100 萬</option>
-      </select>
-      <div class="hint">同時適用於傷害醫療及海外突發疾病住院醫療保險金（上限各100萬）</div>
-    </div>
-  </div>
-
-  <hr class="sec-divider">
-
-  <!-- 04 不便險 -->
-  <div class="sec-label"><span class="sec-num">04</span><span class="sec-title">旅行不便險方案</span></div>
-  <div class="form-card">
-    <div class="form-row">
-      <label>附加不便險種類　<span style="font-size:11px;color:var(--red);font-weight:400">（推薦尊榮型，額度較完善）</span></label>
-      <div class="ti-group">
-        <div class="ti-btn blue">
-          <input type="radio" name="ti" id="ti_super" value="super" onchange="onTiChange()">
-          <label for="ti_super">超值型 TI<span class="ti-badge">ADD 200萬以上適用</span></label>
-        </div>
-        <div class="ti-btn red">
-          <input type="radio" name="ti" id="ti_premium" value="premium" disabled onchange="onTiChange()">
-          <label for="ti_premium">尊榮型 TI<span class="ti-badge">ADD 500萬以上適用</span></label>
+          <div class="ti-preview red-preview" id="previewPremium">
+            <div class="ti-preview-header red">尊榮型 TI　主要保障項目（供參考）</div>
+            <table>
+              <tr><td>旅程取消保險</td><td>最高 15萬</td></tr>
+              <tr><td>班機延誤（每滿4小時）</td><td>每次 6,000，最高 1.2萬</td></tr>
+              <tr><td>旅程更改保險</td><td>最高 15萬</td></tr>
+              <tr class="preview-thick-sep"><td colspan="2"></td></tr>
+              <tr><td>行李延誤（超過6小時）</td><td>定額 6,000</td></tr>
+              <tr><td>行李損失保險</td><td>定額 6,000</td></tr>
+              <tr><td>旅行文件損失保險</td><td>定額 3,000</td></tr>
+              <tr><td>第三人責任保險</td><td>最高 600萬</td></tr>
+              <tr><td>劫機補償（每次10日）</td><td>每日 6,000</td></tr>
+              <tr><td>等待返國住宿（每次5日）</td><td>每日 6,000</td></tr>
+              <tr><td>傳染病旅程取消/更改</td><td>各最高 15萬</td></tr>
+            </table>
+          </div>
         </div>
       </div>
-      <div class="hint" id="tiHint" style="margin-top:8px">可選擇超值型不便險</div>
+    </div><!-- end 右欄 -->
 
-      <!-- 超值型預覽 -->
-      <div class="ti-preview" id="previewSuper">
-        <div class="ti-preview-header blue">超值型 TI　主要保障項目（供參考）</div>
-        <table>
-          <tr><td>旅程取消保險</td><td>最高 12萬</td></tr>
-          <tr><td>班機延誤（每滿4小時）</td><td>每次 3,000，最高 6,000</td></tr>
-          <tr><td>旅程更改保險</td><td>最高 12萬</td></tr>
-          <tr class="preview-thick-sep"><td colspan="2"></td></tr>
-          <tr><td>行李延誤（超過6小時）</td><td>定額 3,000</td></tr>
-          <tr><td>行李損失保險</td><td>定額 3,000</td></tr>
-          <tr><td>旅行文件損失保險</td><td>定額 3,000</td></tr>
-          <tr><td>第三人責任保險</td><td>最高 300萬</td></tr>
-          <tr><td>劫機補償（每次10日）</td><td>每日 3,000</td></tr>
-          <tr><td>等待返國住宿（每次5日）</td><td>每日 3,000</td></tr>
-          <tr><td>傳染病旅程取消/更改</td><td>各最高 12萬</td></tr>
-        </table>
+    <!-- 全寬：保費預覽 + 按鈕 -->
+    <div class="page2-col-full">
+      <div id="previewPremiumPrice" style="display:none;background:var(--ink);border-radius:10px;padding:14px 18px;margin-bottom:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px">
+        <div style="font-size:12px;color:var(--accent);letter-spacing:.04em;font-weight:500">目前選擇的試算保費</div>
+        <div class="pp-amount" style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--bg)">—</div>
       </div>
-
-      <!-- 尊榮型預覽 -->
-      <div class="ti-preview red-preview" id="previewPremium">
-        <div class="ti-preview-header red">尊榮型 TI　主要保障項目（供參考）</div>
-        <table>
-          <tr><td>旅程取消保險</td><td>最高 15萬</td></tr>
-          <tr><td>班機延誤（每滿4小時）</td><td>每次 6,000，最高 1.2萬</td></tr>
-          <tr><td>旅程更改保險</td><td>最高 15萬</td></tr>
-          <tr class="preview-thick-sep"><td colspan="2"></td></tr>
-          <tr><td>行李延誤（超過6小時）</td><td>定額 6,000</td></tr>
-          <tr><td>行李損失保險</td><td>定額 6,000</td></tr>
-          <tr><td>旅行文件損失保險</td><td>定額 3,000</td></tr>
-          <tr><td>第三人責任保險</td><td>最高 600萬</td></tr>
-          <tr><td>劫機補償（每次10日）</td><td>每日 6,000</td></tr>
-          <tr><td>等待返國住宿（每次5日）</td><td>每日 6,000</td></tr>
-          <tr><td>傳染病旅程取消/更改</td><td>各最高 15萬</td></tr>
-        </table>
+      <button class="btn-quote" onclick="doQuote()">查看完整報價結果 →</button>
+      <div class="small-note" style="margin-top:10px">
+        ※ 80–85歲最長投保30天；超過85歲婉謝承保<br>
+        ※ 費率表版本：2026.04.01 製 CHUBBITA139
       </div>
     </div>
-  </div>
 
-  <!-- live premium preview -->
-  <div id="previewPremiumPrice" style="display:none;background:var(--ink);border-radius:10px;padding:14px 18px;margin-bottom:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px">
-    <div style="font-size:12px;color:var(--accent);letter-spacing:.04em;font-weight:500">目前選擇的試算保費</div>
-    <div class="pp-amount" style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--bg)">—</div>
-  </div>
-
-  <button class="btn-quote" onclick="doQuote()">查看完整報價結果 →</button>
-  <div class="small-note" style="margin-top:10px">
-    ※ 80–85歲最長投保30天；超過85歲婉謝承保<br>
-    ※ 費率表版本：2026.04.01 製 CHUBBITA139
-  </div>
+  </div><!-- end page2-grid -->
 </div>
 
 <!-- ══ PAGE 3 ══ -->
@@ -415,37 +496,41 @@ select:disabled{opacity:.5;cursor:not-allowed}
   <div style="height:4px"></div>
   <button class="btn-back" onclick="goPage(2)">← 修改條件</button>
 
-  <!-- 截圖按鈕（上） -->
-  <button class="btn-screenshot btn-screenshot-top" onclick="doScreenshot()">📸 截圖投保內容給業務</button>
+  <div class="page3-grid">
 
-  <!-- 截圖目標區域 -->
-  <div id="screenshotTarget">
+    <!-- 全寬：截圖按鈕 + 截圖目標 + 年齡警告 -->
+    <div class="page3-col-full">
+      <button class="btn-screenshot btn-screenshot-top" onclick="doScreenshot()">📸 截圖投保內容給業務</button>
 
-  <!-- 總保費（最上方） -->
-  <div id="totalPremiumBox"></div>
+      <div id="screenshotTarget">
+        <div id="totalPremiumBox"></div>
+        <div class="result-trip-bar">
+          <div class="trip-info-line" id="resultTripInfo">—</div>
+          <div class="trip-detail-line" id="resultTitle">—</div>
+        </div>
+      </div>
 
-  <!-- 旅程資訊 -->
-  <div class="result-trip-bar">
-    <div class="trip-info-line" id="resultTripInfo">—</div>
-    <div class="trip-detail-line" id="resultTitle">—</div>
-  </div>
+      <div id="ageLimitNoteBox"></div>
+    </div>
 
-  </div><!-- end screenshotTarget -->
+    <!-- 左欄：旅平險 -->
+    <div id="planBase"></div>
 
-  <div id="ageLimitNoteBox"></div>
+    <!-- 右欄：不便險 -->
+    <div id="planTI"></div>
 
-  <div id="planBase"></div>
-  <div id="planTI"></div>
+    <!-- 全寬：重要提醒 + 截圖按鈕 -->
+    <div class="page3-col-full">
+      <div class="insight-box">
+        <strong>重要提醒</strong><br>
+        • 海外突發疾病觀察期僅 <strong>90天</strong>（業界多為180天），保障起始更早<br>
+        • 本報價僅供參考，實際承保依保險公司審核為準<br>
+        • 海外急難援助服務係免費提供之服務，非保險契約之權利義務
+      </div>
+      <button class="btn-screenshot btn-screenshot-bot" onclick="doScreenshot()">📸 截圖投保內容給業務</button>
+    </div>
 
-  <div class="insight-box">
-    <strong>重要提醒</strong><br>
-    • 海外突發疾病觀察期僅 <strong>90天</strong>（業界多為180天），保障起始更早<br>
-    • 本報價僅供參考，實際承保依保險公司審核為準<br>
-    • 海外急難援助服務係免費提供之服務，非保險契約之權利義務
-  </div>
-
-  <!-- 截圖按鈕（下） -->
-  <button class="btn-screenshot btn-screenshot-bot" onclick="doScreenshot()">📸 截圖投保內容給業務</button>
+  </div><!-- end page3-grid -->
 </div>
 
 <!-- ══ MODAL ══ -->
