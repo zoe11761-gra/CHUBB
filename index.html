@@ -1788,6 +1788,7 @@ function collectFormText(){
 
   let lines = [
     '════════════════════════',
+    '安達旅平險 投保資料',
     '════════════════════════',
     '',
     '▌ 投保方案',
@@ -1907,110 +1908,42 @@ async function sendAll(){
   const btn = document.getElementById('btnSendAll');
   btn.textContent='⏳ 準備中…'; btn.disabled=true;
 
-  const text = collectFormText();
-
   try {
-    // 1. Generate screenshot canvas
-    const W=2100,H=2970;
-    const cv=document.createElement('canvas');
-    cv.width=W; cv.height=H;
-    const ctx=cv.getContext('2d');
-
-    // Same canvas drawing as doScreenshot
-    const bgGrad=ctx.createLinearGradient(0,0,0,H);
-    bgGrad.addColorStop(0,'#1a1410'); bgGrad.addColorStop(0.5,'#231a13'); bgGrad.addColorStop(1,'#1a1410');
-    ctx.fillStyle=bgGrad; ctx.fillRect(0,0,W,H);
-    const drawCorner=(x,y,sx,sy)=>{ctx.strokeStyle='rgba(200,169,110,.32)';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x+sx*100,y);ctx.lineTo(x,y);ctx.lineTo(x,y+sy*100);ctx.stroke();};
-    drawCorner(70,70,1,1);drawCorner(W-70,70,-1,1);drawCorner(70,H-70,1,-1);drawCorner(W-70,H-70,-1,-1);
-    const drawRule=(y,alpha=.35)=>{const g=ctx.createLinearGradient(140,0,W-140,0);g.addColorStop(0,'transparent');g.addColorStop(0.2,`rgba(200,169,110,${alpha})`);g.addColorStop(0.8,`rgba(200,169,110,${alpha})`);g.addColorStop(1,'transparent');ctx.strokeStyle=g;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(140,y);ctx.lineTo(W-140,y);ctx.stroke();};
-    drawRule(200);
-    ctx.textAlign='center';ctx.fillStyle='#f5f0eb';ctx.font='bold 200px "Noto Serif TC",serif';ctx.fillText('我想投保',W/2,420);
-    ctx.font='500 52px "Noto Serif TC",serif';ctx.fillStyle='#c8a96e';ctx.fillText('CHUBB  TRAVEL  INSURANCE',W/2,500);
-    drawRule(560);
-
-    const rawTotal=document.getElementById('totalPremiumBox')?.querySelector('.total-price')?.textContent?.trim()||'';
-    const tripRaw=document.getElementById('resultTripInfo')?.textContent?.trim()||'';
-    const titleRaw=document.getElementById('resultTitle')?.textContent?.trim()||'';
-    const addMatch=titleRaw.match(/身故保額\s*([\d,]+萬)/)||titleRaw.match(/傷害醫療\s*([\d,]+萬)/);
-    const tiMatch=titleRaw.match(/(超值型 TI|尊榮型 TI)/);
-    const ageMatch=titleRaw.match(/年齡[：:]\s*(.+)/);
-    const tripMatch=tripRaw.match(/(.+?)\s*→\s*(.+?)\s*共\s*(\d+)\s*天/);
-
-    const PAD=180,ROW_H=170;
-    const infoRows=[
-      {label:'出發時間',value:tripMatch?tripMatch[1].trim():tripRaw},
-      {label:'返回時間',value:tripMatch?tripMatch[2].trim():''},
-      {label:'旅遊天數',value:tripMatch?`共 ${tripMatch[3]} 天`:''},
-      {label:'意外身故保額',value:addMatch?addMatch[1]:''},
-      {label:'不便險方案',value:tiMatch?tiMatch[1]:''},
-      {label:'被保人年齡',value:ageMatch?ageMatch[1]:''},
-    ];
-    let iy=600;
-    infoRows.forEach((r,i)=>{
-      ctx.fillStyle=i%2===0?'rgba(255,255,255,.04)':'rgba(0,0,0,.06)';ctx.fillRect(PAD,iy,W-PAD*2,ROW_H);
-      ctx.font='bold 44px "Noto Serif TC",serif';ctx.fillStyle='#c8a96e';ctx.textAlign='left';ctx.fillText(r.label,PAD+50,iy+ROW_H*0.6);
-      ctx.font='bold 58px "Noto Serif TC",serif';ctx.fillStyle='#f5f0eb';ctx.textAlign='right';ctx.fillText(r.value,W-PAD-50,iy+ROW_H*0.72);
-      iy+=ROW_H;
-    });
-    drawRule(iy+30);
-    const bx=PAD,by=iy+80,bw=W-PAD*2,bh=280;
-    ctx.save();ctx.shadowColor='rgba(200,169,110,.4)';ctx.shadowBlur=50;
-    const bGrad=ctx.createLinearGradient(bx,by,bx+bw,by+bh);bGrad.addColorStop(0,'#c8a96e');bGrad.addColorStop(1,'#a07838');
-    ctx.fillStyle=bGrad;roundRect(ctx,bx,by,bw,bh,28);ctx.fill();ctx.restore();
-    ctx.font='bold 60px "Noto Serif TC",serif';ctx.fillStyle='#1a1410';ctx.textAlign='left';ctx.fillText('試算總保費',bx+70,by+110);
-    ctx.font='bold 120px "Noto Serif TC",serif';ctx.fillStyle='#1a1410';ctx.textAlign='right';ctx.fillText(rawTotal,bx+bw-70,by+bh-50);
-    drawRule(by+bh+70,.2);
-    ctx.textAlign='center';ctx.font='500 52px "Noto Serif TC",serif';ctx.fillStyle='rgba(245,240,235,.55)';ctx.fillText('誠摯為您服務，祝福您旅途愉快、平安歸來',W/2,by+bh+160);
-    ctx.font='300 32px "Noto Serif TC",serif';ctx.fillStyle='rgba(200,169,110,.22)';ctx.fillText('CHUBB',W/2,H-90);
-
-    // 2. Create text file blob
-    const textBlob = new Blob([text], {type:'text/plain;charset=utf-8'});
-    const textFile = new File([textBlob],'安達旅平險投保資料.txt',{type:'text/plain'});
-
-    // 3. Screenshot blob
-    cv.toBlob(async(imgBlob)=>{
-      const imgFile = new File([imgBlob],'安達旅平險投保方案.png',{type:'image/png'});
-      // Try native share with both files
-      if(navigator.share && navigator.canShare && navigator.canShare({files:[imgFile,textFile]})){
-        try{
-          await navigator.share({files:[imgFile,textFile],title:'安達旅平險投保資料',text:'您好，我想投保安達旅平險，詳情如附件。'});
-        } catch(e){ fallbackDownload(cv,text); }
-      } else {
-        fallbackDownload(cv,text);
-      }
-      btn.textContent='📤 傳送投保資料給業務'; btn.disabled=false;
-    },'image/png');
-
+    const text = collectFormText();
+    downloadText(text);
   } catch(e){
-    console.error(e); alert('產生失敗，請截圖後手動傳送');
+    console.error(e);
+  } finally {
     btn.textContent='📤 傳送投保資料給業務'; btn.disabled=false;
   }
 }
 
-function fallbackDownload(cv, text){
-  // 1. Download screenshot PNG
-  const a1 = document.createElement('a');
-  a1.download = '安達旅平險投保方案.png';
-  a1.href = cv.toDataURL('image/png');
-  document.body.appendChild(a1);
-  a1.click();
-  document.body.removeChild(a1);
+// downloadText: universal .txt download + mobile share
+function downloadText(text){
+  const blob = new Blob([text], {type:'text/plain;charset=utf-8'});
+  const txtFile = new File([blob], '安達旅平險投保資料.txt', {type:'text/plain'});
 
-  // 2. Generate formatted HTML file (more reliable than .txt cross-browser)
-  const escaped = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const htmlContent = '<!DOCTYPE html>\n<html lang="zh-TW">\n<head><meta charset="UTF-8"><title>安達旅平險 投保資料</title>\n<style>body{font-family:"Microsoft JhengHei",serif;background:#f5f0eb;color:#1a1410;max-width:700px;margin:40px auto;padding:24px}pre{white-space:pre-wrap;font-size:13px;line-height:1.9}.note{font-size:11px;color:#9a8a80;margin-top:20px}</style></head>\n<body><pre>' + escaped + '</pre><div class="note">※ 本文件由安達旅平險報價試算系統產生，資料僅供傳送使用，不儲存於系統。</div></body></html>';
+  // Mobile: try native share
+  if(navigator.share && navigator.canShare && navigator.canShare({files:[txtFile]})){
+    navigator.share({
+      files:[txtFile],
+      title:'安達旅平險 投保資料',
+      text:'您好，我想投保安達旅平險，詳情如附件。'
+    }).catch(()=>{ doTxtDownload(blob); });
+  } else {
+    doTxtDownload(blob);
+  }
+}
 
-  setTimeout(()=>{
-    const blob = new Blob([htmlContent], {type:'text/html;charset=utf-8'});
-    const url = URL.createObjectURL(blob);
-    const a2 = document.createElement('a');
-    a2.download = '安達旅平險投保資料.html';
-    a2.href = url;
-    document.body.appendChild(a2);
-    a2.click();
-    document.body.removeChild(a2);
-    setTimeout(()=>URL.revokeObjectURL(url), 1000);
-  }, 800);
+function doTxtDownload(blob){
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.download = '安達旅平險投保資料.txt';
+  a.href = url;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
 }
 
 function openModal(id){
