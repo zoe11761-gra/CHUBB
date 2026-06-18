@@ -225,6 +225,51 @@ select:disabled{opacity:.5;cursor:not-allowed}
 
 .insight-box{background:var(--ink);color:var(--bg);border-radius:10px;padding:16px 18px;font-size:12.5px;line-height:1.9;margin-bottom:16px}
 .insight-box strong{color:var(--accent)}
+
+/* ── BTN PAIR (screenshot + fill side by side) ── */
+.btn-pair{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.btn-pair .btn-screenshot{flex:1;margin-bottom:0;min-width:140px}
+.btn-fill-data{flex:1;min-width:140px;background:var(--accent);color:var(--ink);border:2px solid var(--accent);border-radius:10px;padding:13px;font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;letter-spacing:.06em;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-fill-data:hover{background:#a8863e;border-color:#a8863e;color:var(--white)}
+
+/* ── PAGE 4 FORM STYLES ── */
+.form-section-title{font-size:15px;font-weight:700;color:var(--ink);margin:20px 0 10px;letter-spacing:.04em}
+.form-note-box{background:var(--blue-pale);border-left:3px solid var(--blue);border-radius:6px;padding:11px 14px;font-size:12px;color:var(--blue);margin-bottom:18px;line-height:1.7}
+.form-input{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;font-family:'Noto Serif TC',serif;font-size:14px;color:var(--ink);outline:none;transition:border-color .2s;-webkit-appearance:none}
+.form-input:focus{border-color:var(--accent)}
+.req{color:var(--red);font-size:11px;margin-left:2px}
+
+/* Insured card */
+.insured-header{display:flex;align-items:center;justify-content:flex-start;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.insured-num{font-size:13px;font-weight:700;color:var(--ink);letter-spacing:.04em}
+.same-as-proposer-label{font-size:12px;color:var(--ink-light);display:flex;align-items:center;gap:6px;cursor:pointer}
+.same-as-proposer-label input{cursor:pointer;width:15px;height:15px}
+
+/* Beneficiary toggle */
+.bene-toggle{font-size:12px;color:var(--blue);cursor:pointer;margin-top:14px;padding-top:12px;border-top:1px dashed var(--border);font-weight:500}
+.bene-toggle:hover{color:var(--blue-light)}
+.bene-fields{margin-top:12px;padding:14px;background:var(--stripe);border-radius:8px}
+
+/* Add insured button */
+.btn-add-insured{width:100%;background:none;border:2px dashed var(--border);border-radius:10px;padding:13px;font-family:'Noto Serif TC',serif;font-size:14px;color:var(--ink-muted);cursor:pointer;transition:all .18s;margin-bottom:6px}
+.btn-add-insured:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Payment option */
+.pay-option{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer}
+.pay-option:last-of-type{border-bottom:none}
+.pay-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;margin-top:2px;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.pay-radio.selected{border-color:var(--accent);background:var(--accent)}
+.pay-radio.selected::after{content:'';width:8px;height:8px;border-radius:50%;background:var(--ink)}
+.pay-label{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.pay-sub{font-size:11px;color:var(--ink-muted)}
+
+/* Extra insured card close btn */
+.insured-remove{font-size:11px;color:var(--red);cursor:pointer;padding:2px 8px;border:1px solid var(--red-pale);border-radius:10px;background:var(--red-pale)}
+.insured-remove:hover{background:var(--red);color:var(--white)}
+
+/* Send button */
+.btn-send-all{width:100%;background:var(--ink);color:var(--bg);border:none;border-radius:10px;padding:16px;font-family:'Noto Serif TC',serif;font-size:16px;font-weight:700;letter-spacing:.08em;cursor:pointer;transition:background .18s}
+.btn-send-all:hover{background:#2d2520}
 .small-note{font-size:11px;color:var(--ink-muted);line-height:1.8;margin-top:6px}
 .age-limit-note{background:var(--red-pale);border-left:3px solid var(--red);border-radius:4px;padding:10px 14px;font-size:12px;color:var(--red);margin-bottom:14px;line-height:1.7}
 
@@ -326,6 +371,8 @@ select:disabled{opacity:.5;cursor:not-allowed}
   <div class="step-item" id="step2"><div class="step-dot">2</div>輸入條件</div>
   <div class="step-sep"></div>
   <div class="step-item" id="step3"><div class="step-dot">3</div>報價結果</div>
+  <div class="step-sep"></div>
+  <div class="step-item" id="step4"><div class="step-dot">4</div>投保資料</div>
 </div>
 
 <!-- ══ PAGE 1 ══ -->
@@ -530,7 +577,10 @@ select:disabled{opacity:.5;cursor:not-allowed}
 
     <!-- 全寬：截圖按鈕 + 截圖目標 + 年齡警告 -->
     <div class="page3-col-full">
-      <button class="btn-screenshot btn-screenshot-top" onclick="doScreenshot()">📸 截圖投保內容給業務</button>
+      <div class="btn-pair">
+        <button class="btn-screenshot btn-screenshot-top" onclick="doScreenshot()">📸 截圖投保內容給業務</button>
+        <button class="btn-fill-data" onclick="goPage(4)">📝 填寫投保資料</button>
+      </div>
 
       <div id="screenshotTarget">
         <div id="totalPremiumBox"></div>
@@ -549,7 +599,7 @@ select:disabled{opacity:.5;cursor:not-allowed}
     <!-- 右欄：不便險 -->
     <div id="planTI"></div>
 
-    <!-- 全寬：重要提醒 + 截圖按鈕 -->
+    <!-- 全寬：重要提醒 + 底部按鈕 -->
     <div class="page3-col-full">
       <div class="insight-box">
         <strong>重要提醒</strong><br>
@@ -557,10 +607,102 @@ select:disabled{opacity:.5;cursor:not-allowed}
         • 本報價僅供參考，實際承保依保險公司審核為準<br>
         • 海外急難援助服務係免費提供之服務，非保險契約之權利義務
       </div>
-      <button class="btn-screenshot btn-screenshot-bot" onclick="doScreenshot()">📸 截圖投保內容給業務</button>
+      <div class="btn-pair">
+        <button class="btn-screenshot btn-screenshot-bot" onclick="doScreenshot()">📸 截圖投保內容給業務</button>
+        <button class="btn-fill-data" onclick="goPage(4)">📝 填寫投保資料</button>
+      </div>
     </div>
 
   </div><!-- end page3-grid -->
+</div>
+
+<!-- ══ PAGE 4: 投保資料填寫 ══ -->
+<div class="page" id="page4">
+  <div style="height:4px"></div>
+  <button class="btn-back" onclick="goPage(3)">← 返回報價結果</button>
+
+  <div class="sec-label"><span class="sec-num">✦</span><span class="sec-title">填寫投保資料</span></div>
+  <div class="form-note-box">填寫完畢後可一鍵傳送投保截圖＋資料給業務，所有資料僅供傳送使用，不會儲存於本系統。</div>
+
+  <!-- ── 要保人 ── -->
+  <div class="form-section-title">✨ 要保人（付錢的人）</div>
+  <div class="form-card">
+    <div class="form-row"><label>姓名 <span class="req">*</span></label><input type="text" id="p_name" placeholder="請輸入姓名" class="form-input"></div>
+    <div class="form-row"><label>出生年月日 <span class="req">*</span></label><input type="text" id="p_birth" placeholder="民國年月日，例：079/01/15" class="form-input" maxlength="9" oninput="autoSlash(this)"></div>
+    <div class="form-row"><label>身分證字號 <span class="req">*</span></label><input type="text" id="p_id" placeholder="例：A123456789" class="form-input" maxlength="10" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()"></div>
+    <div class="form-row"><label>手機號碼 <span class="req">*</span></label><input type="tel" id="p_phone" placeholder="例：0912345678" class="form-input" maxlength="10"></div>
+    <div class="form-row"><label>地址 <span class="req">*</span></label><input type="text" id="p_addr" placeholder="請輸入通訊地址" class="form-input"></div>
+    <div class="form-row" style="margin-bottom:0"><label>Email（電子保單） <span class="req">*</span></label><input type="email" id="p_email" placeholder="請輸入 Email" class="form-input"></div>
+  </div>
+
+  <!-- ── 被保險人名冊 ── -->
+  <div class="form-section-title">✨ 被保險人名冊（實際出遊的人）</div>
+
+  <!-- 被保險人 #1 必填 -->
+  <div class="form-card" id="insured-card-1">
+    <div class="insured-header">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="insured-num">被保險人 1</span>
+        <label class="same-as-proposer-label">
+          <input type="checkbox" id="same_as_proposer" onchange="toggleSameAsProposer(this.checked)"> 同要保人
+        </label>
+      </div>
+    </div>
+    <div id="insured-fields-1">
+      <div class="form-row"><label>姓名 <span class="req">*</span></label><input type="text" id="i1_name" placeholder="請輸入姓名" class="form-input"></div>
+      <div class="form-row"><label>出生年月日 <span class="req">*</span></label><input type="text" id="i1_birth" placeholder="民國年月日，例：079/01/15" class="form-input" maxlength="9" oninput="autoSlash(this)"></div>
+      <div class="form-row" style="margin-bottom:0"><label>身分證字號 <span class="req">*</span></label><input type="text" id="i1_id" placeholder="例：A123456789" class="form-input" maxlength="10" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()"></div>
+    </div>
+    <!-- 受益人（選填） -->
+    <div class="bene-toggle" onclick="toggleBene(1)">＋ 填寫受益人（選填）</div>
+    <div class="bene-fields" id="bene-1" style="display:none">
+      <div class="form-row"><label>受益人姓名</label><input type="text" id="b1_name" placeholder="請輸入姓名" class="form-input"></div>
+      <div class="form-row"><label>身分證字號</label><input type="text" id="b1_id" placeholder="例：A123456789" class="form-input" maxlength="10" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()"></div>
+      <div class="form-row"><label>出生年月日</label><input type="text" id="b1_birth" placeholder="民國年月日，例：079/01/15" class="form-input" maxlength="9" oninput="autoSlash(this)"></div>
+      <div class="form-row" style="margin-bottom:0"><label>與被保險人關係</label><input type="text" id="b1_rel" placeholder="例：配偶、父母、子女" class="form-input"></div>
+    </div>
+  </div>
+
+  <!-- 動態新增被保險人 -->
+  <div id="extra-insureds"></div>
+
+  <button class="btn-add-insured" onclick="addInsured()">＋ 新增被保險人（選填）</button>
+
+  <!-- ── 繳費方式 ── -->
+  <div class="form-section-title">✨ 繳費方式（必填）</div>
+  <div class="form-note-box" style="margin-bottom:10px">填寫完畢後可一鍵傳送投保截圖＋資料給業務，所有資料僅供傳送使用，不會儲存於本系統。</div>
+  <div class="form-card">
+    <div class="pay-option" onclick="selectPay('cash')">
+      <div class="pay-radio" id="pay-radio-cash"></div>
+      <div>
+        <div class="pay-label">現金超商 / 轉帳匯款</div>
+        <div class="pay-sub">業務將提供繳費帳號或超商代碼</div>
+      </div>
+    </div>
+    <div class="pay-option" onclick="selectPay('card')">
+      <div class="pay-radio" id="pay-radio-card"></div>
+      <div>
+        <div class="pay-label">線上授權刷卡</div>
+        <div class="pay-sub">需填寫信用卡資料</div>
+      </div>
+    </div>
+    <div id="card-fields" style="display:none;margin-top:14px;border-top:1px solid var(--border);padding-top:14px">
+      <div class="form-row"><label>發卡銀行</label><input type="text" id="cc_bank" placeholder="例：台新銀行" class="form-input"></div>
+      <div class="form-row"><label>信用卡號</label><input type="text" id="cc_num" placeholder="0000 0000 0000 0000" class="form-input" maxlength="19" oninput="formatCardNum(this)"></div>
+      <div class="form-row" style="margin-bottom:0"><label>到期日</label><input type="text" id="cc_exp" placeholder="MM/YY" class="form-input" maxlength="5" oninput="formatCardExp(this)"></div>
+    </div>
+  </div>
+
+  <div style="height:8px"></div>
+
+  <!-- ── 傳送按鈕 ── -->
+  <button class="btn-send-all" id="btnSendAll" onclick="sendAll()">
+    📤 傳送投保資料給業務
+  </button>
+  <div class="small-note" style="margin-top:10px;text-align:center">
+    點擊後將產生投保截圖＋資料文字檔，請透過 LINE / Email 等方式傳送給業務
+  </div>
+  <div style="height:20px"></div>
 </div>
 
 <!-- ══ MODAL ══ -->
@@ -1198,9 +1340,10 @@ function fmtWan(n){
 //  NAVIGATION
 // ════════════════════════════════
 function goPage(n){
-  [1,2,3].forEach(i=>{
+  [1,2,3,4].forEach(i=>{
     document.getElementById('page'+i).classList.toggle('active',i===n);
     const s=document.getElementById('step'+i);
+    if(!s) return;
     s.classList.remove('active','done');
     if(i<n) s.classList.add('done');
     if(i===n) s.classList.add('active');
@@ -1555,6 +1698,319 @@ function dlCanvas(cv){
   a.download='安達旅平險投保需求.png';
   a.href=cv.toDataURL('image/png');
   a.click();
+}
+
+
+// ════════════════════════════════
+//  PAGE 4 — 投保資料填寫
+// ════════════════════════════════
+
+// ── helpers ──
+function autoSlash(el){
+  // 民國年格式：最多3位年份 + MM/DD → e.g. 079/01/15 or 113/05/20
+  let v = el.value.replace(/[^0-9]/g,'');
+  if(v.length>3) v = v.slice(0,3)+'/'+v.slice(3);
+  if(v.length>6) v = v.slice(0,6)+'/'+v.slice(6);
+  el.value = v.slice(0,9); // max 9 chars: 113/05/20
+}
+function formatCardNum(el){
+  let v = el.value.replace(/\D/g,'').slice(0,16);
+  el.value = v.replace(/(.{4})/g,'$1 ').trim();
+}
+function formatCardExp(el){
+  let v = el.value.replace(/\D/g,'').slice(0,4);
+  if(v.length>2) v = v.slice(0,2)+'/'+v.slice(2);
+  el.value = v;
+}
+
+// ── Same as proposer ──
+function toggleSameAsProposer(checked){
+  const fields = document.getElementById('insured-fields-1');
+  if(checked){
+    document.getElementById('i1_name').value  = document.getElementById('p_name').value;
+    document.getElementById('i1_birth').value = document.getElementById('p_birth').value;
+    document.getElementById('i1_id').value    = document.getElementById('p_id').value;
+    fields.style.opacity = '0.5';
+    fields.querySelectorAll('input').forEach(i=>i.disabled=true);
+  } else {
+    fields.style.opacity = '1';
+    fields.querySelectorAll('input').forEach(i=>i.disabled=false);
+  }
+}
+
+// ── Extra insureds ──
+let insuredCount = 1;
+function addInsured(){
+  insuredCount++;
+  const n = insuredCount;
+  const div = document.createElement('div');
+  div.className = 'form-card';
+  div.id = 'insured-card-'+n;
+  div.innerHTML = `
+    <div class="insured-header">
+      <span class="insured-num">被保險人 ${n}</span>
+      <button class="insured-remove" onclick="removeInsured(${n})">✕ 刪除</button>
+    </div>
+    <div class="form-row"><label>姓名</label><input type="text" id="i${n}_name" placeholder="請輸入姓名" class="form-input"></div>
+    <div class="form-row"><label>出生年月日</label><input type="text" id="i${n}_birth" placeholder="民國年月日，例：079/01/15" class="form-input" maxlength="9" oninput="autoSlash(this)"></div>
+    <div class="form-row" style="margin-bottom:0"><label>身分證字號</label><input type="text" id="i${n}_id" placeholder="例：A123456789" class="form-input" maxlength="10" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()"></div>
+  `;
+  document.getElementById('extra-insureds').appendChild(div);
+}
+function removeInsured(n){
+  const el = document.getElementById('insured-card-'+n);
+  if(el) el.remove();
+}
+
+// ── Beneficiary toggle ──
+function toggleBene(n){
+  const el = document.getElementById('bene-'+n);
+  if(!el) return;
+  const open = el.style.display !== 'none';
+  el.style.display = open ? 'none' : 'block';
+  el.previousElementSibling.textContent = open ? '＋ 填寫受益人（選填）' : '－ 收起受益人';
+}
+
+// ── Payment selection ──
+let selectedPay = null;
+function selectPay(type){
+  selectedPay = type;
+  ['cash','card'].forEach(t=>{
+    document.getElementById('pay-radio-'+t).classList.toggle('selected', t===type);
+  });
+  document.getElementById('card-fields').style.display = type==='card' ? 'block' : 'none';
+}
+
+// ── Collect form data as text ──
+function collectFormText(){
+  const v = id => (document.getElementById(id)||{}).value||'（未填）';
+  const payLabel = selectedPay==='cash'?'現金超商/轉帳匯款':selectedPay==='card'?'線上授權刷卡':'（未選擇）';
+
+  let lines = [
+    '════════════════════════',
+    '════════════════════════',
+    '',
+    '▌ 投保方案',
+    document.getElementById('resultTripInfo')?.textContent||'',
+    document.getElementById('resultTitle')?.textContent||'',
+    document.getElementById('totalPremiumBox')?.querySelector('.total-price')?.textContent?.trim()||'',
+    '',
+    '▌ 要保人',
+    `姓名：${v('p_name')}`,
+    `出生年月日：${v('p_birth')}`,
+    `身分證字號：${v('p_id')}`,
+    `手機號碼：${v('p_phone')}`,
+    `地址：${v('p_addr')}`,
+    `Email：${v('p_email')}`,
+    '',
+    '▌ 被保險人名冊',
+  ];
+
+  // #1
+  const same = document.getElementById('same_as_proposer')?.checked;
+  lines.push(`被保險人 1${same?' （同要保人）':''}`);
+  if(!same){
+    lines.push(`  姓名：${v('i1_name')}`);
+    lines.push(`  出生年月日：${v('i1_birth')}`);
+    lines.push(`  身分證字號：${v('i1_id')}`);
+  }
+  const b1name = v('b1_name');
+  if(b1name!=='（未填）'){
+    lines.push(`  受益人：${b1name}　${v('b1_id')}　${v('b1_birth')}　關係：${v('b1_rel')}`);
+  }
+
+  // Extra insureds
+  for(let n=2;n<=insuredCount;n++){
+    const card = document.getElementById('insured-card-'+n);
+    if(!card) continue;
+    const nm=v('i'+n+'_name'), bd=v('i'+n+'_birth'), id=v('i'+n+'_id');
+    lines.push(`被保險人 ${n}`);
+    lines.push(`  姓名：${nm}　出生：${bd}　身分證：${id}`);
+  }
+
+  lines.push('');
+  lines.push('▌ 繳費方式');
+  lines.push(payLabel);
+  if(selectedPay==='card'){
+    lines.push(`  發卡銀行：${v('cc_bank')}`);
+    lines.push(`  卡號：${v('cc_num')}`);
+    lines.push(`  到期日：${v('cc_exp')}`);
+  }
+
+  lines.push('');
+  lines.push('════════════════════════');
+  return lines.join('\n');
+}
+
+// ── Validate required fields ──
+function validateForm(){
+  // Helper: mark field red and alert
+  function fail(el, msg){
+    el.focus();
+    el.style.borderColor='var(--red)';
+    el.style.boxShadow='0 0 0 3px rgba(139,38,53,.15)';
+    alert(msg);
+    return false;
+  }
+  function clear(el){ el.style.borderColor=''; el.style.boxShadow=''; }
+
+  // ── 要保人基本非空欄位 ──
+  const basics = ['p_name','p_birth','p_id','p_phone','p_addr','p_email'];
+  for(const id of basics){
+    const el = document.getElementById(id);
+    if(!el||!el.value.trim()) return fail(el,'請填寫：'+el.previousElementSibling?.textContent?.replace('*','').trim());
+    clear(el);
+  }
+
+  // ── 手機號碼：10碼且09開頭 ──
+  const phone = document.getElementById('p_phone');
+  if(!/^09\d{8}$/.test(phone.value.trim())) return fail(phone,'請重新檢查手機號碼（需為10碼且以09開頭）');
+  clear(phone);
+
+  // ── 身分證：1英文+9數字，共10碼 ──
+  const pid = document.getElementById('p_id');
+  if(!/^[A-Za-z]\d{9}$/.test(pid.value.trim())) return fail(pid,'請重新檢查身分證字號（需為1碼英文＋9碼數字，共10碼）');
+  clear(pid);
+
+  // ── 地址：必須含「號」 ──
+  const addr = document.getElementById('p_addr');
+  if(!addr.value.includes('號')) return fail(addr,'非完整地址（地址須包含「號」）');
+  clear(addr);
+
+  // ── Email：必須含「@」且格式正確 ──
+  const email = document.getElementById('p_email');
+  if(!email.value.includes('@')||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) return fail(email,'非完整 Email（請確認格式如 example@mail.com）');
+  clear(email);
+
+  // ── 被保險人 1 ──
+  const same = document.getElementById('same_as_proposer')?.checked;
+  if(!same){
+    for(const id of ['i1_name','i1_birth','i1_id']){
+      const el = document.getElementById(id);
+      if(!el||!el.value.trim()) return fail(el,'請填寫被保險人 1 的必填欄位：'+el.previousElementSibling?.textContent?.replace('*','').trim());
+      clear(el);
+    }
+    // 被保險人身分證也要10碼
+    const i1id = document.getElementById('i1_id');
+    if(!/^[A-Za-z]\d{9}$/.test(i1id.value.trim())) return fail(i1id,'請重新檢查被保險人 1 身分證字號（需為1碼英文＋9碼數字，共10碼）');
+    clear(i1id);
+  }
+
+  if(!selectedPay){ alert('請選擇繳費方式'); return false; }
+  return true;
+}
+
+// ── Send all ──
+async function sendAll(){
+  if(!validateForm()) return;
+
+  const btn = document.getElementById('btnSendAll');
+  btn.textContent='⏳ 準備中…'; btn.disabled=true;
+
+  const text = collectFormText();
+
+  try {
+    // 1. Generate screenshot canvas
+    const W=2100,H=2970;
+    const cv=document.createElement('canvas');
+    cv.width=W; cv.height=H;
+    const ctx=cv.getContext('2d');
+
+    // Same canvas drawing as doScreenshot
+    const bgGrad=ctx.createLinearGradient(0,0,0,H);
+    bgGrad.addColorStop(0,'#1a1410'); bgGrad.addColorStop(0.5,'#231a13'); bgGrad.addColorStop(1,'#1a1410');
+    ctx.fillStyle=bgGrad; ctx.fillRect(0,0,W,H);
+    const drawCorner=(x,y,sx,sy)=>{ctx.strokeStyle='rgba(200,169,110,.32)';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x+sx*100,y);ctx.lineTo(x,y);ctx.lineTo(x,y+sy*100);ctx.stroke();};
+    drawCorner(70,70,1,1);drawCorner(W-70,70,-1,1);drawCorner(70,H-70,1,-1);drawCorner(W-70,H-70,-1,-1);
+    const drawRule=(y,alpha=.35)=>{const g=ctx.createLinearGradient(140,0,W-140,0);g.addColorStop(0,'transparent');g.addColorStop(0.2,`rgba(200,169,110,${alpha})`);g.addColorStop(0.8,`rgba(200,169,110,${alpha})`);g.addColorStop(1,'transparent');ctx.strokeStyle=g;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(140,y);ctx.lineTo(W-140,y);ctx.stroke();};
+    drawRule(200);
+    ctx.textAlign='center';ctx.fillStyle='#f5f0eb';ctx.font='bold 200px "Noto Serif TC",serif';ctx.fillText('我想投保',W/2,420);
+    ctx.font='500 52px "Noto Serif TC",serif';ctx.fillStyle='#c8a96e';ctx.fillText('CHUBB  TRAVEL  INSURANCE',W/2,500);
+    drawRule(560);
+
+    const rawTotal=document.getElementById('totalPremiumBox')?.querySelector('.total-price')?.textContent?.trim()||'';
+    const tripRaw=document.getElementById('resultTripInfo')?.textContent?.trim()||'';
+    const titleRaw=document.getElementById('resultTitle')?.textContent?.trim()||'';
+    const addMatch=titleRaw.match(/身故保額\s*([\d,]+萬)/)||titleRaw.match(/傷害醫療\s*([\d,]+萬)/);
+    const tiMatch=titleRaw.match(/(超值型 TI|尊榮型 TI)/);
+    const ageMatch=titleRaw.match(/年齡[：:]\s*(.+)/);
+    const tripMatch=tripRaw.match(/(.+?)\s*→\s*(.+?)\s*共\s*(\d+)\s*天/);
+
+    const PAD=180,ROW_H=170;
+    const infoRows=[
+      {label:'出發時間',value:tripMatch?tripMatch[1].trim():tripRaw},
+      {label:'返回時間',value:tripMatch?tripMatch[2].trim():''},
+      {label:'旅遊天數',value:tripMatch?`共 ${tripMatch[3]} 天`:''},
+      {label:'意外身故保額',value:addMatch?addMatch[1]:''},
+      {label:'不便險方案',value:tiMatch?tiMatch[1]:''},
+      {label:'被保人年齡',value:ageMatch?ageMatch[1]:''},
+    ];
+    let iy=600;
+    infoRows.forEach((r,i)=>{
+      ctx.fillStyle=i%2===0?'rgba(255,255,255,.04)':'rgba(0,0,0,.06)';ctx.fillRect(PAD,iy,W-PAD*2,ROW_H);
+      ctx.font='bold 44px "Noto Serif TC",serif';ctx.fillStyle='#c8a96e';ctx.textAlign='left';ctx.fillText(r.label,PAD+50,iy+ROW_H*0.6);
+      ctx.font='bold 58px "Noto Serif TC",serif';ctx.fillStyle='#f5f0eb';ctx.textAlign='right';ctx.fillText(r.value,W-PAD-50,iy+ROW_H*0.72);
+      iy+=ROW_H;
+    });
+    drawRule(iy+30);
+    const bx=PAD,by=iy+80,bw=W-PAD*2,bh=280;
+    ctx.save();ctx.shadowColor='rgba(200,169,110,.4)';ctx.shadowBlur=50;
+    const bGrad=ctx.createLinearGradient(bx,by,bx+bw,by+bh);bGrad.addColorStop(0,'#c8a96e');bGrad.addColorStop(1,'#a07838');
+    ctx.fillStyle=bGrad;roundRect(ctx,bx,by,bw,bh,28);ctx.fill();ctx.restore();
+    ctx.font='bold 60px "Noto Serif TC",serif';ctx.fillStyle='#1a1410';ctx.textAlign='left';ctx.fillText('試算總保費',bx+70,by+110);
+    ctx.font='bold 120px "Noto Serif TC",serif';ctx.fillStyle='#1a1410';ctx.textAlign='right';ctx.fillText(rawTotal,bx+bw-70,by+bh-50);
+    drawRule(by+bh+70,.2);
+    ctx.textAlign='center';ctx.font='500 52px "Noto Serif TC",serif';ctx.fillStyle='rgba(245,240,235,.55)';ctx.fillText('誠摯為您服務，祝福您旅途愉快、平安歸來',W/2,by+bh+160);
+    ctx.font='300 32px "Noto Serif TC",serif';ctx.fillStyle='rgba(200,169,110,.22)';ctx.fillText('CHUBB',W/2,H-90);
+
+    // 2. Create text file blob
+    const textBlob = new Blob([text], {type:'text/plain;charset=utf-8'});
+    const textFile = new File([textBlob],'安達旅平險投保資料.txt',{type:'text/plain'});
+
+    // 3. Screenshot blob
+    cv.toBlob(async(imgBlob)=>{
+      const imgFile = new File([imgBlob],'安達旅平險投保方案.png',{type:'image/png'});
+      // Try native share with both files
+      if(navigator.share && navigator.canShare && navigator.canShare({files:[imgFile,textFile]})){
+        try{
+          await navigator.share({files:[imgFile,textFile],title:'安達旅平險投保資料',text:'您好，我想投保安達旅平險，詳情如附件。'});
+        } catch(e){ fallbackDownload(cv,text); }
+      } else {
+        fallbackDownload(cv,text);
+      }
+      btn.textContent='📤 傳送投保資料給業務'; btn.disabled=false;
+    },'image/png');
+
+  } catch(e){
+    console.error(e); alert('產生失敗，請截圖後手動傳送');
+    btn.textContent='📤 傳送投保資料給業務'; btn.disabled=false;
+  }
+}
+
+function fallbackDownload(cv, text){
+  // 1. Download screenshot PNG
+  const a1 = document.createElement('a');
+  a1.download = '安達旅平險投保方案.png';
+  a1.href = cv.toDataURL('image/png');
+  document.body.appendChild(a1);
+  a1.click();
+  document.body.removeChild(a1);
+
+  // 2. Generate formatted HTML file (more reliable than .txt cross-browser)
+  const escaped = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const htmlContent = '<!DOCTYPE html>\n<html lang="zh-TW">\n<head><meta charset="UTF-8"><title>安達旅平險 投保資料</title>\n<style>body{font-family:"Microsoft JhengHei",serif;background:#f5f0eb;color:#1a1410;max-width:700px;margin:40px auto;padding:24px}pre{white-space:pre-wrap;font-size:13px;line-height:1.9}.note{font-size:11px;color:#9a8a80;margin-top:20px}</style></head>\n<body><pre>' + escaped + '</pre><div class="note">※ 本文件由安達旅平險報價試算系統產生，資料僅供傳送使用，不儲存於系統。</div></body></html>';
+
+  setTimeout(()=>{
+    const blob = new Blob([htmlContent], {type:'text/html;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a2 = document.createElement('a');
+    a2.download = '安達旅平險投保資料.html';
+    a2.href = url;
+    document.body.appendChild(a2);
+    a2.click();
+    document.body.removeChild(a2);
+    setTimeout(()=>URL.revokeObjectURL(url), 1000);
+  }, 800);
 }
 
 function openModal(id){
