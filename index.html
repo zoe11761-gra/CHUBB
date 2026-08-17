@@ -187,8 +187,8 @@ select:disabled{opacity:.5;cursor:not-allowed}
 
 /* trip info bar */
 .result-trip-bar{background:var(--ink);color:var(--bg);border-radius:12px;padding:16px 20px;margin-bottom:18px}
-.trip-info-line{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--accent);letter-spacing:.04em;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.trip-detail-line{font-size:15px;font-weight:600;line-height:1.5}
+.trip-info-line{font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);letter-spacing:.04em;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trip-detail-line{font-size:19px;font-weight:600;line-height:1.5}
 
 /* section titles */
 .result-section-title{display:flex;align-items:center;gap:10px;margin:18px 0 10px}
@@ -222,6 +222,10 @@ select:disabled{opacity:.5;cursor:not-allowed}
 .btn-screenshot:hover{background:var(--ink);color:var(--bg)}
 .btn-screenshot-top{margin-bottom:16px;margin-top:0}
 .btn-screenshot-bot{margin-top:6px;margin-bottom:0}
+/* Page 3 top section boxes */
+.p3-price-box{background:var(--ink);color:var(--bg);border-radius:12px;padding:16px 20px;height:100%;box-sizing:border-box}
+/* Page 3 top buttons — fill height equally */
+.btn-p3{flex:1;margin:0 !important}
 
 .insight-box{background:var(--ink);color:var(--bg);border-radius:10px;padding:16px 18px;font-size:12.5px;line-height:1.9;margin-bottom:16px}
 .insight-box strong{color:var(--accent)}
@@ -232,7 +236,37 @@ select:disabled{opacity:.5;cursor:not-allowed}
 .btn-fill-data{flex:1;min-width:140px;background:var(--accent);color:var(--ink);border:2px solid var(--accent);border-radius:10px;padding:13px;font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;letter-spacing:.06em;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:8px}
 .btn-fill-data:hover{background:#a8863e;border-color:#a8863e;color:var(--white)}
 
-/* ── PAGE 4 FORM STYLES ── */
+/* ── GROUP TABS ── */
+.group-tabs-row{display:flex;gap:4px;margin-bottom:0}
+.group-tab{padding:7px 16px;border-radius:8px 8px 0 0;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);border-bottom:none;background:var(--stripe);color:var(--ink-muted);transition:all .15s;font-family:'Noto Serif TC',serif;white-space:nowrap}
+.group-tab.active{background:var(--white);color:var(--ink);border-color:var(--border)}
+.group-tab.g1.active{border-top:3px solid #c8a96e}
+.group-tab.g2.active{border-top:3px solid #2d5a8e}
+.group-tab.g3.active{border-top:3px solid #8b2635}
+.group-tab .tab-del{margin-left:8px;color:var(--red);font-size:11px;opacity:.7}
+.group-tab .tab-del:hover{opacity:1}
+/* ── GROUP CARDS ── */
+.group-card{background:var(--white);border-radius:12px;padding:20px 20px 16px;box-shadow:var(--shadow);border:1.5px solid var(--border);margin-bottom:12px}
+.group-card.single{border-radius:12px;border-top:1.5px solid var(--border)}
+.group-card.g1{border-top:3px solid #c8a96e}
+.group-card.g2{border-top:3px solid #2d5a8e}
+.group-card.g3{border-top:3px solid #8b2635}
+.group-price-hint{display:none} /* hidden - removed from UI */
+/* Group card header */
+.group-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;min-height:28px}
+.group-card-label{font-size:12px;font-weight:700;letter-spacing:.04em}
+.group-card-btns{display:flex;gap:6px;align-items:center;margin-left:auto}
+.group-collapse-btn{background:none;border:1px solid var(--border);border-radius:6px;padding:2px 10px;font-size:11px;color:var(--ink-muted);cursor:pointer;line-height:1.6;transition:all .15s}
+.group-collapse-btn:hover{background:var(--stripe);color:var(--ink)}
+/* ── PREVIEW PRICE BOX ── */
+.pp-single{display:flex;align-items:center;justify-content:space-between}
+.pp-group-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0}
+.pp-group-row+.pp-group-row{border-top:1px solid rgba(255,255,255,.1)}
+.pp-group-label{font-size:12px;color:rgba(245,240,235,.7)}
+.pp-group-price{font-family:'DM Mono',monospace;font-size:18px;font-weight:500;color:var(--bg)}
+.btn-add-group-sm{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:5px 12px;font-family:'Noto Serif TC',serif;font-size:12px;color:var(--ink-muted);cursor:pointer;transition:all .18s;white-space:nowrap}
+.btn-add-group-sm:hover{border-color:var(--accent);color:var(--accent)}
+.btn-add-group-sm:disabled{opacity:.35;cursor:not-allowed;pointer-events:none}
 .form-section-title{font-size:15px;font-weight:700;color:var(--ink);margin:20px 0 10px;letter-spacing:.04em}
 .form-note-box{background:var(--blue-pale);border-left:3px solid var(--blue);border-radius:6px;padding:11px 14px;font-size:12px;color:var(--blue);margin-bottom:18px;line-height:1.7}
 .form-input{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;font-family:'Noto Serif TC',serif;font-size:14px;color:var(--ink);outline:none;transition:border-color .2s;-webkit-appearance:none}
@@ -272,6 +306,7 @@ select:disabled{opacity:.5;cursor:not-allowed}
 .country-remove-btn{flex-shrink:0;background:none;border:1px solid var(--red-pale);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--red);cursor:pointer;font-family:'Noto Serif TC',serif;white-space:nowrap}
 .country-remove-btn:hover{background:var(--red);color:var(--white)}
 .insured-remove{font-size:11px;color:var(--red);cursor:pointer;padding:2px 8px;border:1px solid var(--red-pale);border-radius:10px;background:var(--red-pale)}
+.insured-group-hint{font-size:11px;color:var(--blue);margin-top:5px;padding:4px 10px;background:var(--blue-pale);border-radius:5px;display:none}
 .insured-remove:hover{background:var(--red);color:var(--white)}
 
 /* Send button */
@@ -301,7 +336,8 @@ select:disabled{opacity:.5;cursor:not-allowed}
   .page{padding:28px 32px}
 
   /* Page 1: wider feature grid */
-  .features-grid{grid-template-columns:repeat(4,1fr); gap:14px}
+  /* Page 1: 3-col grid, narrower overall */
+  .features-grid{grid-template-columns:repeat(3,1fr); gap:14px; max-width:700px; margin-left:auto; margin-right:auto}
   .feat-card{padding:20px 14px 16px}
   .feat-icon{font-size:28px}
   .feat-short{font-size:12.5px}
@@ -329,13 +365,15 @@ select:disabled{opacity:.5;cursor:not-allowed}
   .page3-grid{
     display:grid !important;
     grid-template-columns:1fr 1fr;
-    gap:0 28px;
+    gap:16px 28px;
     align-items:start;
   }
   .page3-col-full{grid-column:1 / -1 !important}
   .result-trip-bar h2, .trip-detail-line{font-size:18px}
 
-  /* Coverage table larger text */
+  /* Page 1: constrain width */
+  #page1 .features-intro{max-width:700px;margin-left:auto;margin-right:auto}
+  #page1 .page1-nav{max-width:700px;margin-left:auto;margin-right:auto}
   .ct td{padding:9px 12px; font-size:13px}
   .ct th{font-size:12px; padding:9px 12px}
   .ct-sub{font-size:12px}
@@ -458,49 +496,18 @@ select:disabled{opacity:.5;cursor:not-allowed}
         <div id="daysBadge" class="days-badge" style="display:none"></div>
       </div>
 
-      <!-- 02 年齡 -->
-      <div class="sec-label"><span class="sec-num">02</span><span class="sec-title">被保險人年齡</span></div>
-      <div class="form-card">
-        <div class="form-row">
-          <label>投保年齡區間</label>
-          <select id="ageGroup" onchange="onAgeGroupChange()">
-            <option value="a15">15 – 75歲（含）</option>
-            <option value="u15">0 – 未滿15歲</option>
-            <option value="a75">超過75 – 80歲（含）</option>
-            <option value="a80">超過80 – 85歲（含）</option>
-            <option value="over85">超過85歲（謝絕承保）</option>
-          </select>
-          <div class="age-warning" id="ageWarning"></div>
+      <!-- 02+03 被保險人年齡 & 意外身故保額 -->
+      <div class="sec-label" style="align-items:center">
+        <span class="sec-num">02</span>
+        <span class="sec-title" style="white-space:nowrap">被保險人年齡 ＆ 意外身故保額</span>
+        <div style="margin-left:auto;display:flex;gap:8px;align-items:center;flex-shrink:0">
+          <button class="btn-add-group-sm" id="btn-add-group" onclick="addGroup()">＋ 新增組別</button>
         </div>
       </div>
 
-      <!-- 03 保額（移至左欄） -->
-      <div class="sec-label"><span class="sec-num">03</span><span class="sec-title">意外身故保險金額</span></div>
-      <div class="form-card">
-        <div class="form-row">
-          <div class="label-row">
-            <label id="addLabel" style="margin-bottom:0">身故保額（萬元）<span class="recommend-tag" id="recommendTag">建議500萬以上＋尊榮型</span></label>
-            <button class="info-btn" onclick="openModal('mAge')">年齡投保上限 ↗</button>
-          </div>
-          <select id="addAmount" onchange="onAddChange()">
-            <option value="200">200 萬</option>
-            <option value="300">300 萬</option>
-            <option value="500">500 萬</option>
-            <option value="1000">1,000 萬</option>
-            <option value="1500">1,500 萬</option>
-            <option value="2000">2,000 萬</option>
-          </select>
-        </div>
-        <div class="form-row" id="mrRow" style="display:none">
-          <label>傷害醫療 ＝ 海外突發疾病住院醫療保額（萬元）</label>
-          <select id="mrAmount" onchange="updatePreviewPremium()">
-            <option value="30">30 萬</option>
-            <option value="60">60 萬</option>
-            <option value="100">100 萬</option>
-          </select>
-          <div class="hint">同時適用於傷害醫療及海外突發疾病住院醫療保險金（上限各100萬）</div>
-        </div>
-      </div>
+      <!-- 組別卡片容器 -->
+      <div id="groups-container"></div>
+
     </div><!-- end 左欄 -->
 
     <!-- 右欄：不便險 -->
@@ -557,20 +564,18 @@ select:disabled{opacity:.5;cursor:not-allowed}
           </div>
         </div>
       </div>
-    </div><!-- end 右欄 -->
-
-    <!-- 全寬：保費預覽 + 按鈕 -->
-    <div class="page2-col-full">
-      <div id="previewPremiumPrice" style="display:none;background:var(--ink);border-radius:10px;padding:14px 18px;margin-bottom:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px">
-        <div style="font-size:12px;color:var(--accent);letter-spacing:.04em;font-weight:500">目前選擇的試算保費</div>
-        <div class="pp-amount" style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--bg)">—</div>
+      <!-- 保費預覽 + 查看完整報價結果 (在右欄底部，對齊左欄底部) -->
+      <div id="previewPremiumPrice" style="display:none;background:var(--ink);border-radius:10px;padding:14px 18px;margin-bottom:12px;min-height:72px;flex-direction:column;justify-content:space-between">
+        <div style="font-size:11px;color:var(--accent);letter-spacing:.04em;font-weight:500">目前選擇的試算保費</div>
+        <div id="pp-groups-display" style="margin-top:8px"></div>
       </div>
       <button class="btn-quote" onclick="doQuote()">查看完整報價結果 →</button>
       <div class="small-note" style="margin-top:10px">
         ※ 80–85歲最長投保30天；超過85歲婉謝承保<br>
-        ※ 費率表版本：2026.04.01 製 CHUBBITA139
+        ※ 費率表版本：2026.08.11 製 CHUBBITA139
       </div>
-    </div>
+    </div><!-- end 右欄 -->
+
 
   </div><!-- end page2-grid -->
 </div>
@@ -582,25 +587,27 @@ select:disabled{opacity:.5;cursor:not-allowed}
 
   <div class="page3-grid">
 
-    <!-- 全寬：截圖按鈕 + 截圖目標 + 年齡警告 -->
-    <div class="page3-col-full">
-      <div class="btn-pair">
-        <button class="btn-screenshot btn-screenshot-top" onclick="doScreenshot()">📸 截圖投保內容給業務</button>
-        <button class="btn-fill-data" onclick="goPage(4)">📝 填寫投保資料</button>
-      </div>
+    <!-- 行1左：試算保費（獨立框） -->
+    <div>
+      <div id="totalPremiumBox" class="p3-price-box"></div>
+    </div>
 
-      <div id="screenshotTarget">
-        <div id="totalPremiumBox"></div>
-        <div class="result-trip-bar">
-          <div class="trip-info-line" id="resultTripInfo">—</div>
-          <div class="trip-detail-line" id="resultTitle">—</div>
-        </div>
-      </div>
+    <!-- 行1右：截圖 + 填寫（各自獨立框，垂直堆疊） -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <button class="btn-screenshot btn-p3" onclick="doScreenshot()">📸 截圖投保內容給業務</button>
+      <button class="btn-fill-data btn-p3" onclick="goPage(4)">📝 填寫投保資料</button>
+    </div>
 
+    <!-- 行2：旅程資訊（全寬橫跨） -->
+    <div class="page3-col-full" id="screenshotTarget">
+      <div class="result-trip-bar" style="margin-bottom:0">
+        <div class="trip-info-line" id="resultTripInfo">—</div>
+        <div class="trip-detail-line" id="resultTitle">—</div>
+      </div>
       <div id="ageLimitNoteBox"></div>
     </div>
 
-    <!-- 左欄：旅平險 -->
+    <!-- 行3左：旅平險 -->
     <div id="planBase"></div>
 
     <!-- 右欄：不便險 -->
@@ -668,7 +675,8 @@ select:disabled{opacity:.5;cursor:not-allowed}
     </div>
     <div id="insured-fields-1">
       <div class="form-row"><label>姓名 <span class="req">*</span></label><input type="text" id="i1_name" placeholder="請輸入姓名" class="form-input"></div>
-      <div class="form-row"><label>出生年月日 <span class="req">*</span></label><input type="text" id="i1_birth" placeholder="民國年月日，例：079/01/15" class="form-input" maxlength="9" oninput="autoSlash(this)"></div>
+      <div class="form-row"><label>出生年月日 <span class="req">*</span></label><input type="text" id="i1_birth" placeholder="民國年月日，例：079/01/15" class="form-input" maxlength="9" oninput="autoSlash(this);matchInsuredGroup('i1_birth','i1-group-hint')">
+      <div id="i1-group-hint" class="insured-group-hint"></div></div>
       <div class="form-row" style="margin-bottom:0"><label>身分證字號 <span class="req">*</span></label><input type="text" id="i1_id" placeholder="例：A123456789" class="form-input" maxlength="10" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()"></div>
     </div>
     <!-- 受益人（選填） -->
@@ -918,12 +926,316 @@ document.addEventListener('click', e => {
   });
   // enable endTime immediately (default same time as start)
   document.getElementById('endTime').disabled = false;
-  // default age = 15to75, trigger population
-  onAgeGroupChange();
-  // default add = 500 to allow premium
-  document.getElementById('addAmount').value = '500';
-  onAddChange();
+  // Groups init deferred to after all declarations (see bottom of script)
 })();
+
+// ════════════════════════════════
+//  GROUPS SYSTEM
+// ════════════════════════════════
+let groups = [];
+let groupIdCounter = 0;
+
+const GROUP_COLORS = ['#c8a96e','#2d5a8e','#8b2635'];
+const GROUP_NAMES  = ['組別 1','組別 2','組別 3'];
+const GROUP_CLS    = ['g1','g2','g3'];
+
+function initGroups(){
+  addGroup(); // start with one group, no tabs shown
+}
+
+function addGroup(){
+  if(groups.length >= 3) return;
+  groupIdCounter++;
+  const id = groupIdCounter;
+  const idx = groups.length;
+  groups.push({id, ag:'a15', add:500, mr:100});
+  activeGroupId = id;
+
+  // Build card
+  const container = document.getElementById('groups-container');
+  const div = document.createElement('div');
+  div.id = 'group-card-'+id;
+  container.appendChild(div);
+
+  renderAllGroupCards();
+  onGroupAgeChange(id);
+
+  // Button state
+  const btn = document.getElementById('btn-add-group');
+  if(btn){ btn.disabled = groups.length >= 3; btn.textContent = groups.length >= 3 ? '已達最多3組' : '＋ 新增組別'; }
+  updateAllGroupPreviews();
+}
+
+function removeGroup(id){
+  const idx = groups.findIndex(g=>g.id===id);
+  if(idx < 0 || idx === 0) return;
+  groups.splice(idx,1);
+  renderAllGroupCards();
+  const btn = document.getElementById('btn-add-group');
+  if(btn){ btn.disabled = false; btn.textContent = '＋ 新增組別'; }
+  updateAllGroupPreviews();
+}
+
+
+function renderAllGroupCards(){
+  const container = document.getElementById('groups-container');
+  if(!container) return;
+  container.innerHTML = '';
+  const BORDER_COLORS = ['transparent','var(--blue)','var(--red)'];
+  const LABEL_COLORS  = ['var(--accent)','var(--blue)','var(--red)'];
+
+  groups.forEach((g, i) => {
+    const div = document.createElement('div');
+    div.id = 'group-card-' + g.id;
+    div.className = 'form-card group-card';
+    if(i > 0){
+      div.style.borderLeft = `4px solid ${BORDER_COLORS[i]}`;
+      div.style.borderRadius = '12px';  // ensure all corners rounded despite left border
+    }
+
+    const collapseBtn = `<button class="group-collapse-btn" onclick="toggleGroupCollapse(${g.id},this)" title="折疊">▲</button>`;
+    const deleteBtn   = i > 0
+      ? `<button onclick="removeGroup(${g.id})" title="刪除" style="background:none;border:none;color:var(--red);font-size:16px;cursor:pointer;padding:0 2px;line-height:1;font-weight:700">✕</button>`
+      : '';
+
+    // ── Header: 組別N + 年齡投保上限 (left) │ ▲ ✕ (right) ──
+    const hdr = `
+      <div style="display:flex;align-items:center;margin-bottom:14px">
+        <span style="font-size:13px;font-weight:700;color:${LABEL_COLORS[i]};letter-spacing:.04em">組別 ${i+1}</span>
+        <button class="info-btn" onclick="openModal('mAge')" style="margin-left:8px;font-size:10px;padding:2px 8px">年齡投保上限 ↗</button>
+        <div style="margin-left:auto;display:flex;gap:6px;align-items:center">${collapseBtn}${deleteBtn}</div>
+      </div>`;
+
+    // ── Body: two labelled selects ──
+    const body = `
+      <div class="group-card-body" id="group-body-${g.id}">
+        <div class="age-warning" id="age-warn-${g.id}" style="display:none;margin-bottom:8px"></div>
+        <div class="form-row" style="margin-bottom:14px">
+          <label>被保險人年齡</label>
+          <select id="ag-${g.id}" onchange="onGroupAgeChange(${g.id})">
+            <option value="a15">15 – 75歲（含）</option>
+            <option value="u15">0 – 未滿15歲</option>
+            <option value="a75">超過75 – 80歲（含）</option>
+            <option value="a80">超過80 – 85歲（含）</option>
+            <option value="over85">超過85歲（謝絕承保）</option>
+          </select>
+        </div>
+        <div id="add-row-${g.id}" class="form-row" style="margin-bottom:0">
+          <label id="add-label-${g.id}">意外身故保額（萬元）<span class="recommend-tag">建議500萬以上＋尊榮型</span></label>
+          <select id="add-${g.id}" onchange="onGroupAddChange(${g.id})">
+            <option value="200">200 萬</option>
+            <option value="300">300 萬</option>
+            <option value="500">500 萬</option>
+            <option value="1000">1,000 萬</option>
+            <option value="1500">1,500 萬</option>
+            <option value="2000">2,000 萬</option>
+          </select>
+        </div>
+        <div id="mr-row-${g.id}" style="display:none">
+          <div class="form-row" style="margin-bottom:0;margin-top:14px">
+            <label>傷害醫療保額（萬元）</label>
+            <select id="mr-${g.id}" onchange="onGroupMrChange(${g.id})">
+              <option value="30">30 萬</option>
+              <option value="40">40 萬</option>
+              <option value="50">50 萬</option>
+              <option value="60">60 萬</option>
+              <option value="70">70 萬</option>
+              <option value="80">80 萬</option>
+              <option value="90">90 萬</option>
+              <option value="100">100 萬</option>
+            </select>
+            <div class="hint" style="margin-top:4px">同時適用傷害醫療及海外突發疾病住院醫療保險金（上限各100萬）</div>
+          </div>
+        </div>
+      </div>`;
+
+    div.innerHTML = hdr + body;
+    container.appendChild(div);
+
+    const agEl  = document.getElementById('ag-'  + g.id); if(agEl)  agEl.value = g.ag;
+    const addEl = document.getElementById('add-' + g.id); if(addEl) addEl.value = String(g.add||500);
+    const mrEl  = document.getElementById('mr-'  + g.id); if(mrEl)  mrEl.value = String(g.mr||100);
+    syncGroupDisplay(g.id);
+  });
+}
+
+function togglePlanCard(bodyId, btn){
+  const body = document.getElementById(bodyId);
+  if(!body) return;
+  const collapsed = body.style.display === 'none';
+  body.style.display = collapsed ? 'block' : 'none';
+  btn.textContent = collapsed ? '▲ 收合' : '▼ 展開';
+}
+
+function toggleGroupCollapse(id, btn){
+  const body = document.getElementById('group-body-'+id);
+  if(!body) return;
+  const collapsed = body.style.display === 'none';
+  body.style.display = collapsed ? 'block' : 'none';
+  btn.textContent = collapsed ? '▲' : '▼';
+}
+
+
+
+function syncGroupDisplay(id){
+  const g = groups.find(x=>x.id===id);
+  if(!g) return;
+  const warn   = document.getElementById('age-warn-'+id);
+  const addRow = document.getElementById('add-row-'+id);
+  const addSel = document.getElementById('add-'+id);
+  const addLbl = document.getElementById('add-label-'+id);
+  const mrRow  = document.getElementById('mr-row-'+id);
+  const isU15  = g.ag==='u15';
+
+  const msgs = {
+    over85:'超過85歲婉謝承保',
+    a80:'超過80–85歲：身故保額上限100萬，最長30天',
+    a75:'超過75–80歲：身故保額上限300萬',
+    u15:'未滿15歲：身故保額上限69萬，並選擇傷害醫療保額',
+  };
+  if(warn){ warn.style.display=msgs[g.ag]?'block':'none'; warn.textContent=msgs[g.ag]||''; }
+
+  // 0–15歲：add-row 仍顯示，但選單改為 0萬/69萬；mr-row 也顯示
+  if(addRow) addRow.style.display = 'block';
+  if(mrRow)  mrRow.style.display  = isU15 ? 'block' : 'none';
+
+  if(isU15 && addSel){
+    // Replace options for u15
+    const curVal = addSel.value;
+    addSel.innerHTML = `
+      <option value="0">0 萬（不含身故）</option>
+      <option value="69">69 萬（喪葬費用上限）</option>`;
+    addSel.value = ['0','69'].includes(curVal) ? curVal : '0';
+    g.add = parseInt(addSel.value);
+    if(addLbl) addLbl.innerHTML = '身故保額（萬元）';
+    // ADD=0: only MR=100 available (SUPER only); ADD=69: MR=30/60/100
+    const mrSel = document.getElementById('mr-'+id);
+    if(mrSel){
+      if(g.add === 0){
+        // No death benefit: Super has MR=30萬 and MR=100萬; Premium has same
+        mrSel.innerHTML = '<option value="30">30 萬</option><option value="100">100 萬</option>';
+        const curMx = mrSel.value;
+        mrSel.value = ['30','100'].includes(curMx) ? curMx : '100';
+        g.mr = parseInt(mrSel.value);
+      } else {
+        // Restore MR options for add=69 (30~100萬 per new rate table)
+        const mrOpts = [30,40,50,60,70,80,90,100];
+        if(mrSel.options.length !== mrOpts.length){
+          mrSel.innerHTML = mrOpts.map(v=>`<option value="${v}">${v} 萬</option>`).join('');
+        }
+        const cur = mrSel.value;
+        mrSel.value = mrOpts.map(String).includes(cur) ? cur : '100';
+        g.mr = parseInt(mrSel.value);
+      }
+    }
+  } else if(!isU15 && addSel){
+    // Restore adult options if coming back from u15
+    const opts = [200,300,500,1000,1500,2000];
+    if(!opts.map(String).includes(addSel.value)){
+      addSel.innerHTML = opts.map(v=>`<option value="${v}">${v>=1000?(v/1000+'千萬'):v+' 萬'}</option>`).join('');
+      addSel.value = '500';
+      g.add = 500;
+    }
+    if(addLbl) addLbl.innerHTML = '意外身故保額（萬元）<span class="recommend-tag">建議500萬以上＋尊榮型</span>';
+  }
+}
+
+function onGroupAgeChange(id){
+  const g = groups.find(x=>x.id===id);
+  if(!g) return;
+  const ag = document.getElementById('ag-'+id)?.value||'a15';
+  g.ag = ag;
+  const isU15 = ag==='u15';
+  const addSel = document.getElementById('add-'+id);
+
+  if(addSel && !isU15){
+    // Restore adult options
+    const configs = {a15:[200,300,500,1000,1500,2000],a75:[200,300],a80:[100]};
+    const vals = configs[ag]||configs.a15;
+    addSel.innerHTML = vals.map(v=>`<option value="${v}">${v>=1000?(v/1000)+'千萬':v+' 萬'}</option>`).join('');
+    if(vals.includes(500)) addSel.value='500'; else addSel.value=String(vals[0]);
+    g.add = parseInt(addSel.value)||vals[0];
+  }
+  // syncGroupDisplay handles u15 add options + mr-row visibility
+  syncGroupDisplay(id);
+  updateTIForAllGroups();
+  updateAllGroupPreviews();
+}
+
+function onGroupAddChange(id){
+  const g = groups.find(x=>x.id===id);
+  if(!g) return;
+  g.add = parseInt(document.getElementById('add-'+id)?.value||'500');
+  // For u15, re-sync MR options (add=0 → only mr=100 available)
+  if(g.ag==='u15') syncGroupDisplay(id);
+  updateTIForAllGroups();
+  updateAllGroupPreviews();
+}
+
+function onGroupMrChange(id){
+  const g = groups.find(x=>x.id===id);
+  if(!g) return;
+  g.mr = parseInt(document.getElementById('mr-'+id)?.value||'100');
+  updateAllGroupPreviews();
+}
+
+function updateTIForAllGroups(){
+  const maxAdd = Math.max(...groups.filter(g=>g.ag!=='u15').map(g=>g.add||0), 0);
+  const prem = document.getElementById('ti_premium');
+  const hint = document.getElementById('tiHint');
+  if(maxAdd>=500){
+    if(prem) prem.disabled=false;
+    if(hint) hint.textContent='可選擇超值型或尊榮型不便險';
+  } else if(maxAdd>=200){
+    if(prem){ prem.disabled=true; if(prem.checked){document.getElementById('ti_super').checked=true;onTiChange();} }
+    if(hint) hint.textContent='200–499萬僅可選擇超值型；尊榮型需500萬以上';
+  } else {
+    if(prem) prem.disabled=true;
+    if(hint) hint.textContent='請先選擇身故保額';
+  }
+}
+
+function updateAllGroupPreviews(){
+  const days  = calcDaysOnly();
+  const tiEl  = document.querySelector('input[name="ti"]:checked');
+  const ti    = tiEl ? tiEl.value : null;
+  const box   = document.getElementById('previewPremiumPrice');
+  const disp  = document.getElementById('pp-groups-display');
+  if(!box || !disp) return;
+  if(!days || !ti){ box.style.display='none'; return; }
+
+  const multi = groups.length > 1;
+  let html = '';
+  let anyPrice = false;
+
+  groups.forEach((g, i) => {
+    if(g.ag === 'over85') return;
+    const p = g.ag === 'u15'
+      ? lookup(days, g.add, ti, g.mr||100)
+      : lookup(days, g.add||500, ti);
+    const priceStr = p ? `NT$ ${p.toLocaleString()}` : 'NA';
+
+
+    if(multi){
+      // Multi-group: show each group on its own labeled line
+      html += `<div class="pp-group-row"><span class="pp-group-label">組別${i+1}_保費：</span><span class="pp-group-price">${priceStr.replace('NT$ ','NT. ')} / 人</span></div>`;
+    } else {
+      // Single group: original single-line display
+      html += `<div style="display:flex;justify-content:flex-end;align-items:flex-end">
+        <span class="pp-group-price" style="font-size:22px">${priceStr.replace('NT$ ','NT. ')} / 人</span>
+      </div>`;
+    }
+    if(p) anyPrice = true;
+  });
+
+  if(html){ box.style.display = 'flex'; disp.innerHTML = html; }
+  else { box.style.display = 'none'; }
+}
+
+function agLabel(ag){
+  return {a15:'15–75歲',a75:'75–80歲',a80:'80–85歲',u15:'0–15歲'}[ag]||ag;
+}
+
 
 function onStartTimeChange(){
   const st = document.getElementById('startTime').value;
@@ -996,26 +1308,7 @@ function calcDays(){
 
 // ── live premium preview on page 2 ──
 function updatePreviewPremium(){
-  const box = document.getElementById('previewPremiumPrice');
-  if(!box) return;
-  const days = calcDaysOnly();
-  const add  = parseInt(document.getElementById('addAmount').value);
-  const tiEl = document.querySelector('input[name="ti"]:checked');
-  const ti   = tiEl ? tiEl.value : null;
-  const isU15 = document.getElementById('ageGroup').value === 'u15';
-  const mr  = isU15 ? parseInt(document.getElementById('mrAmount').value||'100') : null;
-  if(!days || !ti){ box.style.display='none'; return; }
-  if(!isU15 && !add){ box.style.display='none'; return; }
-  const p = isU15 ? lookup(days, 0, ti, mr) : lookup(days, add, ti);
-  // always show box once days+add+ti are set (even if NA)
-  box.style.display='flex';
-  if(p !== null){
-    box.querySelector('.pp-amount').textContent = `NT$ ${p.toLocaleString()} 元`;
-    box.querySelector('.pp-amount').style.color = 'var(--bg)';
-  } else {
-    box.querySelector('.pp-amount').textContent = `NA（${days}天費率待建置）`;
-    box.querySelector('.pp-amount').style.color = 'rgba(245,240,235,.5)';
-  }
+  updateAllGroupPreviews();
 }
 
 function calcDaysOnly(){
@@ -1034,70 +1327,15 @@ function calcDaysOnly(){
 // ════════════════════════════════
 //  AGE GROUP
 // ════════════════════════════════
-function onAgeGroupChange(){
-  const g = document.getElementById('ageGroup').value;
-  const warn = document.getElementById('ageWarning');
-  const addSel = document.getElementById('addAmount');
-  const mrRow = document.getElementById('mrRow');
-  const recTag = document.getElementById('recommendTag');
-  warn.style.display='none'; warn.className='age-warning';
-  if(!g) return;
-  if(g==='over85'){
-    warn.style.display='block'; warn.className='age-warning age-warn-red';
-    warn.textContent='超過85歲婉謝承保，無法辦理投保'; return;
-  }
-  const isU15 = g==='u15';
-  // show/hide MR row and recommend tag
-  mrRow.style.display = isU15 ? 'block' : 'none';
-  recTag.style.display = isU15 ? 'none' : '';
+function onAgeGroupChange(){ /* handled by onGroupAgeChange */ }
 
-  const configs = {
-    u15:[{v:0,l:'0 萬（不含身故）'},{v:69,l:'69萬（喪葬費用上限）'}],
-    a15:[{v:200,l:'200萬'},{v:300,l:'300萬'},{v:500,l:'500萬'},{v:1000,l:'1,000萬'},{v:1500,l:'1,500萬'},{v:2000,l:'2,000萬'}],
-    a75:[{v:200,l:'200萬'},{v:300,l:'300萬'}],
-    a80:[{v:100,l:'100萬（上限）'}]
-  };
-  const msgs = {
-    u15:'未滿15歲：身故/喪葬費用上限69萬（或不含身故）；請另選傷害醫療保額',
-    a15:'',
-    a75:'超過75–80歲：身故/喪葬費用上限300萬，最長180天',
-    a80:'超過80–85歲：身故/喪葬費用上限100萬，最長投保30天'
-  };
-  const curVal = addSel.value;
-  addSel.innerHTML = '';
-  (configs[g]||[]).forEach(o => addSel.add(new Option(o.l, o.v)));
-  if([...addSel.options].some(o=>o.value===curVal)) addSel.value = curVal;
-  if(msgs[g]){ warn.style.display='block'; warn.textContent=msgs[g]; }
-  onAddChange();
-}
-
-function onAddChange(){
-  const add = parseInt(document.getElementById('addAmount').value);
-  const prem = document.getElementById('ti_premium');
-  const hint = document.getElementById('tiHint');
-  const isU15 = document.getElementById('ageGroup').value === 'u15';
-  if(isU15){
-    // u15 can use both super and premium TI regardless of add amount
-    prem.disabled=false; hint.textContent='可選擇超值型或尊榮型不便險';
-  } else if(add>=500){
-    prem.disabled=false; hint.textContent='可選擇超值型或尊榮型不便險';
-  } else if(add>=200){
-    prem.disabled=true; hint.textContent='200–499萬僅可選擇超值型；尊榮型需500萬以上';
-    if(prem.checked){ document.getElementById('ti_super').checked=true; onTiChange(); }
-  } else {
-    prem.disabled=true; hint.textContent='請先選擇身故保額';
-  }
-  // Auto-select super if nothing is checked
-  const checked = document.querySelector('input[name="ti"]:checked');
-  if(!checked){ document.getElementById('ti_super').checked=true; onTiChange(); }
-  updatePreviewPremium();
-}
+function onAddChange(){ /* handled by onGroupAddChange */ }
 
 function onTiChange(){
   const ti = document.querySelector('input[name="ti"]:checked')?.value;
   document.getElementById('previewSuper').classList.toggle('show', ti==='super');
   document.getElementById('previewPremium').classList.toggle('show', ti==='premium');
-  updatePreviewPremium();
+  updateAllGroupPreviews();
 }
 
 // ════════════════════════════════
@@ -1144,172 +1382,482 @@ const RATE_BASE={
   50:{a200:1032,a300:1506,a500:2450,a1000:4720,a1500:7078,a2000:9433}
 };
 const RATE_SUPER={
-  1:{a200:411,a300:500,a500:673,a1000:1107,a1500:1542,a2000:1974},
-  2:{a200:446,a300:543,a500:730,a1000:1205,a1500:1681,a2000:2150},
-  3:{a200:482,a300:587,a500:791,a1000:1309,a1500:1824,a2000:2336},
-  4:{a200:564,a300:700,a500:964,a1000:1635,a1500:2307,a2000:2973},
-  5:{a200:646,a300:811,a500:1138,a1000:1965,a1500:2789,a2000:3611},
-  6:{a200:693,a300:872,a500:1228,a1000:2114,a1500:3003,a2000:3890},
-  7:{a200:738,a300:925,a500:1312,a1000:2261,a1500:3215,a2000:4165},
-  8:{a200:776,a300:969,a500:1370,a1000:2348,a1500:3337,a2000:4322},
-  9:{a200:815,a300:1020,a500:1432,a1000:2440,a1500:3460,a2000:4478},
-  10:{a200:848,a300:1060,a500:1488,a1000:2522,a1500:3578,a2000:4631},
-  11:{a200:887,a300:1105,a500:1545,a1000:2611,a1500:3702,a2000:4788},
-  12:{a200:922,a300:1147,a500:1602,a1000:2694,a1500:3820,a2000:4943},
-  13:{a200:953,a300:1189,a500:1657,a1000:2778,a1500:3937,a2000:5091},
-  14:{a200:991,a300:1235,a500:1716,a1000:2864,a1500:4058,a2000:5248},
-  15:{a200:1022,a300:1274,a500:1772,a1000:2960,a1500:4195,a2000:5428},
-  16:{a200:1139,a300:1400,a500:1912,a1000:3142,a1500:4416,a2000:5690},
-  17:{a200:1161,a300:1429,a500:1957,a1000:3226,a1500:4541,a2000:5858},
-  18:{a200:1179,a300:1456,a500:2003,a1000:3309,a1500:4666,a2000:6020},
-  19:{a200:1201,a300:1483,a500:2046,a1000:3394,a1500:4790,a2000:6189},
-  20:{a200:1219,a300:1512,a500:2091,a1000:3477,a1500:4916,a2000:6351},
-  21:{a200:1240,a300:1540,a500:2135,a1000:3560,a1500:5040,a2000:6520},
-  22:{a200:1255,a300:1560,a500:2166,a1000:3618,a1500:5125,a2000:6631},
-  23:{a200:1270,a300:1579,a500:2196,a1000:3676,a1500:5209,a2000:6744},
-  24:{a200:1286,a300:1601,a500:2228,a1000:3733,a1500:5294,a2000:6855},
-  25:{a200:1299,a300:1619,a500:2258,a1000:3789,a1500:5378,a2000:6968},
-  26:{a200:1315,a300:1643,a500:2290,a1000:3847,a1500:5463,a2000:7079},
-  27:{a200:1329,a300:1662,a500:2319,a1000:3904,a1500:5548,a2000:7191},
-  28:{a200:1345,a300:1683,a500:2351,a1000:3960,a1500:5632,a2000:7305},
-  29:{a200:1359,a300:1703,a500:2382,a1000:4017,a1500:5717,a2000:7416},
-  30:{a200:1374,a300:1723,a500:2414,a1000:4075,a1500:5801,a2000:7527},
-  31:{a200:1400,a300:1754,a500:2456,a1000:4144,a1500:5898,a2000:7651},
-  32:{a200:1415,a300:1775,a500:2490,a1000:4208,a1500:5995,a2000:7782},
-  33:{a200:1431,a300:1797,a500:2522,a1000:4272,a1500:6087,a2000:7901},
-  34:{a200:1444,a300:1815,a500:2555,a1000:4335,a1500:6182,a2000:8030},
-  35:{a200:1456,a300:1834,a500:2589,a1000:4398,a1500:6280,a2000:8159},
-  36:{a200:1487,a300:1871,a500:2637,a1000:4477,a1500:6390,a2000:8304},
-  37:{a200:1498,a300:1893,a500:2669,a1000:4540,a1500:6484,a2000:8424},
-  38:{a200:1515,a300:1913,a500:2703,a1000:4603,a1500:6580,a2000:8554},
-  39:{a200:1530,a300:1934,a500:2734,a1000:4664,a1500:6676,a2000:8684},
-  40:{a200:1541,a300:1954,a500:2767,a1000:4729,a1500:6769,a2000:8802},
-  41:{a200:1571,a300:1988,a500:2814,a1000:4807,a1500:6877,a2000:8947},
-  42:{a200:1584,a300:2008,a500:2849,a1000:4870,a1500:6975,a2000:9075},
-  43:{a200:1597,a300:2028,a500:2881,a1000:4934,a1500:7070,a2000:9204},
-  44:{a200:1612,a300:2051,a500:2913,a1000:4997,a1500:7164,a2000:9324},
-  45:{a200:1698,a300:2140,a500:3018,a1000:5133,a1500:7332,a2000:9526},
-  46:{a200:1725,a300:2174,a500:3066,a1000:5211,a1500:7442,a2000:9668},
-  47:{a200:1740,a300:2197,a500:3099,a1000:5275,a1500:7540,a2000:9803},
-  48:{a200:1754,a300:2217,a500:3134,a1000:5341,a1500:7636,a2000:9929},
-  49:{a200:1769,a300:2235,a500:3167,a1000:5406,a1500:7731,a2000:10056},
-  50:{a200:1782,a300:2256,a500:3200,a1000:5470,a1500:7828,a2000:10183}
+  1:{a200:412,a300:501,a500:674,a1000:1108,a1500:1543},
+  2:{a200:448,a300:545,a500:732,a1000:1207,a1500:1683},
+  3:{a200:484,a300:589,a500:793,a1000:1311,a1500:1826},
+  4:{a200:566,a300:702,a500:966,a1000:1637,a1500:2309},
+  5:{a200:648,a300:813,a500:1140,a1000:1967,a1500:2791},
+  6:{a200:696,a300:875,a500:1231,a1000:2117,a1500:3006},
+  7:{a200:741,a300:928,a500:1315,a1000:2264,a1500:3218},
+  8:{a200:779,a300:972,a500:1373,a1000:2351,a1500:3340},
+  9:{a200:819,a300:1024,a500:1436,a1000:2444,a1500:3464},
+  10:{a200:852,a300:1064,a500:1492,a1000:2526,a1500:3582},
+  11:{a200:892,a300:1110,a500:1550,a1000:2616,a1500:3707},
+  12:{a200:927,a300:1152,a500:1607,a1000:2699,a1500:3825},
+  13:{a200:959,a300:1195,a500:1663,a1000:2784,a1500:3943},
+  14:{a200:997,a300:1241,a500:1722,a1000:2870,a1500:4064},
+  15:{a200:1029,a300:1281,a500:1779,a1000:2967,a1500:4202},
+  16:{a200:1148,a300:1409,a500:1921,a1000:3151,a1500:4425},
+  17:{a200:1170,a300:1438,a500:1966,a1000:3235,a1500:4550},
+  18:{a200:1188,a300:1465,a500:2012,a1000:3318,a1500:4675},
+  19:{a200:1210,a300:1492,a500:2055,a1000:3403,a1500:4799},
+  20:{a200:1228,a300:1521,a500:2100,a1000:3486,a1500:4925},
+  21:{a200:1249,a300:1549,a500:2144,a1000:3569,a1500:5049},
+  22:{a200:1264,a300:1569,a500:2175,a1000:3627,a1500:5134},
+  23:{a200:1279,a300:1588,a500:2205,a1000:3685,a1500:5218},
+  24:{a200:1295,a300:1610,a500:2237,a1000:3742,a1500:5303},
+  25:{a200:1308,a300:1628,a500:2267,a1000:3798,a1500:5387},
+  26:{a200:1324,a300:1652,a500:2299,a1000:3856,a1500:5472},
+  27:{a200:1338,a300:1671,a500:2328,a1000:3913,a1500:5557},
+  28:{a200:1354,a300:1692,a500:2360,a1000:3969,a1500:5641},
+  29:{a200:1368,a300:1712,a500:2391,a1000:4026,a1500:5726},
+  30:{a200:1383,a300:1732,a500:2423,a1000:4084,a1500:5810},
+  31:{a200:1409,a300:1763,a500:2465,a1000:4153,a1500:5907},
+  32:{a200:1424,a300:1784,a500:2499,a1000:4217,a1500:6004},
+  33:{a200:1440,a300:1806,a500:2531,a1000:4281,a1500:6096},
+  34:{a200:1453,a300:1824,a500:2564,a1000:4344,a1500:6191},
+  35:{a200:1465,a300:1843,a500:2598,a1000:4407,a1500:6289},
+  36:{a200:1496,a300:1880,a500:2646,a1000:4486,a1500:6399},
+  37:{a200:1507,a300:1902,a500:2678,a1000:4549,a1500:6493},
+  38:{a200:1524,a300:1922,a500:2712,a1000:4612,a1500:6589},
+  39:{a200:1539,a300:1943,a500:2743,a1000:4673,a1500:6685},
+  40:{a200:1550,a300:1963,a500:2776,a1000:4738,a1500:6778},
+  41:{a200:1580,a300:1997,a500:2823,a1000:4816,a1500:6886},
+  42:{a200:1593,a300:2017,a500:2858,a1000:4879,a1500:6984},
+  43:{a200:1606,a300:2037,a500:2890,a1000:4943,a1500:7079},
+  44:{a200:1621,a300:2060,a500:2922,a1000:5006,a1500:7173},
+  45:{a200:1709,a300:2151,a500:3029,a1000:5144,a1500:7343},
+  46:{a200:1736,a300:2185,a500:3077,a1000:5222,a1500:7453},
+  47:{a200:1751,a300:2208,a500:3110,a1000:5286,a1500:7551},
+  48:{a200:1765,a300:2228,a500:3145,a1000:5352,a1500:7647},
+  49:{a200:1780,a300:2246,a500:3178,a1000:5417,a1500:7742},
+  50:{a200:1793,a300:2267,a500:3211,a1000:5481,a1500:7839}
 };
 const RATE_PREMIUM={
-  1:{a500:743,a600:830,a800:1005,a1000:1177,a1500:1612,a2000:2044},
-  2:{a500:819,a600:916,a800:1105,a1000:1294,a1500:1770,a2000:2239},
-  3:{a500:902,a600:1007,a800:1211,a1000:1420,a1500:1935,a2000:2447},
-  4:{a500:1093,a600:1230,a800:1496,a1000:1764,a1500:2436,a2000:3102},
-  5:{a500:1285,a600:1453,a800:1779,a1000:2112,a1500:2936,a2000:3758},
-  6:{a500:1397,a600:1573,a800:1927,a1000:2283,a1500:3172,a2000:4059},
-  7:{a500:1500,a600:1687,a800:2072,a1000:2449,a1500:3403,a2000:4353},
-  8:{a500:1576,a600:1773,a800:2168,a1000:2554,a1500:3543,a2000:4528},
-  9:{a500:1660,a600:1863,a800:2268,a1000:2668,a1500:3688,a2000:4706},
-  10:{a500:1731,a600:1939,a800:2359,a1000:2765,a1500:3821,a2000:4874},
-  11:{a500:1807,a600:2021,a800:2452,a1000:2873,a1500:3964,a2000:5050},
-  12:{a500:1879,a600:2102,a800:2542,a1000:2971,a1500:4097,a2000:5220},
-  13:{a500:1949,a600:2178,a800:2628,a1000:3070,a1500:4229,a2000:5383},
-  14:{a500:2026,a600:2261,a800:2726,a1000:3174,a1500:4368,a2000:5558},
-  15:{a500:2096,a600:2339,a800:2818,a1000:3284,a1500:4519,a2000:5752},
-  16:{a500:2335,a600:2588,a800:3085,a1000:3565,a1500:4839,a2000:6113},
-  17:{a500:2382,a600:2643,a800:3155,a1000:3651,a1500:4966,a2000:6283},
-  18:{a500:2430,a600:2695,a800:3227,a1000:3736,a1500:5093,a2000:6447},
-  19:{a500:2475,a600:2750,a800:3296,a1000:3823,a1500:5219,a2000:6618},
-  20:{a500:2522,a600:2804,a800:3368,a1000:3908,a1500:5347,a2000:6782},
-  21:{a500:2568,a600:2858,a800:3438,a1000:3993,a1500:5473,a2000:6953},
-  22:{a500:2601,a600:2896,a800:3488,a1000:4053,a1500:5560,a2000:7066},
-  23:{a500:2633,a600:2937,a800:3536,a1000:4113,a1500:5646,a2000:7181},
-  24:{a500:2667,a600:2974,a800:3585,a1000:4172,a1500:5733,a2000:7294},
-  25:{a500:2699,a600:3014,a800:3633,a1000:4230,a1500:5819,a2000:7409},
-  26:{a500:2733,a600:3053,a800:3683,a1000:4290,a1500:5906,a2000:7522},
-  27:{a500:2764,a600:3089,a800:3729,a1000:4349,a1500:5993,a2000:7636},
-  28:{a500:2798,a600:3128,a800:3778,a1000:4407,a1500:6079,a2000:7752},
-  29:{a500:2831,a600:3166,a800:3827,a1000:4466,a1500:6166,a2000:7865},
-  30:{a500:2865,a600:3205,a800:3876,a1000:4526,a1500:6252,a2000:7978},
-  31:{a500:2921,a600:3268,a800:3950,a1000:4609,a1500:6363,a2000:8116},
-  32:{a500:2955,a600:3307,a800:3999,a1000:4673,a1500:6460,a2000:8247},
-  33:{a500:2987,a600:3348,a800:4051,a1000:4737,a1500:6552,a2000:8366},
-  34:{a500:3020,a600:3385,a800:4104,a1000:4800,a1500:6647,a2000:8495},
-  35:{a500:3054,a600:3424,a800:4156,a1000:4863,a1500:6745,a2000:8624},
-  36:{a500:3115,a600:3492,a800:4235,a1000:4955,a1500:6868,a2000:8782},
-  37:{a500:3147,a600:3532,a800:4285,a1000:5018,a1500:6962,a2000:8902},
-  38:{a500:3181,a600:3572,a800:4338,a1000:5081,a1500:7058,a2000:9032},
-  39:{a500:3212,a600:3611,a800:4391,a1000:5142,a1500:7154,a2000:9162},
-  40:{a500:3245,a600:3651,a800:4439,a1000:5207,a1500:7247,a2000:9280},
-  41:{a500:3307,a600:3719,a800:4522,a1000:5300,a1500:7370,a2000:9440},
-  42:{a500:3342,a600:3757,a800:4573,a1000:5363,a1500:7468,a2000:9568},
-  43:{a500:3374,a600:3796,a800:4626,a1000:5427,a1500:7563,a2000:9697},
-  44:{a500:3406,a600:3837,a800:4677,a1000:5490,a1500:7657,a2000:9817},
-  45:{a500:3582,a600:4017,a800:4871,a1000:5697,a1500:7896,a2000:10090},
-  46:{a500:3644,a600:4085,a800:4952,a1000:5789,a1500:8020,a2000:10246},
-  47:{a500:3677,a600:4125,a800:5002,a1000:5853,a1500:8118,a2000:10381},
-  48:{a500:3712,a600:4165,a800:5054,a1000:5919,a1500:8214,a2000:10507},
-  49:{a500:3745,a600:4206,a800:5108,a1000:5984,a1500:8309,a2000:10634},
-  50:{a500:3778,a600:4246,a800:5160,a1000:6048,a1500:8406,a2000:10761}
+  1:{a500:744,a600:831,a800:1006,a1000:1178,a1500:1613,a2000:2045},
+  2:{a500:821,a600:918,a800:1107,a1000:1296,a1500:1772,a2000:2241},
+  3:{a500:905,a600:1010,a800:1214,a1000:1423,a1500:1938,a2000:2450},
+  4:{a500:1097,a600:1234,a800:1500,a1000:1768,a1500:2440,a2000:3106},
+  5:{a500:1290,a600:1458,a800:1784,a1000:2117,a1500:2941,a2000:3763},
+  6:{a500:1403,a600:1579,a800:1933,a1000:2289,a1500:3178,a2000:4065},
+  7:{a500:1506,a600:1693,a800:2078,a1000:2455,a1500:3409,a2000:4359},
+  8:{a500:1583,a600:1780,a800:2175,a1000:2561,a1500:3550,a2000:4535},
+  9:{a500:1668,a600:1871,a800:2276,a1000:2676,a1500:3696,a2000:4714},
+  10:{a500:1740,a600:1948,a800:2368,a1000:2774,a1500:3830,a2000:4883},
+  11:{a500:1817,a600:2031,a800:2462,a1000:2883,a1500:3974,a2000:5060},
+  12:{a500:1889,a600:2112,a800:2552,a1000:2981,a1500:4107,a2000:5230},
+  13:{a500:1960,a600:2189,a800:2639,a1000:3081,a1500:4240,a2000:5394},
+  14:{a500:2038,a600:2273,a800:2738,a1000:3186,a1500:4380,a2000:5570},
+  15:{a500:2109,a600:2352,a800:2831,a1000:3297,a1500:4532,a2000:5765},
+  16:{a500:2354,a600:2607,a800:3104,a1000:3584,a1500:4858,a2000:6132},
+  17:{a500:2400,a600:2661,a800:3173,a1000:3669,a1500:4984,a2000:6301},
+  18:{a500:2448,a600:2713,a800:3245,a1000:3754,a1500:5111,a2000:6465},
+  19:{a500:2493,a600:2768,a800:3314,a1000:3841,a1500:5237,a2000:6636},
+  20:{a500:2540,a600:2822,a800:3386,a1000:3926,a1500:5365,a2000:6800},
+  21:{a500:2586,a600:2876,a800:3456,a1000:4011,a1500:5491,a2000:6971},
+  22:{a500:2619,a600:2914,a800:3506,a1000:4071,a1500:5578,a2000:7084},
+  23:{a500:2651,a600:2955,a800:3554,a1000:4131,a1500:5664,a2000:7199},
+  24:{a500:2685,a600:2992,a800:3603,a1000:4190,a1500:5751,a2000:7312},
+  25:{a500:2717,a600:3032,a800:3651,a1000:4248,a1500:5837,a2000:7427},
+  26:{a500:2751,a600:3071,a800:3701,a1000:4308,a1500:5924,a2000:7540},
+  27:{a500:2782,a600:3107,a800:3747,a1000:4367,a1500:6011,a2000:7654},
+  28:{a500:2816,a600:3146,a800:3796,a1000:4425,a1500:6097,a2000:7770},
+  29:{a500:2849,a600:3184,a800:3845,a1000:4484,a1500:6184,a2000:7883},
+  30:{a500:2883,a600:3223,a800:3894,a1000:4544,a1500:6270,a2000:7996},
+  31:{a500:2939,a600:3286,a800:3968,a1000:4627,a1500:6381,a2000:8134},
+  32:{a500:2973,a600:3325,a800:4017,a1000:4691,a1500:6478,a2000:8265},
+  33:{a500:3005,a600:3366,a800:4069,a1000:4755,a1500:6570,a2000:8384},
+  34:{a500:3038,a600:3403,a800:4122,a1000:4818,a1500:6665,a2000:8513},
+  35:{a500:3072,a600:3442,a800:4174,a1000:4881,a1500:6763,a2000:8642},
+  36:{a500:3134,a600:3511,a800:4254,a1000:4974,a1500:6887,a2000:8801},
+  37:{a500:3166,a600:3551,a800:4304,a1000:5037,a1500:6981,a2000:8921},
+  38:{a500:3200,a600:3591,a800:4357,a1000:5100,a1500:7077,a2000:9051},
+  39:{a500:3231,a600:3630,a800:4410,a1000:5161,a1500:7173,a2000:9181},
+  40:{a500:3264,a600:3670,a800:4458,a1000:5226,a1500:7266,a2000:9299},
+  41:{a500:3325,a600:3737,a800:4540,a1000:5318,a1500:7388,a2000:9458},
+  42:{a500:3360,a600:3775,a800:4591,a1000:5381,a1500:7486,a2000:9586},
+  43:{a500:3392,a600:3814,a800:4644,a1000:5445,a1500:7581,a2000:9715},
+  44:{a500:3424,a600:3855,a800:4695,a1000:5508,a1500:7675,a2000:9835},
+  45:{a500:3604,a600:4039,a800:4893,a1000:5719,a1500:7918,a2000:10112},
+  46:{a500:3666,a600:4107,a800:4974,a1000:5811,a1500:8042,a2000:10268},
+  47:{a500:3699,a600:4147,a800:5024,a1000:5875,a1500:8140,a2000:10403},
+  48:{a500:3734,a600:4187,a800:5076,a1000:5941,a1500:8236,a2000:10529},
+  49:{a500:3767,a600:4228,a800:5130,a1000:6006,a1500:8331,a2000:10656},
+  50:{a500:3800,a600:4268,a800:5182,a1000:6070,a1500:8428,a2000:10783}
 };
 const RATE_U15_SUPER={
-  1:{mr30:431,mr60:602,mr100:831},2:{mr30:467,mr60:656,mr100:905},
-  3:{mr30:505,mr60:711,mr100:984},4:{mr30:595,mr60:862,mr100:1215},
-  5:{mr30:682,mr60:1010,mr100:1446},6:{mr30:733,mr60:1085,mr100:1556},
-  7:{mr30:777,mr60:1157,mr100:1663},8:{mr30:815,mr60:1210,mr100:1729},
-  9:{mr30:858,mr60:1264,mr100:1800},10:{mr30:892,mr60:1312,mr100:1862},
-  11:{mr30:930,mr60:1361,mr100:1929},12:{mr30:965,mr60:1411,mr100:1992},
-  13:{mr30:1001,mr60:1458,mr100:2056},14:{mr30:1038,mr60:1509,mr100:2121},
-  15:{mr30:1071,mr60:1559,mr100:2192},16:{mr30:1190,mr60:1693,mr100:2348},
-  17:{mr30:1213,mr60:1733,mr100:2409},18:{mr30:1233,mr60:1769,mr100:2467},
-  19:{mr30:1254,mr60:1808,mr100:2527},20:{mr30:1276,mr60:1844,mr100:2585},
-  21:{mr30:1298,mr60:1882,mr100:2644},22:{mr30:1313,mr60:1909,mr100:2684},
-  23:{mr30:1328,mr60:1936,mr100:2725},24:{mr30:1345,mr60:1962,mr100:2765},
-  25:{mr30:1359,mr60:1989,mr100:2805},26:{mr30:1378,mr60:2016,mr100:2846},
-  27:{mr30:1392,mr60:2040,mr100:2885},28:{mr30:1408,mr60:2066,mr100:2925},
-  29:{mr30:1423,mr60:2093,mr100:2965},30:{mr30:1439,mr60:2120,mr100:3006},
-  31:{mr30:1467,mr60:2159,mr100:3059},32:{mr30:1482,mr60:2187,mr100:3103},
-  33:{mr30:1499,mr60:2216,mr100:3147},34:{mr30:1512,mr60:2241,mr100:3190},
-  35:{mr30:1526,mr60:2268,mr100:3234},36:{mr30:1557,mr60:2312,mr100:3293},
-  37:{mr30:1573,mr60:2339,mr100:3337},38:{mr30:1588,mr60:2367,mr100:3380},
-  39:{mr30:1603,mr60:2394,mr100:3421},40:{mr30:1618,mr60:2422,mr100:3466},
-  41:{mr30:1648,mr60:2464,mr100:3524},42:{mr30:1663,mr60:2490,mr100:3568},
-  43:{mr30:1676,mr60:2517,mr100:3611},44:{mr30:1694,mr60:2546,mr100:3655},
-  45:{mr30:1779,mr60:2644,mr100:3771},46:{mr30:1808,mr60:2686,mr100:3830},
-  47:{mr30:1826,mr60:2716,mr100:3875},48:{mr30:1840,mr60:2743,mr100:3920},
-  49:{mr30:1854,mr60:2772,mr100:3964},50:{mr30:1869,mr60:2800,mr100:4009}
+  1:{mr30:432,mr40:488,mr50:547,mr60:603,mr70:662,mr80:720,mr90:776,mr100:832,mx100:812,mx30:412},
+  2:{mr30:469,mr40:532,mr50:594,mr60:658,mr70:720,mr80:784,mr90:846,mr100:907,mx100:885,mx30:447},
+  3:{mr30:507,mr40:578,mr50:644,mr60:713,mr70:781,mr80:849,mr90:917,mr100:986,mx100:962,mx30:483},
+  4:{mr30:597,mr40:685,mr50:772,mr60:864,mr70:951,mr80:1039,mr90:1129,mr100:1217,mx100:1186,mx30:566},
+  5:{mr30:684,mr40:790,mr50:900,mr60:1012,mr70:1118,mr80:1228,mr90:1340,mr100:1448,mx100:1411,mx30:647},
+  6:{mr30:736,mr40:853,mr50:972,mr60:1088,mr70:1205,mr80:1324,mr90:1443,mr100:1559,mx100:1518,mx30:695},
+  7:{mr30:780,mr40:907,mr50:1037,mr60:1160,mr70:1286,mr80:1416,mr90:1540,mr100:1666,mx100:1622,mx30:736},
+  8:{mr30:818,mr40:949,mr50:1084,mr60:1213,mr70:1342,mr80:1476,mr90:1603,mr100:1732,mx100:1685,mx30:771},
+  9:{mr30:862,mr40:996,mr50:1135,mr60:1268,mr70:1402,mr80:1538,mr90:1671,mr100:1804,mx100:1754,mx30:812},
+  10:{mr30:896,mr40:1034,mr50:1179,mr60:1316,mr70:1454,mr80:1596,mr90:1730,mr100:1866,mx100:1813,mx30:843},
+  11:{mr30:935,mr40:1080,mr50:1226,mr60:1366,mr70:1510,mr80:1654,mr90:1795,mr100:1934,mx100:1878,mx30:879},
+  12:{mr30:970,mr40:1119,mr50:1270,mr60:1416,mr70:1563,mr80:1711,mr90:1855,mr100:1997,mx100:1938,mx30:911},
+  13:{mr30:1007,mr40:1159,mr50:1314,mr60:1464,mr70:1616,mr80:1766,mr90:1916,mr100:2062,mx100:2000,mx30:945},
+  14:{mr30:1044,mr40:1200,mr50:1361,mr60:1515,mr70:1671,mr80:1826,mr90:1978,mr100:2127,mx100:2063,mx30:980},
+  15:{mr30:1078,mr40:1240,mr50:1406,mr60:1566,mr70:1727,mr80:1886,mr90:2044,mr100:2199,mx100:2132,mx30:1011},
+  16:{mr30:1199,mr40:1367,mr50:1536,mr60:1702,mr70:1869,mr80:2035,mr90:2197,mr100:2357,mx100:2288,mx30:1130},
+  17:{mr30:1222,mr40:1395,mr50:1570,mr60:1742,mr70:1914,mr80:2084,mr90:2251,mr100:2418,mx100:2345,mx30:1149},
+  18:{mr30:1242,mr40:1420,mr50:1603,mr60:1778,mr70:1956,mr80:2134,mr90:2305,mr100:2476,mx100:2401,mx30:1167},
+  19:{mr30:1263,mr40:1448,mr50:1635,mr60:1817,mr70:2000,mr80:2181,mr90:2360,mr100:2536,mx100:2458,mx30:1185},
+  20:{mr30:1285,mr40:1475,mr50:1667,mr60:1853,mr70:2042,mr80:2231,mr90:2413,mr100:2594,mx100:2514,mx30:1205},
+  21:{mr30:1307,mr40:1502,mr50:1699,mr60:1891,mr70:2086,mr80:2279,mr90:2466,mr100:2653,mx100:2570,mx30:1224},
+  22:{mr30:1322,mr40:1522,mr50:1722,mr60:1918,mr70:2115,mr80:2312,mr90:2503,mr100:2693,mx100:2608,mx30:1237},
+  23:{mr30:1337,mr40:1540,mr50:1743,mr60:1945,mr70:2147,mr80:2345,mr90:2540,mr100:2734,mx100:2647,mx30:1250},
+  24:{mr30:1354,mr40:1560,mr50:1768,mr60:1971,mr70:2175,mr80:2379,mr90:2578,mr100:2774,mx100:2685,mx30:1265},
+  25:{mr30:1368,mr40:1579,mr50:1790,mr60:1998,mr70:2207,mr80:2412,mr90:2613,mr100:2814,mx100:2723,mx30:1277},
+  26:{mr30:1387,mr40:1599,mr50:1813,mr60:2025,mr70:2236,mr80:2446,mr90:2651,mr100:2855,mx100:2762,mx30:1294},
+  27:{mr30:1401,mr40:1617,mr50:1833,mr60:2049,mr70:2264,mr80:2476,mr90:2687,mr100:2894,mx100:2800,mx30:1307},
+  28:{mr30:1417,mr40:1637,mr50:1856,mr60:2075,mr70:2295,mr80:2510,mr90:2724,mr100:2934,mx100:2838,mx30:1321},
+  29:{mr30:1432,mr40:1656,mr50:1880,mr60:2102,mr70:2324,mr80:2543,mr90:2760,mr100:2974,mx100:2876,mx30:1334},
+  30:{mr30:1448,mr40:1674,mr50:1903,mr60:2129,mr70:2355,mr80:2577,mr90:2798,mr100:3015,mx100:2915,mx30:1348},
+  31:{mr30:1476,mr40:1707,mr50:1937,mr60:2168,mr70:2397,mr80:2624,mr90:2847,mr100:3068,mx100:2965,mx30:1373},
+  32:{mr30:1491,mr40:1726,mr50:1961,mr60:2196,mr70:2429,mr80:2659,mr90:2886,mr100:3112,mx100:3007,mx30:1386},
+  33:{mr30:1508,mr40:1745,mr50:1984,mr60:2225,mr70:2461,mr80:2694,mr90:2927,mr100:3156,mx100:3049,mx30:1401},
+  34:{mr30:1521,mr40:1764,mr50:2007,mr60:2250,mr70:2491,mr80:2730,mr90:2965,mr100:3199,mx100:3091,mx30:1413},
+  35:{mr30:1535,mr40:1784,mr50:2032,mr60:2277,mr70:2522,mr80:2766,mr90:3005,mr100:3243,mx100:3133,mx30:1425},
+  36:{mr30:1566,mr40:1817,mr50:2070,mr60:2321,mr70:2569,mr80:2818,mr90:3060,mr100:3302,mx100:3190,mx30:1454},
+  37:{mr30:1582,mr40:1838,mr50:2093,mr60:2348,mr70:2601,mr80:2852,mr90:3101,mr100:3346,mx100:3232,mx30:1468},
+  38:{mr30:1597,mr40:1856,mr50:2116,mr60:2376,mr70:2632,mr80:2888,mr90:3139,mr100:3389,mx100:3274,mx30:1482},
+  39:{mr30:1612,mr40:1874,mr50:2139,mr60:2403,mr70:2664,mr80:2925,mr90:3178,mr100:3430,mx100:3313,mx30:1495},
+  40:{mr30:1627,mr40:1894,mr50:2162,mr60:2431,mr70:2695,mr80:2959,mr90:3219,mr100:3475,mx100:3356,mx30:1508},
+  41:{mr30:1657,mr40:1927,mr50:2200,mr60:2473,mr70:2741,mr80:3011,mr90:3273,mr100:3533,mx100:3412,mx30:1536},
+  42:{mr30:1672,mr40:1946,mr50:2225,mr60:2499,mr70:2772,mr80:3046,mr90:3312,mr100:3577,mx100:3454,mx30:1549},
+  43:{mr30:1685,mr40:1965,mr50:2247,mr60:2526,mr70:2803,mr80:3081,mr90:3350,mr100:3620,mx100:3496,mx30:1561},
+  44:{mr30:1703,mr40:1985,mr50:2270,mr60:2555,mr70:2835,mr80:3117,mr90:3391,mr100:3664,mx100:3538,mx30:1577},
+  45:{mr30:1790,mr40:2078,mr50:2368,mr60:2655,mr70:2941,mr80:3227,mr90:3504,mr100:3782,mx100:3654,mx30:1662},
+  46:{mr30:1819,mr40:2112,mr50:2407,mr60:2697,mr70:2987,mr80:3278,mr90:3558,mr100:3841,mx100:3711,mx30:1689},
+  47:{mr30:1837,mr40:2132,mr50:2430,mr60:2727,mr70:3020,mr80:3313,mr90:3600,mr100:3886,mx100:3753,mx30:1704},
+  48:{mr30:1851,mr40:2150,mr50:2454,mr60:2754,mr70:3051,mr80:3349,mr90:3640,mr100:3931,mx100:3797,mx30:1717},
+  49:{mr30:1865,mr40:2170,mr50:2477,mr60:2783,mr70:3086,mr80:3387,mr90:3682,mr100:3975,mx100:3839,mx30:1729},
+  50:{mr30:1880,mr40:2189,mr50:2501,mr60:2811,mr70:3117,mr80:3423,mr90:3721,mr100:4020,mx100:3882,mx30:1742},
+  51:{mr30:1913,mr40:2224,mr50:2539,mr60:2854,mr70:3164,mr80:3474,mr90:3778,mr100:4078,mx100:3938,mx30:1773},
+  52:{mr30:1926,mr40:2243,mr50:2562,mr60:2880,mr70:3195,mr80:3509,mr90:3817,mr100:4121,mx100:3980,mx30:1785},
+  53:{mr30:1941,mr40:2264,mr50:2587,mr60:2910,mr70:3227,mr80:3545,mr90:3859,mr100:4169,mx100:4026,mx30:1798},
+  54:{mr30:1955,mr40:2283,mr50:2611,mr60:2936,mr70:3259,mr80:3583,mr90:3899,mr100:4213,mx100:4068,mx30:1810},
+  55:{mr30:1973,mr40:2304,mr50:2634,mr60:2966,mr70:3292,mr80:3618,mr90:3940,mr100:4258,mx100:4111,mx30:1826},
+  56:{mr30:2001,mr40:2337,mr50:2673,mr60:3007,mr70:3337,mr80:3669,mr90:3994,mr100:4316,mx100:4167,mx30:1852},
+  57:{mr30:2015,mr40:2355,mr50:2696,mr60:3036,mr70:3371,mr80:3704,mr90:4035,mr100:4360,mx100:4210,mx30:1865},
+  58:{mr30:2030,mr40:2375,mr50:2720,mr60:3063,mr70:3403,mr80:3742,mr90:4075,mr100:4405,mx100:4253,mx30:1878},
+  59:{mr30:2047,mr40:2394,mr50:2742,mr60:3092,mr70:3435,mr80:3776,mr90:4116,mr100:4450,mx100:4296,mx30:1893},
+  60:{mr30:2062,mr40:2414,mr50:2767,mr60:3120,mr70:3467,mr80:3813,mr90:4156,mr100:4494,mx100:4338,mx30:1906},
+  61:{mr30:2087,mr40:2442,mr50:2798,mr60:3153,mr70:3506,mr80:3852,mr90:4198,mr100:4540,mx100:4383,mx30:1930},
+  62:{mr30:2097,mr40:2455,mr50:2813,mr60:3172,mr70:3525,mr80:3877,mr90:4226,mr100:4569,mx100:4411,mx30:1939},
+  63:{mr30:2108,mr40:2469,mr50:2831,mr60:3192,mr70:3549,mr80:3903,mr90:4254,mr100:4602,mx100:4442,mx30:1948},
+  64:{mr30:2118,mr40:2483,mr50:2847,mr60:3212,mr70:3572,mr80:3928,mr90:4281,mr100:4631,mx100:4469,mx30:1956},
+  65:{mr30:2130,mr40:2495,mr50:2864,mr60:3231,mr70:3593,mr80:3954,mr90:4310,mr100:4663,mx100:4500,mx30:1967},
+  66:{mr30:2155,mr40:2523,mr50:2893,mr60:3264,mr70:3630,mr80:3993,mr90:4351,mr100:4707,mx100:4542,mx30:1990},
+  67:{mr30:2164,mr40:2537,mr50:2911,mr60:3283,mr70:3653,mr80:4018,mr90:4380,mr100:4738,mx100:4572,mx30:1998},
+  68:{mr30:2175,mr40:2549,mr50:2927,mr60:3302,mr70:3674,mr80:4041,mr90:4407,mr100:4768,mx100:4601,mx30:2008},
+  69:{mr30:2184,mr40:2563,mr50:2942,mr60:3321,mr70:3696,mr80:4066,mr90:4434,mr100:4799,mx100:4631,mx30:2016},
+  70:{mr30:2196,mr40:2575,mr50:2960,mr60:3340,mr70:3718,mr80:4092,mr90:4464,mr100:4828,mx100:4658,mx30:2026},
+  71:{mr30:2221,mr40:2603,mr50:2989,mr60:3374,mr70:3754,mr80:4130,mr90:4504,mr100:4873,mx100:4702,mx30:2050},
+  72:{mr30:2229,mr40:2615,mr50:3006,mr60:3392,mr70:3775,mr80:4155,mr90:4530,mr100:4904,mx100:4732,mx30:2057},
+  73:{mr30:2242,mr40:2630,mr50:3022,mr60:3412,mr70:3799,mr80:4180,mr90:4560,mr100:4935,mx100:4761,mx30:2068},
+  74:{mr30:2251,mr40:2642,mr50:3038,mr60:3431,mr70:3820,mr80:4205,mr90:4586,mr100:4965,mx100:4790,mx30:2076},
+  75:{mr30:2262,mr40:2657,mr50:3056,mr60:3451,mr70:3842,mr80:4229,mr90:4615,mr100:4997,mx100:4821,mx30:2086},
+  76:{mr30:2288,mr40:2685,mr50:3085,mr60:3485,mr70:3878,mr80:4269,mr90:4657,mr100:5040,mx100:4863,mx30:2111},
+  77:{mr30:2298,mr40:2698,mr50:3103,mr60:3505,mr70:3902,mr80:4294,mr90:4684,mr100:5071,mx100:4892,mx30:2119},
+  78:{mr30:2309,mr40:2712,mr50:3118,mr60:3523,mr70:3923,mr80:4319,mr90:4712,mr100:5102,mx100:4922,mx30:2129},
+  79:{mr30:2318,mr40:2724,mr50:3134,mr60:3542,mr70:3945,mr80:4344,mr90:4740,mr100:5133,mx100:4952,mx30:2137},
+  80:{mr30:2329,mr40:2739,mr50:3151,mr60:3562,mr70:3967,mr80:4369,mr90:4767,mr100:5163,mx100:4980,mx30:2146},
+  81:{mr30:2354,mr40:2765,mr50:3182,mr60:3595,mr70:4004,mr80:4408,mr90:4810,mr100:5209,mx100:5025,mx30:2170},
+  82:{mr30:2364,mr40:2778,mr50:3196,mr60:3614,mr70:4024,mr80:4432,mr90:4836,mr100:5237,mx100:5052,mx30:2179},
+  83:{mr30:2374,mr40:2791,mr50:3213,mr60:3632,mr70:4047,mr80:4456,mr90:4863,mr100:5268,mx100:5082,mx30:2188},
+  84:{mr30:2385,mr40:2805,mr50:3231,mr60:3653,mr70:4069,mr80:4481,mr90:4893,mr100:5299,mx100:5111,mx30:2197},
+  85:{mr30:2395,mr40:2818,mr50:3246,mr60:3671,mr70:4092,mr80:4506,mr90:4919,mr100:5330,mx100:5141,mx30:2206},
+  86:{mr30:2422,mr40:2845,mr50:3278,mr60:3705,mr70:4127,mr80:4545,mr90:4962,mr100:5375,mx100:5185,mx30:2232},
+  87:{mr30:2432,mr40:2860,mr50:3293,mr60:3725,mr70:4151,mr80:4571,mr90:4991,mr100:5406,mx100:5214,mx30:2240},
+  88:{mr30:2443,mr40:2873,mr50:3312,mr60:3745,mr70:4173,mr80:4597,mr90:5018,mr100:5436,mx100:5242,mx30:2249},
+  89:{mr30:2453,mr40:2886,mr50:3327,mr60:3764,mr70:4195,mr80:4621,mr90:5046,mr100:5467,mx100:5272,mx30:2258},
+  90:{mr30:2464,mr40:2899,mr50:3343,mr60:3782,mr70:4217,mr80:4646,mr90:5073,mr100:5498,mx100:5302,mx30:2268},
+  91:{mr30:2486,mr40:2925,mr50:3370,mr60:3813,mr70:4249,mr80:4680,mr90:5111,mr100:5538,mx100:5341,mx30:2289},
+  92:{mr30:2496,mr40:2936,mr50:3384,mr60:3829,mr70:4269,mr80:4704,mr90:5136,mr100:5563,mx100:5365,mx30:2298},
+  93:{mr30:2505,mr40:2948,mr50:3401,mr60:3847,mr70:4288,mr80:4724,mr90:5159,mr100:5592,mx100:5392,mx30:2305},
+  94:{mr30:2513,mr40:2959,mr50:3413,mr60:3863,mr70:4306,mr80:4747,mr90:5183,mr100:5617,mx100:5416,mx30:2312},
+  95:{mr30:2523,mr40:2971,mr50:3427,mr60:3879,mr70:4327,mr80:4767,mr90:5206,mr100:5644,mx100:5442,mx30:2321},
+  96:{mr30:2547,mr40:2998,mr50:3456,mr60:3911,mr70:4360,mr80:4805,mr90:5246,mr100:5684,mx100:5481,mx30:2344},
+  97:{mr30:2555,mr40:3009,mr50:3469,mr60:3926,mr70:4378,mr80:4826,mr90:5270,mr100:5711,mx100:5507,mx30:2351},
+  98:{mr30:2564,mr40:3020,mr50:3484,mr60:3944,mr70:4398,mr80:4846,mr90:5292,mr100:5736,mx100:5531,mx30:2359},
+  99:{mr30:2573,mr40:3032,mr50:3498,mr60:3960,mr70:4416,mr80:4869,mr90:5317,mr100:5765,mx100:5559,mx30:2367},
+  100:{mr30:2581,mr40:3043,mr50:3512,mr60:3976,mr70:4435,mr80:4889,mr90:5340,mr100:5790,mx100:5583,mx30:2374},
+  101:{mr30:2605,mr40:3069,mr50:3539,mr60:4007,mr70:4469,mr80:4926,mr90:5379,mr100:5830,mx100:5622,mx30:2397},
+  102:{mr30:2614,mr40:3080,mr50:3553,mr60:4024,mr70:4487,mr80:4946,mr90:5403,mr100:5855,mx100:5646,mx30:2405},
+  103:{mr30:2621,mr40:3091,mr50:3568,mr60:4039,mr70:4505,mr80:4970,mr90:5426,mr100:5881,mx100:5671,mx30:2411},
+  104:{mr30:2631,mr40:3102,mr50:3582,mr60:4057,mr70:4525,mr80:4989,mr90:5450,mr100:5908,mx100:5697,mx30:2420},
+  105:{mr30:2640,mr40:3114,mr50:3595,mr60:4073,mr70:4545,mr80:5013,mr90:5475,mr100:5936,mx100:5724,mx30:2428},
+  106:{mr30:2663,mr40:3141,mr50:3624,mr60:4103,mr70:4579,mr80:5048,mr90:5513,mr100:5976,mx100:5763,mx30:2450},
+  107:{mr30:2673,mr40:3153,mr50:3638,mr60:4121,mr70:4599,mr80:5068,mr90:5538,mr100:6002,mx100:5788,mx30:2459},
+  108:{mr30:2681,mr40:3162,mr50:3653,mr60:4136,mr70:4617,mr80:5091,mr90:5559,mr100:6027,mx100:5812,mx30:2466},
+  109:{mr30:2689,mr40:3175,mr50:3666,mr60:4153,mr70:4635,mr80:5111,mr90:5583,mr100:6054,mx100:5838,mx30:2473},
+  110:{mr30:2699,mr40:3186,mr50:3679,mr60:4171,mr70:4655,mr80:5134,mr90:5608,mr100:6079,mx100:5862,mx30:2482},
+  111:{mr30:2722,mr40:3213,mr50:3708,mr60:4201,mr70:4687,mr80:5169,mr90:5646,mr100:6121,mx100:5903,mx30:2504},
+  112:{mr30:2730,mr40:3224,mr50:3721,mr60:4217,mr70:4706,mr80:5191,mr90:5670,mr100:6147,mx100:5928,mx30:2511},
+  113:{mr30:2739,mr40:3234,mr50:3735,mr60:4235,mr70:4726,mr80:5211,mr90:5693,mr100:6173,mx100:5953,mx30:2519},
+  114:{mr30:2749,mr40:3247,mr50:3750,mr60:4251,mr70:4745,mr80:5233,mr90:5717,mr100:6200,mx100:5978,mx30:2527},
+  115:{mr30:2757,mr40:3258,mr50:3765,mr60:4268,mr70:4763,mr80:5255,mr90:5742,mr100:6226,mx100:6003,mx30:2534},
+  116:{mr30:2781,mr40:3284,mr50:3792,mr60:4298,mr70:4797,mr80:5290,mr90:5780,mr100:6265,mx100:6041,mx30:2557},
+  117:{mr30:2790,mr40:3296,mr50:3805,mr60:4314,mr70:4816,mr80:5313,mr90:5805,mr100:6293,mx100:6068,mx30:2565},
+  118:{mr30:2797,mr40:3306,mr50:3820,mr60:4331,mr70:4834,mr80:5333,mr90:5827,mr100:6318,mx100:6092,mx30:2571},
+  119:{mr30:2808,mr40:3319,mr50:3836,mr60:4348,mr70:4855,mr80:5357,mr90:5853,mr100:6347,mx100:6119,mx30:2580},
+  120:{mr30:2817,mr40:3330,mr50:3848,mr60:4365,mr70:4873,mr80:5378,mr90:5876,mr100:6372,mx100:6143,mx30:2588},
+  121:{mr30:2838,mr40:3352,mr50:3874,mr60:4390,mr70:4901,mr80:5405,mr90:5907,mr100:6403,mx100:6174,mx30:2609},
+  122:{mr30:2844,mr40:3360,mr50:3882,mr60:4402,mr70:4913,mr80:5421,mr90:5923,mr100:6422,mx100:6192,mx30:2614},
+  123:{mr30:2851,mr40:3369,mr50:3893,mr60:4413,mr70:4927,mr80:5436,mr90:5940,mr100:6438,mx100:6207,mx30:2620},
+  124:{mr30:2856,mr40:3376,mr50:3901,mr60:4423,mr70:4938,mr80:5449,mr90:5954,mr100:6457,mx100:6226,mx30:2625},
+  125:{mr30:2863,mr40:3384,mr50:3911,mr60:4435,mr70:4951,mr80:5465,mr90:5970,mr100:6475,mx100:6243,mx30:2631},
+  126:{mr30:2883,mr40:3406,mr50:3934,mr60:4461,mr70:4978,mr80:5493,mr90:6000,mr100:6506,mx100:6273,mx30:2650},
+  127:{mr30:2889,mr40:3415,mr50:3944,mr60:4470,mr70:4991,mr80:5507,mr90:6017,mr100:6525,mx100:6291,mx30:2655},
+  128:{mr30:2894,mr40:3422,mr50:3953,mr60:4482,mr70:5003,mr80:5522,mr90:6033,mr100:6540,mx100:6306,mx30:2660},
+  129:{mr30:2900,mr40:3429,mr50:3963,mr60:4493,mr70:5016,mr80:5536,mr90:6049,mr100:6559,mx100:6324,mx30:2665},
+  130:{mr30:2907,mr40:3437,mr50:3972,mr60:4504,mr70:5029,mr80:5551,mr90:6066,mr100:6576,mx100:6340,mx30:2671},
+  131:{mr30:2927,mr40:3462,mr50:3997,mr60:4530,mr70:5057,mr80:5581,mr90:6096,mr100:6610,mx100:6373,mx30:2690},
+  132:{mr30:2933,mr40:3468,mr50:4005,mr60:4540,mr70:5069,mr80:5594,mr90:6112,mr100:6628,mx100:6391,mx30:2696},
+  133:{mr30:2940,mr40:3475,mr50:4016,mr60:4552,mr70:5082,mr80:5609,mr90:6127,mr100:6644,mx100:6406,mx30:2702},
+  134:{mr30:2946,mr40:3483,mr50:4025,mr60:4564,mr70:5095,mr80:5625,mr90:6145,mr100:6663,mx100:6424,mx30:2707},
+  135:{mr30:2953,mr40:3492,mr50:4036,mr60:4576,mr70:5109,mr80:5638,mr90:6162,mr100:6680,mx100:6440,mx30:2713},
+  136:{mr30:2972,mr40:3513,mr50:4057,mr60:4600,mr70:5136,mr80:5666,mr90:6190,mr100:6711,mx100:6471,mx30:2732},
+  137:{mr30:2979,mr40:3521,mr50:4067,mr60:4611,mr70:5149,mr80:5682,mr90:6207,mr100:6731,mx100:6490,mx30:2738},
+  138:{mr30:2985,mr40:3528,mr50:4077,mr60:4623,mr70:5162,mr80:5696,mr90:6222,mr100:6747,mx100:6505,mx30:2743},
+  139:{mr30:2991,mr40:3535,mr50:4086,mr60:4634,mr70:5173,mr80:5710,mr90:6239,mr100:6764,mx100:6522,mx30:2749},
+  140:{mr30:2997,mr40:3544,mr50:4095,mr60:4643,mr70:5186,mr80:5725,mr90:6254,mr100:6782,mx100:6539,mx30:2754},
+  141:{mr30:3018,mr40:3567,mr50:4121,mr60:4670,mr70:5215,mr80:5754,mr90:6286,mr100:6815,mx100:6571,mx30:2774},
+  142:{mr30:3024,mr40:3575,mr50:4129,mr60:4682,mr70:5227,mr80:5769,mr90:6302,mr100:6834,mx100:6589,mx30:2779},
+  143:{mr30:3029,mr40:3581,mr50:4139,mr60:4693,mr70:5240,mr80:5784,mr90:6318,mr100:6849,mx100:6604,mx30:2784},
+  144:{mr30:3036,mr40:3591,mr50:4148,mr60:4702,mr70:5252,mr80:5798,mr90:6335,mr100:6868,mx100:6622,mx30:2790},
+  145:{mr30:3041,mr40:3598,mr50:4158,mr60:4715,mr70:5265,mr80:5812,mr90:6350,mr100:6886,mx100:6639,mx30:2794},
+  146:{mr30:3063,mr40:3620,mr50:4181,mr60:4740,mr70:5293,mr80:5842,mr90:6381,mr100:6918,mx100:6670,mx30:2815},
+  147:{mr30:3068,mr40:3627,mr50:4191,mr60:4751,mr70:5304,mr80:5855,mr90:6396,mr100:6935,mx100:6687,mx30:2820},
+  148:{mr30:3074,mr40:3636,mr50:4200,mr60:4762,mr70:5318,mr80:5870,mr90:6413,mr100:6951,mx100:6702,mx30:2825},
+  149:{mr30:3080,mr40:3644,mr50:4211,mr60:4773,mr70:5329,mr80:5885,mr90:6428,mr100:6970,mx100:6720,mx30:2830},
+  150:{mr30:3088,mr40:3653,mr50:4220,mr60:4786,mr70:5344,mr80:5900,mr90:6446,mr100:6990,mx100:6738,mx30:2836},
+  151:{mr30:3106,mr40:3671,mr50:4240,mr60:4807,mr70:5366,mr80:5925,mr90:6471,mr100:7015,mx100:6763,mx30:2854},
+  152:{mr30:3111,mr40:3678,mr50:4248,mr60:4817,mr70:5376,mr80:5935,mr90:6484,mr100:7029,mx100:6776,mx30:2858},
+  153:{mr30:3115,mr40:3683,mr50:4253,mr60:4824,mr70:5384,mr80:5946,mr90:6496,mr100:7042,mx100:6789,mx30:2862},
+  154:{mr30:3120,mr40:3687,mr50:4260,mr60:4832,mr70:5396,mr80:5957,mr90:6507,mr100:7055,mx100:6801,mx30:2866},
+  155:{mr30:3122,mr40:3693,mr50:4268,mr60:4839,mr70:5404,mr80:5966,mr90:6518,mr100:7068,mx100:6814,mx30:2868},
+  156:{mr30:3143,mr40:3715,mr50:4290,mr60:4864,mr70:5430,mr80:5993,mr90:6546,mr100:7095,mx100:6840,mx30:2888},
+  157:{mr30:3148,mr40:3719,mr50:4296,mr60:4871,mr70:5437,mr80:6001,mr90:6557,mr100:7108,mx100:6853,mx30:2893},
+  158:{mr30:3152,mr40:3727,mr50:4305,mr60:4879,mr70:5448,mr80:6013,mr90:6569,mr100:7123,mx100:6867,mx30:2896},
+  159:{mr30:3157,mr40:3732,mr50:4310,mr60:4886,mr70:5456,mr80:6024,mr90:6582,mr100:7136,mx100:6880,mx30:2901},
+  160:{mr30:3162,mr40:3738,mr50:4318,mr60:4895,mr70:5466,mr80:6033,mr90:6593,mr100:7148,mx100:6891,mx30:2905},
+  161:{mr30:3179,mr40:3757,mr50:4338,mr60:4916,mr70:5488,mr80:6058,mr90:6619,mr100:7175,mx100:6918,mx30:2922},
+  162:{mr30:3183,mr40:3762,mr50:4345,mr60:4925,mr70:5499,mr80:6070,mr90:6629,mr100:7188,mx100:6930,mx30:2925},
+  163:{mr30:3188,mr40:3767,mr50:4352,mr60:4932,mr70:5508,mr80:6078,mr90:6642,mr100:7201,mx100:6943,mx30:2930},
+  164:{mr30:3192,mr40:3773,mr50:4358,mr60:4942,mr70:5518,mr80:6090,mr90:6653,mr100:7215,mx100:6956,mx30:2933},
+  165:{mr30:3197,mr40:3779,mr50:4365,mr60:4949,mr70:5526,mr80:6101,mr90:6665,mr100:7226,mx100:6967,mx30:2938},
+  166:{mr30:3217,mr40:3800,mr50:4388,mr60:4972,mr70:5550,mr80:6126,mr90:6693,mr100:7255,mx100:6995,mx30:2957},
+  167:{mr30:3220,mr40:3806,mr50:4394,mr60:4981,mr70:5559,mr80:6136,mr90:6704,mr100:7267,mx100:7007,mx30:2960},
+  168:{mr30:3225,mr40:3812,mr50:4401,mr60:4989,mr70:5568,mr80:6146,mr90:6717,mr100:7281,mx100:7020,mx30:2964},
+  169:{mr30:3229,mr40:3815,mr50:4407,mr60:4997,mr70:5578,mr80:6156,mr90:6726,mr100:7294,mx100:7033,mx30:2968},
+  170:{mr30:3233,mr40:3822,mr50:4414,mr60:5004,mr70:5587,mr80:6168,mr90:6739,mr100:7306,mx100:7044,mx30:2971},
+  171:{mr30:3252,mr40:3841,mr50:4434,mr60:5027,mr70:5612,mr80:6191,mr90:6765,mr100:7333,mx100:7071,mx30:2990},
+  172:{mr30:3257,mr40:3847,mr50:4441,mr60:5035,mr70:5620,mr80:6202,mr90:6777,mr100:7346,mx100:7083,mx30:2994},
+  173:{mr30:3260,mr40:3853,mr50:4449,mr60:5042,mr70:5630,mr80:6213,mr90:6789,mr100:7361,mx100:7098,mx30:2997},
+  174:{mr30:3265,mr40:3859,mr50:4457,mr60:5050,mr70:5639,mr80:6223,mr90:6800,mr100:7374,mx100:7110,mx30:3001},
+  175:{mr30:3271,mr40:3865,mr50:4465,mr60:5060,mr70:5649,mr80:6234,mr90:6813,mr100:7387,mx100:7122,mx30:3006},
+  176:{mr30:3289,mr40:3886,mr50:4485,mr60:5082,mr70:5672,mr80:6258,mr90:6839,mr100:7414,mx100:7149,mx30:3024},
+  177:{mr30:3294,mr40:3891,mr50:4492,mr60:5091,mr70:5683,mr80:6270,mr90:6851,mr100:7428,mx100:7162,mx30:3028},
+  178:{mr30:3298,mr40:3895,mr50:4499,mr60:5098,mr70:5692,mr80:6281,mr90:6862,mr100:7441,mx100:7175,mx30:3032},
+  179:{mr30:3302,mr40:3902,mr50:4506,mr60:5108,mr70:5702,mr80:6290,mr90:6875,mr100:7454,mx100:7187,mx30:3035},
+  180:{mr30:3306,mr40:3908,mr50:4512,mr60:5115,mr70:5710,mr80:6301,mr90:6886,mr100:7466,mx100:7199,mx30:3039}
 };
 const RATE_U15_PREM={
-  1:{mr30:501,mr60:672,mr100:901},2:{mr30:556,mr60:745,mr100:994},
-  3:{mr30:616,mr60:822,mr100:1095},4:{mr30:724,mr60:991,mr100:1344},
-  5:{mr30:829,mr60:1157,mr100:1593},6:{mr30:902,mr60:1254,mr100:1725},
-  7:{mr30:965,mr60:1345,mr100:1851},8:{mr30:1021,mr60:1416,mr100:1935},
-  9:{mr30:1086,mr60:1492,mr100:2028},10:{mr30:1135,mr60:1555,mr100:2105},
-  11:{mr30:1192,mr60:1623,mr100:2191},12:{mr30:1242,mr60:1688,mr100:2269},
-  13:{mr30:1293,mr60:1750,mr100:2348},14:{mr30:1348,mr60:1819,mr100:2431},
-  15:{mr30:1395,mr60:1883,mr100:2516},16:{mr30:1613,mr60:2116,mr100:2771},
-  17:{mr30:1638,mr60:2158,mr100:2834},18:{mr30:1660,mr60:2196,mr100:2894},
-  19:{mr30:1683,mr60:2237,mr100:2956},20:{mr30:1707,mr60:2275,mr100:3016},
-  21:{mr30:1731,mr60:2315,mr100:3077},22:{mr30:1748,mr60:2344,mr100:3119},
-  23:{mr30:1765,mr60:2373,mr100:3162},24:{mr30:1784,mr60:2401,mr100:3204},
-  25:{mr30:1800,mr60:2430,mr100:3246},26:{mr30:1821,mr60:2459,mr100:3289},
-  27:{mr30:1837,mr60:2485,mr100:3330},28:{mr30:1855,mr60:2513,mr100:3372},
-  29:{mr30:1872,mr60:2542,mr100:3414},30:{mr30:1890,mr60:2571,mr100:3457},
-  31:{mr30:1932,mr60:2624,mr100:3524},32:{mr30:1947,mr60:2652,mr100:3568},
-  33:{mr30:1964,mr60:2681,mr100:3612},34:{mr30:1977,mr60:2706,mr100:3655},
-  35:{mr30:1991,mr60:2733,mr100:3699},36:{mr30:2035,mr60:2790,mr100:3771},
-  37:{mr30:2051,mr60:2817,mr100:3815},38:{mr30:2066,mr60:2845,mr100:3858},
-  39:{mr30:2081,mr60:2872,mr100:3899},40:{mr30:2096,mr60:2900,mr100:3944},
-  41:{mr30:2141,mr60:2957,mr100:4017},42:{mr30:2156,mr60:2983,mr100:4061},
-  43:{mr30:2169,mr60:3010,mr100:4104},44:{mr30:2187,mr60:3039,mr100:4148},
-  45:{mr30:2343,mr60:3208,mr100:4335},46:{mr30:2386,mr60:3264,mr100:4408},
-  47:{mr30:2404,mr60:3294,mr100:4453},48:{mr30:2418,mr60:3321,mr100:4498},
-  49:{mr30:2432,mr60:3350,mr100:4542},50:{mr30:2447,mr60:3378,mr100:4587}
+  1:{mr30:502,mr40:558,mr50:617,mr60:673,mr70:732,mr80:790,mr90:846,mr100:902,mx100:882,mx30:482},
+  2:{mr30:558,mr40:621,mr50:683,mr60:747,mr70:809,mr80:873,mr90:935,mr100:996,mx100:974,mx30:536},
+  3:{mr30:619,mr40:690,mr50:756,mr60:825,mr70:893,mr80:961,mr90:1029,mr100:1098,mx100:1074,mx30:595},
+  4:{mr30:728,mr40:816,mr50:903,mr60:995,mr70:1082,mr80:1170,mr90:1260,mr100:1348,mx100:1317,mx30:697},
+  5:{mr30:834,mr40:940,mr50:1050,mr60:1162,mr70:1268,mr80:1378,mr90:1490,mr100:1598,mx100:1561,mx30:797},
+  6:{mr30:908,mr40:1025,mr50:1144,mr60:1260,mr70:1377,mr80:1496,mr90:1615,mr100:1731,mx100:1690,mx30:867},
+  7:{mr30:971,mr40:1098,mr50:1228,mr60:1351,mr70:1477,mr80:1607,mr90:1731,mr100:1857,mx100:1813,mx30:927},
+  8:{mr30:1028,mr40:1159,mr50:1294,mr60:1423,mr70:1552,mr80:1686,mr90:1813,mr100:1942,mx100:1895,mx30:981},
+  9:{mr30:1094,mr40:1228,mr50:1367,mr60:1500,mr70:1634,mr80:1770,mr90:1903,mr100:2036,mx100:1986,mx30:1044},
+  10:{mr30:1144,mr40:1282,mr50:1427,mr60:1564,mr70:1702,mr80:1844,mr90:1978,mr100:2114,mx100:2061,mx30:1091},
+  11:{mr30:1202,mr40:1347,mr50:1493,mr60:1633,mr70:1777,mr80:1921,mr90:2062,mr100:2201,mx100:2145,mx30:1146},
+  12:{mr30:1252,mr40:1401,mr50:1552,mr60:1698,mr70:1845,mr80:1993,mr90:2137,mr100:2279,mx100:2220,mx30:1193},
+  13:{mr30:1304,mr40:1456,mr50:1611,mr60:1761,mr70:1913,mr80:2063,mr90:2213,mr100:2359,mx100:2297,mx30:1242},
+  14:{mr30:1360,mr40:1516,mr50:1677,mr60:1831,mr70:1987,mr80:2142,mr90:2294,mr100:2443,mx100:2379,mx30:1296},
+  15:{mr30:1408,mr40:1570,mr50:1736,mr60:1896,mr70:2057,mr80:2216,mr90:2374,mr100:2529,mx100:2462,mx30:1341},
+  16:{mr30:1632,mr40:1800,mr50:1969,mr60:2135,mr70:2302,mr80:2468,mr90:2630,mr100:2790,mx100:2721,mx30:1563},
+  17:{mr30:1656,mr40:1829,mr50:2004,mr60:2176,mr70:2348,mr80:2518,mr90:2685,mr100:2852,mx100:2779,mx30:1583},
+  18:{mr30:1678,mr40:1856,mr50:2039,mr60:2214,mr70:2392,mr80:2570,mr90:2741,mr100:2912,mx100:2837,mx30:1603},
+  19:{mr30:1701,mr40:1886,mr50:2073,mr60:2255,mr70:2438,mr80:2619,mr90:2798,mr100:2974,mx100:2896,mx30:1623},
+  20:{mr30:1725,mr40:1915,mr50:2107,mr60:2293,mr70:2482,mr80:2671,mr90:2853,mr100:3034,mx100:2954,mx30:1645},
+  21:{mr30:1749,mr40:1944,mr50:2141,mr60:2333,mr70:2528,mr80:2721,mr90:2908,mr100:3095,mx100:3012,mx30:1666},
+  22:{mr30:1766,mr40:1966,mr50:2166,mr60:2362,mr70:2559,mr80:2756,mr90:2947,mr100:3137,mx100:3052,mx30:1681},
+  23:{mr30:1783,mr40:1986,mr50:2189,mr60:2391,mr70:2593,mr80:2791,mr90:2986,mr100:3180,mx100:3093,mx30:1696},
+  24:{mr30:1802,mr40:2008,mr50:2216,mr60:2419,mr70:2623,mr80:2827,mr90:3026,mr100:3222,mx100:3133,mx30:1713},
+  25:{mr30:1818,mr40:2029,mr50:2240,mr60:2448,mr70:2657,mr80:2862,mr90:3063,mr100:3264,mx100:3173,mx30:1727},
+  26:{mr30:1839,mr40:2051,mr50:2265,mr60:2477,mr70:2688,mr80:2898,mr90:3103,mr100:3307,mx100:3214,mx30:1746},
+  27:{mr30:1855,mr40:2071,mr50:2287,mr60:2503,mr70:2718,mr80:2930,mr90:3141,mr100:3348,mx100:3254,mx30:1761},
+  28:{mr30:1873,mr40:2093,mr50:2312,mr60:2531,mr70:2751,mr80:2966,mr90:3180,mr100:3390,mx100:3294,mx30:1777},
+  29:{mr30:1890,mr40:2114,mr50:2338,mr60:2560,mr70:2782,mr80:3001,mr90:3218,mr100:3432,mx100:3334,mx30:1792},
+  30:{mr30:1908,mr40:2134,mr50:2363,mr60:2589,mr70:2815,mr80:3037,mr90:3258,mr100:3475,mx100:3375,mx30:1808},
+  31:{mr30:1950,mr40:2181,mr50:2411,mr60:2642,mr70:2871,mr80:3098,mr90:3321,mr100:3542,mx100:3439,mx30:1847},
+  32:{mr30:1965,mr40:2200,mr50:2435,mr60:2670,mr70:2903,mr80:3133,mr90:3360,mr100:3586,mx100:3481,mx30:1860},
+  33:{mr30:1982,mr40:2219,mr50:2458,mr60:2699,mr70:2935,mr80:3168,mr90:3401,mr100:3630,mx100:3523,mx30:1875},
+  34:{mr30:1995,mr40:2238,mr50:2481,mr60:2724,mr70:2965,mr80:3204,mr90:3439,mr100:3673,mx100:3565,mx30:1887},
+  35:{mr30:2009,mr40:2258,mr50:2506,mr60:2751,mr70:2996,mr80:3240,mr90:3479,mr100:3717,mx100:3607,mx30:1899},
+  36:{mr30:2054,mr40:2305,mr50:2558,mr60:2809,mr70:3057,mr80:3306,mr90:3548,mr100:3790,mx100:3678,mx30:1942},
+  37:{mr30:2070,mr40:2326,mr50:2581,mr60:2836,mr70:3089,mr80:3340,mr90:3589,mr100:3834,mx100:3720,mx30:1956},
+  38:{mr30:2085,mr40:2344,mr50:2604,mr60:2864,mr70:3120,mr80:3376,mr90:3627,mr100:3877,mx100:3762,mx30:1970},
+  39:{mr30:2100,mr40:2362,mr50:2627,mr60:2891,mr70:3152,mr80:3413,mr90:3666,mr100:3918,mx100:3801,mx30:1983},
+  40:{mr30:2115,mr40:2382,mr50:2650,mr60:2919,mr70:3183,mr80:3447,mr90:3707,mr100:3963,mx100:3844,mx30:1996},
+  41:{mr30:2159,mr40:2429,mr50:2702,mr60:2975,mr70:3243,mr80:3513,mr90:3775,mr100:4035,mx100:3914,mx30:2038},
+  42:{mr30:2174,mr40:2448,mr50:2727,mr60:3001,mr70:3274,mr80:3548,mr90:3814,mr100:4079,mx100:3956,mx30:2051},
+  43:{mr30:2187,mr40:2467,mr50:2749,mr60:3028,mr70:3305,mr80:3583,mr90:3852,mr100:4122,mx100:3998,mx30:2063},
+  44:{mr30:2205,mr40:2487,mr50:2772,mr60:3057,mr70:3337,mr80:3619,mr90:3893,mr100:4166,mx100:4040,mx30:2079},
+  45:{mr30:2365,mr40:2653,mr50:2943,mr60:3230,mr70:3516,mr80:3802,mr90:4079,mr100:4357,mx100:4229,mx30:2237},
+  46:{mr30:2408,mr40:2701,mr50:2996,mr60:3286,mr70:3576,mr80:3867,mr90:4147,mr100:4430,mx100:4300,mx30:2278},
+  47:{mr30:2426,mr40:2721,mr50:3019,mr60:3316,mr70:3609,mr80:3902,mr90:4189,mr100:4475,mx100:4342,mx30:2293},
+  48:{mr30:2440,mr40:2739,mr50:3043,mr60:3343,mr70:3640,mr80:3938,mr90:4229,mr100:4520,mx100:4386,mx30:2306},
+  49:{mr30:2454,mr40:2759,mr50:3066,mr60:3372,mr70:3675,mr80:3976,mr90:4271,mr100:4564,mx100:4428,mx30:2318},
+  50:{mr30:2469,mr40:2778,mr50:3090,mr60:3400,mr70:3706,mr80:4012,mr90:4310,mr100:4609,mx100:4471,mx30:2331},
+  51:{mr30:2515,mr40:2826,mr50:3141,mr60:3456,mr70:3766,mr80:4076,mr90:4380,mr100:4680,mx100:4540,mx30:2375},
+  52:{mr30:2528,mr40:2845,mr50:3164,mr60:3482,mr70:3797,mr80:4111,mr90:4419,mr100:4723,mx100:4582,mx30:2387},
+  53:{mr30:2543,mr40:2866,mr50:3189,mr60:3512,mr70:3829,mr80:4147,mr90:4461,mr100:4771,mx100:4628,mx30:2400},
+  54:{mr30:2557,mr40:2885,mr50:3213,mr60:3538,mr70:3861,mr80:4185,mr90:4501,mr100:4815,mx100:4670,mx30:2412},
+  55:{mr30:2575,mr40:2906,mr50:3236,mr60:3568,mr70:3894,mr80:4220,mr90:4542,mr100:4860,mx100:4713,mx30:2428},
+  56:{mr30:2618,mr40:2954,mr50:3290,mr60:3624,mr70:3954,mr80:4286,mr90:4611,mr100:4933,mx100:4784,mx30:2469},
+  57:{mr30:2632,mr40:2972,mr50:3313,mr60:3653,mr70:3988,mr80:4321,mr90:4652,mr100:4977,mx100:4827,mx30:2482},
+  58:{mr30:2647,mr40:2992,mr50:3337,mr60:3680,mr70:4020,mr80:4359,mr90:4692,mr100:5022,mx100:4870,mx30:2495},
+  59:{mr30:2664,mr40:3011,mr50:3359,mr60:3709,mr70:4052,mr80:4393,mr90:4733,mr100:5067,mx100:4913,mx30:2510},
+  60:{mr30:2679,mr40:3031,mr50:3384,mr60:3737,mr70:4084,mr80:4430,mr90:4773,mr100:5111,mx100:4955,mx30:2523},
+  61:{mr30:2717,mr40:3072,mr50:3428,mr60:3783,mr70:4136,mr80:4482,mr90:4828,mr100:5170,mx100:5013,mx30:2560},
+  62:{mr30:2727,mr40:3085,mr50:3443,mr60:3802,mr70:4155,mr80:4507,mr90:4856,mr100:5199,mx100:5041,mx30:2569},
+  63:{mr30:2738,mr40:3099,mr50:3461,mr60:3822,mr70:4179,mr80:4533,mr90:4884,mr100:5232,mx100:5072,mx30:2578},
+  64:{mr30:2748,mr40:3113,mr50:3477,mr60:3842,mr70:4202,mr80:4558,mr90:4911,mr100:5261,mx100:5099,mx30:2586},
+  65:{mr30:2760,mr40:3125,mr50:3494,mr60:3861,mr70:4223,mr80:4584,mr90:4940,mr100:5293,mx100:5130,mx30:2597},
+  66:{mr30:2799,mr40:3167,mr50:3537,mr60:3908,mr70:4274,mr80:4637,mr90:4995,mr100:5351,mx100:5186,mx30:2634},
+  67:{mr30:2808,mr40:3181,mr50:3555,mr60:3927,mr70:4297,mr80:4662,mr90:5024,mr100:5382,mx100:5216,mx30:2642},
+  68:{mr30:2819,mr40:3193,mr50:3571,mr60:3946,mr70:4318,mr80:4685,mr90:5051,mr100:5412,mx100:5245,mx30:2652},
+  69:{mr30:2828,mr40:3207,mr50:3586,mr60:3965,mr70:4340,mr80:4710,mr90:5078,mr100:5443,mx100:5275,mx30:2660},
+  70:{mr30:2840,mr40:3219,mr50:3604,mr60:3984,mr70:4362,mr80:4736,mr90:5108,mr100:5472,mx100:5302,mx30:2670},
+  71:{mr30:2880,mr40:3262,mr50:3648,mr60:4033,mr70:4413,mr80:4789,mr90:5163,mr100:5532,mx100:5361,mx30:2709},
+  72:{mr30:2888,mr40:3274,mr50:3665,mr60:4051,mr70:4434,mr80:4814,mr90:5189,mr100:5563,mx100:5391,mx30:2716},
+  73:{mr30:2901,mr40:3289,mr50:3681,mr60:4071,mr70:4458,mr80:4839,mr90:5219,mr100:5594,mx100:5420,mx30:2727},
+  74:{mr30:2910,mr40:3301,mr50:3697,mr60:4090,mr70:4479,mr80:4864,mr90:5245,mr100:5624,mx100:5449,mx30:2735},
+  75:{mr30:2921,mr40:3316,mr50:3715,mr60:4110,mr70:4501,mr80:4888,mr90:5274,mr100:5656,mx100:5480,mx30:2745},
+  76:{mr30:2960,mr40:3357,mr50:3757,mr60:4157,mr70:4550,mr80:4941,mr90:5329,mr100:5712,mx100:5535,mx30:2783},
+  77:{mr30:2970,mr40:3370,mr50:3775,mr60:4177,mr70:4574,mr80:4966,mr90:5356,mr100:5743,mx100:5564,mx30:2791},
+  78:{mr30:2981,mr40:3384,mr50:3790,mr60:4195,mr70:4595,mr80:4991,mr90:5384,mr100:5774,mx100:5594,mx30:2801},
+  79:{mr30:2990,mr40:3396,mr50:3806,mr60:4214,mr70:4617,mr80:5016,mr90:5412,mr100:5805,mx100:5624,mx30:2809},
+  80:{mr30:3001,mr40:3411,mr50:3823,mr60:4234,mr70:4639,mr80:5041,mr90:5439,mr100:5835,mx100:5652,mx30:2818},
+  81:{mr30:3040,mr40:3451,mr50:3868,mr60:4281,mr70:4690,mr80:5094,mr90:5496,mr100:5895,mx100:5711,mx30:2856},
+  82:{mr30:3050,mr40:3464,mr50:3882,mr60:4300,mr70:4710,mr80:5118,mr90:5522,mr100:5923,mx100:5738,mx30:2865},
+  83:{mr30:3060,mr40:3477,mr50:3899,mr60:4318,mr70:4733,mr80:5142,mr90:5549,mr100:5954,mx100:5768,mx30:2874},
+  84:{mr30:3071,mr40:3491,mr50:3917,mr60:4339,mr70:4755,mr80:5167,mr90:5579,mr100:5985,mx100:5797,mx30:2883},
+  85:{mr30:3081,mr40:3504,mr50:3932,mr60:4357,mr70:4778,mr80:5192,mr90:5605,mr100:6016,mx100:5827,mx30:2892},
+  86:{mr30:3121,mr40:3544,mr50:3977,mr60:4404,mr70:4826,mr80:5244,mr90:5661,mr100:6074,mx100:5884,mx30:2931},
+  87:{mr30:3131,mr40:3559,mr50:3992,mr60:4424,mr70:4850,mr80:5270,mr90:5690,mr100:6105,mx100:5913,mx30:2939},
+  88:{mr30:3142,mr40:3572,mr50:4011,mr60:4444,mr70:4872,mr80:5296,mr90:5717,mr100:6135,mx100:5941,mx30:2948},
+  89:{mr30:3152,mr40:3585,mr50:4026,mr60:4463,mr70:4894,mr80:5320,mr90:5745,mr100:6166,mx100:5971,mx30:2957},
+  90:{mr30:3163,mr40:3598,mr50:4042,mr60:4481,mr70:4916,mr80:5345,mr90:5772,mr100:6197,mx100:6001,mx30:2967},
+  91:{mr30:3200,mr40:3639,mr50:4084,mr60:4527,mr70:4963,mr80:5394,mr90:5825,mr100:6252,mx100:6055,mx30:3003},
+  92:{mr30:3210,mr40:3650,mr50:4098,mr60:4543,mr70:4983,mr80:5418,mr90:5850,mr100:6277,mx100:6079,mx30:3012},
+  93:{mr30:3219,mr40:3662,mr50:4115,mr60:4561,mr70:5002,mr80:5438,mr90:5873,mr100:6306,mx100:6106,mx30:3019},
+  94:{mr30:3227,mr40:3673,mr50:4127,mr60:4577,mr70:5020,mr80:5461,mr90:5897,mr100:6331,mx100:6130,mx30:3026},
+  95:{mr30:3237,mr40:3685,mr50:4141,mr60:4593,mr70:5041,mr80:5481,mr90:5920,mr100:6358,mx100:6156,mx30:3035},
+  96:{mr30:3274,mr40:3725,mr50:4183,mr60:4638,mr70:5087,mr80:5532,mr90:5973,mr100:6411,mx100:6208,mx30:3071},
+  97:{mr30:3282,mr40:3736,mr50:4196,mr60:4653,mr70:5105,mr80:5553,mr90:5997,mr100:6438,mx100:6234,mx30:3078},
+  98:{mr30:3291,mr40:3747,mr50:4211,mr60:4671,mr70:5125,mr80:5573,mr90:6019,mr100:6463,mx100:6258,mx30:3086},
+  99:{mr30:3300,mr40:3759,mr50:4225,mr60:4687,mr70:5143,mr80:5596,mr90:6044,mr100:6492,mx100:6286,mx30:3094},
+  100:{mr30:3308,mr40:3770,mr50:4239,mr60:4703,mr70:5162,mr80:5616,mr90:6067,mr100:6517,mx100:6310,mx30:3101},
+  101:{mr30:3346,mr40:3810,mr50:4280,mr60:4748,mr70:5210,mr80:5667,mr90:6120,mr100:6571,mx100:6363,mx30:3138},
+  102:{mr30:3355,mr40:3821,mr50:4294,mr60:4765,mr70:5228,mr80:5687,mr90:6144,mr100:6596,mx100:6387,mx30:3146},
+  103:{mr30:3362,mr40:3832,mr50:4309,mr60:4780,mr70:5246,mr80:5711,mr90:6167,mr100:6622,mx100:6412,mx30:3152},
+  104:{mr30:3372,mr40:3843,mr50:4323,mr60:4798,mr70:5266,mr80:5730,mr90:6191,mr100:6649,mx100:6438,mx30:3161},
+  105:{mr30:3381,mr40:3855,mr50:4336,mr60:4814,mr70:5286,mr80:5754,mr90:6216,mr100:6677,mx100:6465,mx30:3169},
+  106:{mr30:3418,mr40:3896,mr50:4379,mr60:4858,mr70:5334,mr80:5803,mr90:6268,mr100:6731,mx100:6518,mx30:3205},
+  107:{mr30:3428,mr40:3908,mr50:4393,mr60:4876,mr70:5354,mr80:5823,mr90:6293,mr100:6757,mx100:6543,mx30:3214},
+  108:{mr30:3436,mr40:3917,mr50:4408,mr60:4891,mr70:5372,mr80:5846,mr90:6314,mr100:6782,mx100:6567,mx30:3221},
+  109:{mr30:3444,mr40:3930,mr50:4421,mr60:4908,mr70:5390,mr80:5866,mr90:6338,mr100:6809,mx100:6593,mx30:3228},
+  110:{mr30:3454,mr40:3941,mr50:4434,mr60:4926,mr70:5410,mr80:5889,mr90:6363,mr100:6834,mx100:6617,mx30:3237},
+  111:{mr30:3491,mr40:3982,mr50:4477,mr60:4970,mr70:5456,mr80:5938,mr90:6415,mr100:6890,mx100:6672,mx30:3273},
+  112:{mr30:3499,mr40:3993,mr50:4490,mr60:4986,mr70:5475,mr80:5960,mr90:6439,mr100:6916,mx100:6697,mx30:3280},
+  113:{mr30:3508,mr40:4003,mr50:4504,mr60:5004,mr70:5495,mr80:5980,mr90:6462,mr100:6942,mx100:6722,mx30:3288},
+  114:{mr30:3518,mr40:4016,mr50:4519,mr60:5020,mr70:5514,mr80:6002,mr90:6486,mr100:6969,mx100:6747,mx30:3296},
+  115:{mr30:3526,mr40:4027,mr50:4534,mr60:5037,mr70:5532,mr80:6024,mr90:6511,mr100:6995,mx100:6772,mx30:3303},
+  116:{mr30:3564,mr40:4067,mr50:4575,mr60:5081,mr70:5580,mr80:6073,mr90:6563,mr100:7048,mx100:6824,mx30:3340},
+  117:{mr30:3573,mr40:4079,mr50:4588,mr60:5097,mr70:5599,mr80:6096,mr90:6588,mr100:7076,mx100:6851,mx30:3348},
+  118:{mr30:3580,mr40:4089,mr50:4603,mr60:5114,mr70:5617,mr80:6116,mr90:6610,mr100:7101,mx100:6875,mx30:3354},
+  119:{mr30:3591,mr40:4102,mr50:4619,mr60:5131,mr70:5638,mr80:6140,mr90:6636,mr100:7130,mx100:6902,mx30:3363},
+  120:{mr30:3600,mr40:4113,mr50:4631,mr60:5148,mr70:5656,mr80:6161,mr90:6659,mr100:7155,mx100:6926,mx30:3371},
+  121:{mr30:3634,mr40:4148,mr50:4670,mr60:5186,mr70:5697,mr80:6201,mr90:6703,mr100:7199,mx100:6970,mx30:3405},
+  122:{mr30:3640,mr40:4156,mr50:4678,mr60:5198,mr70:5709,mr80:6217,mr90:6719,mr100:7218,mx100:6988,mx30:3410},
+  123:{mr30:3647,mr40:4165,mr50:4689,mr60:5209,mr70:5723,mr80:6232,mr90:6736,mr100:7234,mx100:7003,mx30:3416},
+  124:{mr30:3652,mr40:4172,mr50:4697,mr60:5219,mr70:5734,mr80:6245,mr90:6750,mr100:7253,mx100:7022,mx30:3421},
+  125:{mr30:3659,mr40:4180,mr50:4707,mr60:5231,mr70:5747,mr80:6261,mr90:6766,mr100:7271,mx100:7039,mx30:3427},
+  126:{mr30:3694,mr40:4217,mr50:4745,mr60:5272,mr70:5789,mr80:6304,mr90:6811,mr100:7317,mx100:7084,mx30:3461},
+  127:{mr30:3700,mr40:4226,mr50:4755,mr60:5281,mr70:5802,mr80:6318,mr90:6828,mr100:7336,mx100:7102,mx30:3466},
+  128:{mr30:3705,mr40:4233,mr50:4764,mr60:5293,mr70:5814,mr80:6333,mr90:6844,mr100:7351,mx100:7117,mx30:3471},
+  129:{mr30:3711,mr40:4240,mr50:4774,mr60:5304,mr70:5827,mr80:6347,mr90:6860,mr100:7370,mx100:7135,mx30:3476},
+  130:{mr30:3718,mr40:4248,mr50:4783,mr60:5315,mr70:5840,mr80:6362,mr90:6877,mr100:7387,mx100:7151,mx30:3482},
+  131:{mr30:3751,mr40:4286,mr50:4821,mr60:5354,mr70:5881,mr80:6405,mr90:6920,mr100:7434,mx100:7197,mx30:3514},
+  132:{mr30:3757,mr40:4292,mr50:4829,mr60:5364,mr70:5893,mr80:6418,mr90:6936,mr100:7452,mx100:7215,mx30:3520},
+  133:{mr30:3764,mr40:4299,mr50:4840,mr60:5376,mr70:5906,mr80:6433,mr90:6951,mr100:7468,mx100:7230,mx30:3526},
+  134:{mr30:3770,mr40:4307,mr50:4849,mr60:5388,mr70:5919,mr80:6449,mr90:6969,mr100:7487,mx100:7248,mx30:3531},
+  135:{mr30:3777,mr40:4316,mr50:4860,mr60:5400,mr70:5933,mr80:6462,mr90:6986,mr100:7504,mx100:7264,mx30:3537},
+  136:{mr30:3810,mr40:4351,mr50:4895,mr60:5438,mr70:5974,mr80:6504,mr90:7028,mr100:7549,mx100:7309,mx30:3570},
+  137:{mr30:3817,mr40:4359,mr50:4905,mr60:5449,mr70:5987,mr80:6520,mr90:7045,mr100:7569,mx100:7328,mx30:3576},
+  138:{mr30:3823,mr40:4366,mr50:4915,mr60:5461,mr70:6000,mr80:6534,mr90:7060,mr100:7585,mx100:7343,mx30:3581},
+  139:{mr30:3829,mr40:4373,mr50:4924,mr60:5472,mr70:6011,mr80:6548,mr90:7077,mr100:7602,mx100:7360,mx30:3587},
+  140:{mr30:3835,mr40:4382,mr50:4933,mr60:5481,mr70:6024,mr80:6563,mr90:7092,mr100:7620,mx100:7377,mx30:3592},
+  141:{mr30:3870,mr40:4419,mr50:4973,mr60:5522,mr70:6067,mr80:6606,mr90:7138,mr100:7667,mx100:7423,mx30:3626},
+  142:{mr30:3876,mr40:4427,mr50:4981,mr60:5534,mr70:6079,mr80:6621,mr90:7154,mr100:7686,mx100:7441,mx30:3631},
+  143:{mr30:3881,mr40:4433,mr50:4991,mr60:5545,mr70:6092,mr80:6636,mr90:7170,mr100:7701,mx100:7456,mx30:3636},
+  144:{mr30:3888,mr40:4443,mr50:5000,mr60:5554,mr70:6104,mr80:6650,mr90:7187,mr100:7720,mx100:7474,mx30:3642},
+  145:{mr30:3893,mr40:4450,mr50:5010,mr60:5567,mr70:6117,mr80:6664,mr90:7202,mr100:7738,mx100:7491,mx30:3646},
+  146:{mr30:3929,mr40:4486,mr50:5047,mr60:5606,mr70:6159,mr80:6708,mr90:7247,mr100:7784,mx100:7536,mx30:3681},
+  147:{mr30:3934,mr40:4493,mr50:5057,mr60:5617,mr70:6170,mr80:6721,mr90:7262,mr100:7801,mx100:7553,mx30:3686},
+  148:{mr30:3940,mr40:4502,mr50:5066,mr60:5628,mr70:6184,mr80:6736,mr90:7279,mr100:7817,mx100:7568,mx30:3691},
+  149:{mr30:3946,mr40:4510,mr50:5077,mr60:5639,mr70:6195,mr80:6751,mr90:7294,mr100:7836,mx100:7586,mx30:3696},
+  150:{mr30:3954,mr40:4519,mr50:5086,mr60:5652,mr70:6210,mr80:6766,mr90:7312,mr100:7856,mx100:7604,mx30:3702},
+  151:{mr30:3986,mr40:4551,mr50:5120,mr60:5687,mr70:6246,mr80:6805,mr90:7351,mr100:7895,mx100:7643,mx30:3734},
+  152:{mr30:3991,mr40:4558,mr50:5128,mr60:5697,mr70:6256,mr80:6815,mr90:7364,mr100:7909,mx100:7656,mx30:3738},
+  153:{mr30:3995,mr40:4563,mr50:5133,mr60:5704,mr70:6264,mr80:6826,mr90:7376,mr100:7922,mx100:7669,mx30:3742},
+  154:{mr30:4000,mr40:4567,mr50:5140,mr60:5712,mr70:6276,mr80:6837,mr90:7387,mr100:7935,mx100:7681,mx30:3746},
+  155:{mr30:4002,mr40:4573,mr50:5148,mr60:5719,mr70:6284,mr80:6846,mr90:7398,mr100:7948,mx100:7694,mx30:3748},
+  156:{mr30:4037,mr40:4609,mr50:5184,mr60:5758,mr70:6324,mr80:6887,mr90:7440,mr100:7989,mx100:7734,mx30:3782},
+  157:{mr30:4042,mr40:4613,mr50:5190,mr60:5765,mr70:6331,mr80:6895,mr90:7451,mr100:8002,mx100:7747,mx30:3787},
+  158:{mr30:4046,mr40:4621,mr50:5199,mr60:5773,mr70:6342,mr80:6907,mr90:7463,mr100:8017,mx100:7761,mx30:3790},
+  159:{mr30:4051,mr40:4626,mr50:5204,mr60:5780,mr70:6350,mr80:6918,mr90:7476,mr100:8030,mx100:7774,mx30:3795},
+  160:{mr30:4056,mr40:4632,mr50:5212,mr60:5789,mr70:6360,mr80:6927,mr90:7487,mr100:8042,mx100:7785,mx30:3799},
+  161:{mr30:4087,mr40:4665,mr50:5246,mr60:5824,mr70:6396,mr80:6966,mr90:7527,mr100:8083,mx100:7826,mx30:3830},
+  162:{mr30:4091,mr40:4670,mr50:5253,mr60:5833,mr70:6407,mr80:6978,mr90:7537,mr100:8096,mx100:7838,mx30:3833},
+  163:{mr30:4096,mr40:4675,mr50:5260,mr60:5840,mr70:6416,mr80:6986,mr90:7550,mr100:8109,mx100:7851,mx30:3838},
+  164:{mr30:4100,mr40:4681,mr50:5266,mr60:5850,mr70:6426,mr80:6998,mr90:7561,mr100:8123,mx100:7864,mx30:3841},
+  165:{mr30:4105,mr40:4687,mr50:5273,mr60:5857,mr70:6434,mr80:7009,mr90:7573,mr100:8134,mx100:7875,mx30:3846},
+  166:{mr30:4138,mr40:4721,mr50:5309,mr60:5893,mr70:6471,mr80:7047,mr90:7614,mr100:8176,mx100:7916,mx30:3878},
+  167:{mr30:4141,mr40:4727,mr50:5315,mr60:5902,mr70:6480,mr80:7057,mr90:7625,mr100:8188,mx100:7928,mx30:3881},
+  168:{mr30:4146,mr40:4733,mr50:5322,mr60:5910,mr70:6489,mr80:7067,mr90:7638,mr100:8202,mx100:7941,mx30:3885},
+  169:{mr30:4150,mr40:4736,mr50:5328,mr60:5918,mr70:6499,mr80:7077,mr90:7647,mr100:8215,mx100:7954,mx30:3889},
+  170:{mr30:4154,mr40:4743,mr50:5335,mr60:5925,mr70:6508,mr80:7089,mr90:7660,mr100:8227,mx100:7965,mx30:3892},
+  171:{mr30:4187,mr40:4776,mr50:5369,mr60:5962,mr70:6547,mr80:7126,mr90:7700,mr100:8268,mx100:8006,mx30:3925},
+  172:{mr30:4192,mr40:4782,mr50:5376,mr60:5970,mr70:6555,mr80:7137,mr90:7712,mr100:8281,mx100:8018,mx30:3929},
+  173:{mr30:4195,mr40:4788,mr50:5384,mr60:5977,mr70:6565,mr80:7148,mr90:7724,mr100:8296,mx100:8033,mx30:3932},
+  174:{mr30:4200,mr40:4794,mr50:5392,mr60:5985,mr70:6574,mr80:7158,mr90:7735,mr100:8309,mx100:8045,mx30:3936},
+  175:{mr30:4206,mr40:4800,mr50:5400,mr60:5995,mr70:6584,mr80:7169,mr90:7748,mr100:8322,mx100:8057,mx30:3941},
+  176:{mr30:4238,mr40:4835,mr50:5434,mr60:6031,mr70:6621,mr80:7207,mr90:7788,mr100:8363,mx100:8098,mx30:3973},
+  177:{mr30:4243,mr40:4840,mr50:5441,mr60:6040,mr70:6632,mr80:7219,mr90:7800,mr100:8377,mx100:8111,mx30:3977},
+  178:{mr30:4247,mr40:4844,mr50:5448,mr60:6047,mr70:6641,mr80:7230,mr90:7811,mr100:8390,mx100:8124,mx30:3981},
+  179:{mr30:4251,mr40:4851,mr50:5455,mr60:6057,mr70:6651,mr80:7239,mr90:7824,mr100:8403,mx100:8136,mx30:3984},
+  180:{mr30:4255,mr40:4857,mr50:5461,mr60:6064,mr70:6659,mr80:7250,mr90:7835,mr100:8415,mx100:8148,mx30:3988}
 };
 
 const TI_SUPER=[
-  {name:'旅程取消保險',val:'最高 12萬'},
+  {name:'旅程取消保險<br><span class="ct-sub">（實支實付）</span>',val:'最高 12萬'},
   {name:'班機延誤保險<br><span class="ct-sub">（每滿4小時，最高2次）</span>',val:'每次 3,000，最高 6,000'},
-  {name:'旅程更改保險',val:'最高 12萬'},
+  {name:'旅程更改保險<br><span class="ct-sub">（實支實付）</span>',val:'最高 12萬'},
   {sep:true},
-  {name:'行李延誤保險<br><span class="ct-sub">（超過6小時，不含返國）</span>',val:'定額 3,000'},
-  {name:'行李損失保險',val:'定額 3,000'},
-  {name:'旅行文件損失保險',val:'定額 3,000'},
+  {name:'行李延誤保險<br><span class="ct-sub">（定額，超過6小時，不含返國）</span>',val:'定額 3,000'},
+  {name:'行李損失保險<br><span class="ct-sub">（定額）</span>',val:'定額 3,000'},
+  {name:'旅行文件損失保險<br><span class="ct-sub">（定額）</span>',val:'定額 3,000'},
   {name:'班機改降補償保險',val:'定額 3,000'},
   {name:'劫機補償保險<br><span class="ct-sub">（每次10日為限）</span>',val:'每日 3,000'},
   {name:'第三人責任保險',val:'最高 300萬'},
@@ -1322,13 +1870,13 @@ const TI_SUPER=[
   {name:'旅程取消/更改費用傳染病及檢疫給付',val:'各最高 12萬'},
 ];
 const TI_PREMIUM=[
-  {name:'旅程取消保險',val:'最高 15萬'},
+  {name:'旅程取消保險<br><span class="ct-sub">（實支實付）</span>',val:'最高 15萬'},
   {name:'班機延誤保險<br><span class="ct-sub">（每滿4小時，最高2次）</span>',val:'每次 6,000，最高 1.2萬'},
-  {name:'旅程更改保險',val:'最高 15萬'},
+  {name:'旅程更改保險<br><span class="ct-sub">（實支實付）</span>',val:'最高 15萬'},
   {sep:true},
-  {name:'行李延誤保險<br><span class="ct-sub">（超過6小時，不含返國）</span>',val:'定額 6,000'},
-  {name:'行李損失保險',val:'定額 6,000'},
-  {name:'旅行文件損失保險',val:'定額 3,000'},
+  {name:'行李延誤保險<br><span class="ct-sub">（定額，超過6小時，不含返國）</span>',val:'定額 6,000'},
+  {name:'行李損失保險<br><span class="ct-sub">（定額）</span>',val:'定額 6,000'},
+  {name:'旅行文件損失保險<br><span class="ct-sub">（定額）</span>',val:'定額 3,000'},
   {name:'班機改降補償保險',val:'定額 6,000'},
   {name:'劫機補償保險<br><span class="ct-sub">（每次10日為限）</span>',val:'每日 6,000'},
   {name:'第三人責任保險',val:'最高 600萬'},
@@ -1379,13 +1927,30 @@ function findNearestDays(d){
   if(RATE_DAYS.has(d)) return d;
   return null; // no rate defined for this day count
 }
+// U15 also has 60,90,120,150,180 days
+const U15_EXTRA_DAYS = new Set([60,90,120,150,180]);
+function findU15Days(d){
+  if(RATE_DAYS.has(d)) return d;
+  if(U15_EXTRA_DAYS.has(d)) return d;
+  return null;
+}
 function lookup(days,add,ti,mr){
   const d=findNearestDays(days);
   if(d===null) return null; // no rate defined → NA
   // u15: add=69(or 0), mr=30/60/100
-  if(mr){
-    const row=ti==='premium'?RATE_U15_PREM[d]:RATE_U15_SUPER[d];
-    return row?(row['mr'+mr]||null):null;
+  if(mr !== null && mr !== undefined){
+    const du = findU15Days(days); // u15 allows 51-180 days too
+    if(du===null) return null;
+    if(add === 0){
+      // No death benefit: mx30 or mx100
+      const mxKey = (mr === 30) ? 'mx30' : 'mx100';
+      const row = ti==='premium' ? RATE_U15_PREM[du] : RATE_U15_SUPER[du];
+      return row ? (row[mxKey]||null) : null;
+    } else {
+      // ADD=69萬: use mr30/mr60/mr100
+      const row = ti==='premium' ? RATE_U15_PREM[du] : RATE_U15_SUPER[du];
+      return row ? (row['mr'+mr]||null) : null;
+    }
   }
   const row=ti==='super'?RATE_SUPER[d]:ti==='premium'?RATE_PREMIUM[d]:RATE_BASE[d];
   return row?(row['a'+add]||null):null;
@@ -1395,108 +1960,114 @@ function lookup(days,add,ti,mr){
 //  QUOTE
 // ════════════════════════════════
 function doQuote(){
-  // Compute days directly from calState
-  const sd = calState.start.value;
-  const ed = calState.end.value;
-  const st = document.getElementById('startTime').value;
-  const et = document.getElementById('endTime').value;
+  const sd = calState.start.value, ed = calState.end.value;
+  const st = document.getElementById('startTime').value, et = document.getElementById('endTime').value;
   let days = 0;
   if(sd && ed){
-    if(st && et){
-      const diff = (new Date(`${ed}T${et}`) - new Date(`${sd}T${st}`)) / 3600000;
-      days = diff > 0 ? Math.ceil(diff / 24) : 0;
-    } else {
-      const diff = Math.round((new Date(ed+'T00:00') - new Date(sd+'T00:00')) / 86400000);
-      days = diff > 0 ? diff : 0;
-    }
+    if(st && et){ const diff=(new Date(`${ed}T${et}`)-new Date(`${sd}T${st}`))/3600000; days=diff>0?Math.ceil(diff/24):0; }
+    else { const diff=Math.round((new Date(ed+'T00:00')-new Date(sd+'T00:00'))/86400000); days=diff>0?diff:0; }
   }
-  const ag = document.getElementById('ageGroup').value;
-  const add = parseInt(document.getElementById('addAmount').value);
   const tiEl = document.querySelector('input[name="ti"]:checked');
-  const ti = tiEl ? tiEl.value : null;
+  const ti = tiEl?tiEl.value:null;
+
   if(!days||days<=0){ alert('請選擇正確的旅遊日期區間（返回需晚於出發）'); return; }
   if(days>=181){ alert('181日（含）以上需專案報價，請直接洽業務辦理。'); return; }
   if(days>=51){
-    const go = confirm('51–180日報價金額請洽業務，逾181日需專案報價。\n\n目前天數：'+days+'天\n\n確定繼續查看保障內容（保費欄位將顯示 NA）？');
+    const go=confirm('51–180日報價金額請洽業務，逾181日需專案報價。\n\n目前天數：'+days+'天\n\n確定繼續查看保障內容（保費欄位將顯示 NA）？');
     if(!go) return;
   }
-  if(!ag||ag==='over85'){ alert('超過85歲婉謝承保'); return; }
-  if(ag!=='u15' && !add){ alert('請選擇身故保額'); return; }
   if(!ti){ alert('請選擇不便險方案（超值型或尊榮型）'); return; }
-  if(ag==='a80'&&days>30){ alert('80–85歲最長投保30天'); return; }
-  const mr = ag==='u15' ? parseInt(document.getElementById('mrAmount').value||'100') : null;
-  buildResult(days,ag,add,ti,mr);
+
+  // Validate groups
+  for(const g of groups){
+    if(g.ag==='over85'){ alert('年齡超過85歲婉謝承保，請移除該組別'); return; }
+    if(g.ag==='a80' && days>30){ alert('超過80–85歲最長投保30天'); return; }
+    if(g.ag!=='u15' && !g.add){ alert('請選擇身故保額'); return; }
+  }
+  buildResult(days, ti);
   goPage(3);
 }
 
 // ════════════════════════════════
 //  BUILD RESULT
 // ════════════════════════════════
-function buildResult(days,ag,add,ti,mr){
-  const sd=calState.start.value, st=document.getElementById('startTime').value;
-  const ed=calState.end.value,   et=document.getElementById('endTime').value;
+function buildResult(days, ti){
+  const sd=calState.start.value, st=document.getElementById('startTime').value||'00:00';
+  const ed=calState.end.value,   et=document.getElementById('endTime').value||'00:00';
+  const fmtDate = s=>s.replace(/-/g,'/');
 
-  // Trip info bar — compact single line
-  const fmtDate = s => s.replace(/-/g,'/');
   document.getElementById('resultTripInfo').textContent =
     `${fmtDate(sd)} ${st} → ${fmtDate(ed)} ${et}　共 ${days} 天`;
-  const agLbl={u15:'0–未滿15歲',a15:'15–75歲',a75:'超過75–80歲',a80:'超過80–85歲'}[ag]||'';
+
+  // Build group label summary for title
+  const grpSummary = groups.map((g,i)=>{
+    const lbl = g.ag==='u15'?`${GROUP_NAMES[i]}（0–15歲，MR${g.mr||100}萬）`:`${GROUP_NAMES[i]}（${agLabel(g.ag)}，${(g.add||0).toLocaleString()}萬）`;
+    return lbl;
+  }).join('　');
   const tiLbl = ti==='super'?'超值型 TI':'尊榮型 TI';
-  const addDisplay = mr
-    ? `傷害醫療 <span style="font-family:'DM Mono';color:var(--accent)">${mr}萬</span>` + (add>0?`　身故 <span style="font-family:'DM Mono';color:var(--accent)">${add}萬</span>`:'')
-    : `身故保額 <span style="font-family:'DM Mono';color:var(--accent)">${add.toLocaleString()}萬</span>`;
   document.getElementById('resultTitle').innerHTML =
-    `${addDisplay}　${tiLbl}　年齡：${agLbl}`;
+    `${grpSummary}　<span style="font-family:'DM Mono';color:var(--accent)">${tiLbl}</span>`;
 
-  // Age note
-  const nb = document.getElementById('ageLimitNoteBox');
-  if(ag==='u15') nb.innerHTML='<div class="age-limit-note">⚠ 未滿15歲：身故/喪葬費用上限69萬；傷害醫療及突發疾病醫療各最高100萬。</div>';
-  else if(ag==='a80') nb.innerHTML='<div class="age-limit-note">⚠ 80–85歲：身故/喪葬費用上限100萬；最長投保30天。</div>';
-  else nb.innerHTML='';
+  document.getElementById('ageLimitNoteBox').innerHTML='';
 
-  // Amounts
-  // For u15: mr is the selected MR (30/60/100); for others derive from add
-  const emrWan = mr ? mr : Math.min(add*0.2, 200);
-  const mrWan  = mr ? mr : Math.min(add*0.2, 200);
+  // ── Per-group travel plan cards ──
+  const planBaseEl = document.getElementById('planBase');
+  planBaseEl.innerHTML = '';
 
-  // 旅平險 rows — split bracketed notes to next line for readability
-  const baseItems=[
-    ['意外身故或喪葬費用保險金',                                      fmtWan(add*10000)],
-    ['搭乘大眾運輸工具意外身故增額保險金<br><span class="ct-sub">（保額20%）</span>',    fmtWan(add*10000*0.2)],
-    ['重大燒燙傷保險金<br><span class="ct-sub">（保額25%）</span>',                      fmtWan(add*10000*0.25)],
-    ['旅行傷害醫療保險金<br><span class="ct-sub">（海外加值型，保額20%）</span>',        fmtWan(mrWan*10000)],
-    ['食物中毒慰問保險金<br><span class="ct-sub">（最高2次）</span>',                    '3,000'],
-    ['海外突發疾病住院醫療保險金<br><span class="ct-sub">（保額20%，最高200萬）</span>', fmtWan(emrWan*10000)],
-    ['海外突發疾病門診醫療保險金<br><span class="ct-sub">（住院醫療額3%）</span>',       fmtWan(emrWan*0.03*10000)],
-    ['海外突發疾病急診醫療保險金<br><span class="ct-sub">（住院醫療額10%）</span>',      fmtWan(emrWan*0.1*10000)],
-    ['特定地區限額調整<br><span class="ct-sub">（美加300%／歐日韓澳紐200%）</span>',     '✓ 已附加'],
-    ['全球海外急難援助服務',                                          '12萬美金'],
-  ];
-  const baseRows = baseItems.map(([n,v])=>`<tr><td>${n}</td><td>${v}</td></tr>`).join('');
-  document.getElementById('planBase').innerHTML=`
-    <div class="plan-card">
-      <div class="plan-card-head base">旅行平安險　海外加值型</div>
-      <div class="plan-body">
+  groups.forEach((g, idx)=>{
+    const isU15 = g.ag==='u15';
+    const emrWan = isU15?(g.mr||100):Math.min((g.add||0)*0.2,200);
+    const mrWan  = emrWan;
+    const premTotal = isU15?lookup(days,g.add,ti,g.mr||100):lookup(days,g.add,ti);
+    const premBase  = isU15?lookup(days,g.add,'none',g.mr||100):lookup(days,g.add,'none');
+    const priceStr  = premTotal?`NT$ ${premTotal.toLocaleString()}`:'NA';
+    const color     = GROUP_COLORS[idx]||GROUP_COLORS[0];
+    const gname     = GROUP_NAMES[idx]||'組別';
+
+    const baseItems=[
+      ['意外身故或喪葬費用保險金', isU15?`NT$ ${(69*10000).toLocaleString()}（上限）`:fmtWan((g.add||0)*10000)],
+      ['搭乘大眾運輸工具意外身故增額<br><span class="ct-sub">（身故保額20%）</span>', isU15?'—':fmtWan((g.add||0)*10000*0.2)],
+      ['重大燒燙傷保險金<br><span class="ct-sub">（身故保額25%）</span>', isU15?'—':fmtWan((g.add||0)*10000*0.25)],
+      ['旅行傷害醫療保險金', fmtWan(mrWan*10000)],
+      ['食物中毒慰問保險金<br><span class="ct-sub">（定額，最高2次）</span>','3,000'],
+      ['海外突發疾病住院醫療保險金<br><span class="ct-sub">（最高200萬）</span>', fmtWan(emrWan*10000)],
+      ['海外突發疾病門診醫療保險金<br><span class="ct-sub">（住院醫療額3%）</span>', fmtWan(emrWan*0.03*10000)],
+      ['海外突發疾病急診醫療保險金<br><span class="ct-sub">（住院醫療額10%）</span>', fmtWan(emrWan*0.1*10000)],
+      ['特定地區限額調整<br><span class="ct-sub">（美加300%／歐日韓澳紐200%）</span>','✓ 已附加'],
+      ['全球海外急難援助服務','12萬美金'],
+    ];
+    const baseRows = baseItems.map(([n,v])=>`<tr><td>${n}</td><td>${v}</td></tr>`).join('');
+
+    const card = document.createElement('div');
+    card.className = 'plan-card';
+    card.style.borderTop=`4px solid ${color}`;
+    const planCardId = 'plan-card-body-'+g.id;
+    card.innerHTML=`
+      <div class="plan-card-head base" style="background:#1a1410;display:flex;align-items:center;gap:0">
+        <span style="color:${color}">${gname}</span>
+        <span>　旅行平安險　海外加值型</span>
+        <button onclick="togglePlanCard('${planCardId}',this)"
+          style="margin-left:auto;background:none;border:1px solid rgba(255,255,255,.25);border-radius:5px;color:rgba(255,255,255,.7);font-size:11px;padding:2px 10px;cursor:pointer;white-space:nowrap">▲ 收合</button>
+      </div>
+      <div id="${planCardId}" class="plan-body">
         <table class="ct">
           <thead><tr><th>保障項目</th><th style="text-align:right">保險金額</th></tr></thead>
           <tbody>${baseRows}</tbody>
         </table>
         <div class="small-note" style="margin-top:8px">※ 突發疾病觀察期：出發前90天內未曾接受該疾病診療（業界最短）</div>
-      </div>
-    </div>`;
+      </div>`;
+    planBaseEl.appendChild(card);
+  });
 
-  // 不便險
+  // ── TI (one card, shared) ──
   const isSuper = ti==='super';
 
-  const tiItems = isSuper ? TI_SUPER : TI_PREMIUM;
-  let tiRows = '';
-  tiItems.forEach(c=>{
-    if(c.sep){ tiRows += `<tr class="grp-sep"><td colspan="2"></td></tr>`; }
-    else { tiRows += `<tr><td>${c.name}</td><td>${c.val}</td></tr>`; }
-  });
-  const tiHdrCls = isSuper?'blue':'red';
-  const tiHdrLbl = isSuper?'旅行不便險　超值型 TI':'旅行不便險　尊榮型 TI';
-  const tiTableCls = isSuper ? 'ct' : 'ct red-sep';
+  const tiItems = isSuper?TI_SUPER:TI_PREMIUM;
+  let tiRows='';
+  tiItems.forEach(c2=>{ if(c2.sep){ tiRows+=`<tr class="grp-sep"><td colspan="2"></td></tr>`; } else { tiRows+=`<tr><td>${c2.name}</td><td>${c2.val}</td></tr>`; } });
+  const tiHdrCls=isSuper?'blue':'red';
+  const tiTableCls=isSuper?'ct':'ct red-sep';
+  const tiHdrLbl=isSuper?'旅行不便險　超值型 TI':'旅行不便險　尊榮型 TI';
   document.getElementById('planTI').innerHTML=`
     <div class="plan-card">
       <div class="plan-card-head ${tiHdrCls}">${tiHdrLbl}</div>
@@ -1509,16 +2080,20 @@ function buildResult(days,ag,add,ti,mr){
       </div>
     </div>`;
 
-  // 總保費 at top
-  const premTotal = mr ? lookup(days, 0, ti, mr) : lookup(days, add, ti);
-  const naMsg = `<span style="font-size:13px;color:var(--ink-light)">此天數（${days}天）費率待建置，將儘快更新</span>`;
-  const totalStr = premTotal !== null ? `NT$ ${premTotal.toLocaleString()}` : 'NA';
-  const totalSubStr = premTotal !== null ? `<span>元</span>` : naMsg;
+  // ── Total premium box (dark background p3-price-box) ──
+  const totals = groups.map((g,i)=>{
+    const p = g.ag==='u15'?lookup(days,g.add,ti,g.mr||100):lookup(days,g.add,ti);
+    return {name:`組別 ${i+1}`, price:p};
+  });
+  const totalHTML = totals.map(t=>
+    `<div style="display:flex;justify-content:space-between;align-items:baseline;padding:3px 0">
+       <span style="font-size:13px;color:var(--accent);font-weight:600">${t.name}</span>
+       <span style="font-family:'DM Mono',monospace;font-size:${totals.length>1?'19px':'24px'};font-weight:500;color:var(--bg)">${t.price?'NT$ '+t.price.toLocaleString()+' 元':'NA'}</span>
+     </div>`
+  ).join('');
   document.getElementById('totalPremiumBox').innerHTML=`
-    <div class="total-box">
-      <div class="total-label">試算總保費</div>
-      <div class="total-price">${totalStr} ${totalSubStr}</div>
-    </div>`;
+    <div style="font-size:11px;color:rgba(200,169,110,.75);letter-spacing:.08em;margin-bottom:10px">試算保費（每人單價）</div>
+    ${totalHTML}`;
 }
 
 // ════════════════════════════════
@@ -1544,6 +2119,10 @@ async function doScreenshot(){
 
   const btns = document.querySelectorAll('.btn-screenshot');
   btns.forEach(b=>{ b.textContent='⏳ 製作中…'; b.disabled=true; });
+
+  // Get live ti and days for group price lookup in canvas
+  const tiStr   = document.querySelector('input[name="ti"]:checked')?.value || 'super';
+  const daysNum = calcDaysOnly() || 0;
 
   try {
     // ── collect data ──
@@ -1623,27 +2202,52 @@ async function doScreenshot(){
     drawRule(560);
 
     // ── info rows ──
-    const PAD=180, ROW_H=170;
-    const infoRows=[
+    const PAD=180, ROW_H=155;
+
+    // Collect group info directly from groups array
+    // ── Fixed info rows (no group rows here) ──
+    const fixedRows=[
       {label:'出發時間', value:depText},
       {label:'返回時間', value:retText},
       {label:'旅遊天數', value:daysText},
-      {label:'意外身故保額', value:addText},
       {label:'不便險方案', value:tiText},
-      {label:'被保人年齡', value:ageText},
     ];
 
-    let iy=600;
-    infoRows.forEach((r,i)=>{
+    // ── Group cards: one per group, different colours ──
+    const groupCards = groups.map((g,gi)=>{
+      const agLbl = {a15:'15–75歲',u15:'0–15歲',a75:'75–80歲',a80:'80–85歲'}[g.ag]||g.ag;
+      const addLbl = g.ag==='u15' ? `MR ${g.mr||100}萬` : `${(g.add||0).toLocaleString()}萬`;
+      const p = g.ag==='u15' ? lookup(daysNum,g.add,tiStr,g.mr||100) : lookup(daysNum,g.add,tiStr);
+      const pLabel = p ? `NT. ${p.toLocaleString()} / 人` : 'NA';
+      const colors = ['#c8a96e','#2d5a8e','#8b2635']; // gold, blue, red
+      return {
+        num: gi+1,
+        info: `${agLbl}　${addLbl}`,
+        price: pLabel,
+        color: colors[gi]||colors[0],
+      };
+    });
+
+    // ── Calculate total height for vertical centering ──
+    const CARD_H = 220;   // height per group card
+    const CARD_GAP = 20;
+    const totalCardsH = groupCards.length * CARD_H + (groupCards.length-1) * CARD_GAP;
+    const contentH = fixedRows.length * ROW_H
+                   + 50          // gap before cards
+                   + totalCardsH
+                   + 100;        // blessing
+    const startY = Math.max(260, Math.round((H - contentH) / 2));
+    let iy = startY;
+
+    // ── Draw fixed rows ──
+    fixedRows.forEach((r,i)=>{
       ctx.fillStyle = i%2===0 ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.06)';
       ctx.fillRect(PAD, iy, W-PAD*2, ROW_H);
-
-      ctx.font='bold 44px "Noto Serif TC", serif';
+      ctx.font='bold 40px "Noto Serif TC", serif';
       ctx.fillStyle='#c8a96e';
       ctx.textAlign='left';
-      ctx.fillText(r.label, PAD+50, iy+ROW_H*0.6);
-
-      ctx.font='bold 58px "Noto Serif TC", serif';
+      ctx.fillText(r.label, PAD+50, iy+ROW_H*0.55);
+      ctx.font='bold 52px "Noto Serif TC", serif';
       ctx.fillStyle='#f5f0eb';
       ctx.textAlign='right';
       ctx.fillText(r.value, W-PAD-50, iy+ROW_H*0.72);
@@ -1651,29 +2255,47 @@ async function doScreenshot(){
     });
 
     drawRule(iy+30);
+    iy += 60;
 
-    // ── total premium box ──
-    const bx=PAD, by=iy+80, bw=W-PAD*2, bh=280;
-    ctx.save();
-    ctx.shadowColor='rgba(200,169,110,.4)'; ctx.shadowBlur=50;
-    const bGrad=ctx.createLinearGradient(bx,by,bx+bw,by+bh);
-    bGrad.addColorStop(0,'#c8a96e'); bGrad.addColorStop(1,'#a07838');
-    ctx.fillStyle=bGrad;
-    roundRect(ctx,bx,by,bw,bh,28); ctx.fill();
-    ctx.restore();
+    // ── Draw group cards ──
+    groupCards.forEach((g,i)=>{
+      const cx=PAD, cy=iy, cw=W-PAD*2, ch=CARD_H;
 
-    ctx.font='bold 60px "Noto Serif TC", serif'; ctx.fillStyle='#1a1410';
-    ctx.textAlign='left';
-    ctx.fillText('試算總保費', bx+70, by+110);
+      // Card background: semi-transparent tinted
+      ctx.save();
+      ctx.globalAlpha = 0.18;
+      ctx.fillStyle = g.color;
+      roundRect(ctx,cx,cy,cw,ch,20); ctx.fill();
+      ctx.restore();
 
-    ctx.font='bold 120px "Noto Serif TC", serif'; ctx.fillStyle='#1a1410';
-    ctx.textAlign='right';
-    ctx.fillText(rawTotal, bx+bw-70, by+bh-50);
+      // Left accent bar
+      ctx.fillStyle = g.color;
+      roundRect(ctx,cx,cy,12,ch,6); ctx.fill();
 
-    drawRule(by+bh+70, .2);
+      // 「組別N」label
+      ctx.font='bold 42px "Noto Serif TC", serif';
+      ctx.fillStyle = g.color;
+      ctx.textAlign='left';
+      ctx.fillText(`組別 ${g.num}`, cx+50, cy+72);
+
+      // Info text (age + add)
+      ctx.font='500 38px "Noto Serif TC", serif';
+      ctx.fillStyle='rgba(245,240,235,.8)';
+      ctx.fillText(g.info, cx+50, cy+130);
+
+      // Price (right side, large)
+      ctx.font='bold 72px "DM Mono", monospace';
+      ctx.fillStyle='#f5f0eb';
+      ctx.textAlign='right';
+      ctx.fillText(g.price, cx+cw-50, cy+ch-40);
+
+      iy += ch + CARD_GAP;
+    });
+
+    drawRule(iy+30, .2);
 
     // ── blessing ──
-    const blessY = by+bh+160;
+    const blessY = iy+100;
     ctx.textAlign='center';
     ctx.font='500 52px "Noto Serif TC", serif';
     ctx.fillStyle='rgba(245,240,235,.55)';
@@ -1800,7 +2422,8 @@ function addInsured(){
       <button class="insured-remove" onclick="removeInsured(${n})">✕ 刪除</button>
     </div>
     <div class="form-row"><label>姓名</label><input type="text" id="i${n}_name" placeholder="請輸入姓名" class="form-input"></div>
-    <div class="form-row"><label>出生年月日</label><input type="text" id="i${n}_birth" placeholder="民國年月日，例：079/01/15" class="form-input" maxlength="9" oninput="autoSlash(this)"></div>
+    <div class="form-row"><label>出生年月日</label><input type="text" id="i${n}_birth" placeholder="民國年月日，例：079/01/15" class="form-input" maxlength="9" oninput="autoSlash(this);matchInsuredGroup('i${n}_birth','i${n}-group-hint')">
+    <div id="i${n}-group-hint" class="insured-group-hint"></div></div>
     <div class="form-row" style="margin-bottom:0"><label>身分證字號</label><input type="text" id="i${n}_id" placeholder="例：A123456789" class="form-input" maxlength="10" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()"></div>
   `;
   document.getElementById('extra-insureds').appendChild(div);
@@ -1847,9 +2470,15 @@ function collectFormText(){
     if(el && el.value.trim()) lines.push(`國家 ${i}：${el.value.trim()}`);
   }
   lines.push('');
-  lines.push('▌ 投保方案');
-  lines.push(document.getElementById('resultTripInfo')?.textContent||'');
-  lines.push(document.getElementById('resultTitle')?.textContent||'');
+  // 投保方案：TI 放同行
+  const tiLabelTxt = document.querySelector('input[name="ti"]:checked')?.value === 'premium' ? '尊榮型 TI' : '超值型 TI';
+  lines.push(`▌ 投保方案　${tiLabelTxt}`);
+  // Groups
+  groups.forEach((g,i)=>{
+    const lbl = g.ag==='u15'?`${GROUP_NAMES[i]}（0–15歲，MR${g.mr||100}萬）`:`${GROUP_NAMES[i]}（${agLabel(g.ag)}，${(g.add||0).toLocaleString()}萬）`;
+    lines.push(`  ${lbl}`);
+  });
+  // Trip info 整行刪除（不輸出）
   lines.push(document.getElementById('totalPremiumBox')?.querySelector('.total-price')?.textContent?.trim()||'');
   lines.push('');
   lines.push('▌ 要保人');
@@ -1864,7 +2493,22 @@ function collectFormText(){
 
   // #1
   const same = document.getElementById('same_as_proposer')?.checked;
-  lines.push(`被保險人 1${same?' （同要保人）':''}`);
+  // Determine group for insured #1
+  function getInsuredGroup(birthVal){
+    if(!birthVal||birthVal.length<9) return '';
+    const parts = birthVal.split('/');
+    if(parts.length<3) return '';
+    const rocY=parseInt(parts[0]),mo=parseInt(parts[1])-1,dy=parseInt(parts[2]);
+    if(isNaN(rocY)) return '';
+    const age=(new Date()-new Date(rocY+1911,mo,dy))/(1000*60*60*24*365.25);
+    const hasU15=groups.some(g=>g.ag==='u15');
+    const hasAdult=groups.some(g=>g.ag!=='u15');
+    if(!hasU15||!hasAdult) return ''; // only show if mixed
+    return age<=15?'（套用0–15歲組別）':'（套用15–75歲組別）';
+  }
+  const i1birth = document.getElementById('i1_birth')?.value||'';
+  const g1label = getInsuredGroup(i1birth);
+  lines.push(`被保險人 1${same?' （同要保人）':''}${g1label}`);
   if(!same){
     lines.push(`  姓名：${v('i1_name')}`);
     lines.push(`  出生年月日：${v('i1_birth')}`);
@@ -1880,7 +2524,9 @@ function collectFormText(){
     const card = document.getElementById('insured-card-'+n);
     if(!card) continue;
     const nm=v('i'+n+'_name'), bd=v('i'+n+'_birth'), id=v('i'+n+'_id');
-    lines.push(`被保險人 ${n}`);
+    const inBirth = document.getElementById('i'+n+'_birth')?.value||'';
+    const gnLabel = getInsuredGroup(inBirth);
+    lines.push(`被保險人 ${n}${gnLabel}`);
     lines.push(`  姓名：${nm}　出生：${bd}　身分證：${id}`);
   }
 
@@ -2006,6 +2652,41 @@ function doTxtDownload(blob){
   setTimeout(()=>URL.revokeObjectURL(url), 1000);
 }
 
+// ── Auto-match insured birth date to group plan ──
+function matchInsuredGroup(inputId, hintId){
+  const el = document.getElementById(inputId);
+  const hint = document.getElementById(hintId);
+  if(!el||!hint) return;
+  const val = el.value.trim();
+  if(val.length<9){ hint.style.display='none'; return; }
+  // Parse ROC date: YYY/MM/DD → add 1911
+  const parts = val.split('/');
+  if(parts.length<3){ hint.style.display='none'; return; }
+  const rocY=parseInt(parts[0]), mo=parseInt(parts[1])-1, dy=parseInt(parts[2]);
+  if(isNaN(rocY)||isNaN(mo)||isNaN(dy)){ hint.style.display='none'; return; }
+  const birthDate = new Date(rocY+1911, mo, dy);
+  const today = new Date();
+  const ageMs = today - birthDate;
+  const ageYears = ageMs / (1000*60*60*24*365.25);
+
+  // Only do matching if there are multiple groups with different age bands
+  const has15plus = groups.some(g=>g.ag!=='u15');
+  const hasU15    = groups.some(g=>g.ag==='u15');
+  if(!has15plus || !hasU15){ hint.style.display='none'; return; }
+
+  if(ageYears <= 15){
+    hint.style.display='block';
+    hint.textContent='✓ 套用 0–15歲方案（'+(hasU15?'已設定':'請設定組別')+')';
+    hint.style.color='var(--red)';
+    hint.style.background='var(--red-pale)';
+  } else {
+    hint.style.display='block';
+    hint.textContent='✓ 套用 15–75歲方案（或其他成人組別）';
+    hint.style.color='var(--blue)';
+    hint.style.background='var(--blue-pale)';
+  }
+}
+
 function openModal(id){
   const m=MODALS[id]; if(!m) return;
   document.getElementById('modalIcon').textContent=m.icon;
@@ -2015,6 +2696,9 @@ function openModal(id){
 }
 function closeModal(){ document.getElementById('modal').classList.remove('open'); }
 function closeModalBg(e){ if(e.target===document.getElementById('modal')) closeModal(); }
+
+// Call initGroups directly — script is at bottom of body so DOM is ready
+initGroups();
 </script>
 </body>
 </html>
