@@ -2001,7 +2001,7 @@ function buildResult(days, ti){
 
   // Build group label summary for title
   const grpSummary = groups.map((g,i)=>{
-    const lbl = g.ag==='u15'?`${GROUP_NAMES[i]}（0–15歲，MR${g.mr||100}萬）`:`${GROUP_NAMES[i]}（${agLabel(g.ag)}，${(g.add||0).toLocaleString()}萬）`;
+    const lbl = g.ag==='u15'?`${GROUP_NAMES[i]}（0–15歲，身故${g.add||0}萬，MR${g.mr||100}萬）`:`${GROUP_NAMES[i]}（${agLabel(g.ag)}，${(g.add||0).toLocaleString()}萬）`;
     return lbl;
   }).join('　');
   const tiLbl = ti==='super'?'超值型 TI':'尊榮型 TI';
@@ -2216,7 +2216,9 @@ async function doScreenshot(){
     // ── Group cards: one per group, different colours ──
     const groupCards = groups.map((g,gi)=>{
       const agLbl = {a15:'15–75歲',u15:'0–15歲',a75:'75–80歲',a80:'80–85歲'}[g.ag]||g.ag;
-      const addLbl = g.ag==='u15' ? `MR ${g.mr||100}萬` : `${(g.add||0).toLocaleString()}萬`;
+      const addLbl = g.ag==='u15'
+        ? `身故 ${g.add||0}萬　MR ${g.mr||100}萬`
+        : `${(g.add||0).toLocaleString()}萬`;
       const p = g.ag==='u15' ? lookup(daysNum,g.add,tiStr,g.mr||100) : lookup(daysNum,g.add,tiStr);
       const pLabel = p ? `NT. ${p.toLocaleString()} / 人` : 'NA';
       const colors = ['#c8a96e','#2d5a8e','#8b2635']; // gold, blue, red
@@ -2475,7 +2477,7 @@ function collectFormText(){
   lines.push(`▌ 投保方案　${tiLabelTxt}`);
   // Groups
   groups.forEach((g,i)=>{
-    const lbl = g.ag==='u15'?`${GROUP_NAMES[i]}（0–15歲，MR${g.mr||100}萬）`:`${GROUP_NAMES[i]}（${agLabel(g.ag)}，${(g.add||0).toLocaleString()}萬）`;
+    const lbl = g.ag==='u15'?`${GROUP_NAMES[i]}（0–15歲，身故${g.add||0}萬，MR${g.mr||100}萬）`:`${GROUP_NAMES[i]}（${agLabel(g.ag)}，${(g.add||0).toLocaleString()}萬）`;
     lines.push(`  ${lbl}`);
   });
   // Trip info 整行刪除（不輸出）
