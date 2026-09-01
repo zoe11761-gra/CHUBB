@@ -2472,6 +2472,20 @@ function collectFormText(){
     if(el && el.value.trim()) lines.push(`國家 ${i}：${el.value.trim()}`);
   }
   lines.push('');
+  // ── 旅遊日期 & 時間 ──
+  const sd = calState.start.value || '（未填）';
+  const ed = calState.end.value   || '（未填）';
+  const st = document.getElementById('startTime')?.value || '00:00';
+  const et = document.getElementById('endTime')?.value   || '00:00';
+  lines.push('▌ 旅遊日期');
+  lines.push(`出發：${sd.replace(/-/g,'/')} ${st}`);
+  lines.push(`返回：${ed.replace(/-/g,'/')} ${et}`);
+  // Days count
+  if(calState.start.value && calState.end.value){
+    const diff = Math.round((new Date(ed+'T00:00') - new Date(sd+'T00:00')) / 86400000);
+    if(diff > 0) lines.push(`天數：共 ${diff} 天`);
+  }
+  lines.push('');
   // 投保方案：TI 放同行
   const tiLabelTxt = document.querySelector('input[name="ti"]:checked')?.value === 'premium' ? '尊榮型 TI' : '超值型 TI';
   lines.push(`▌ 投保方案　${tiLabelTxt}`);
