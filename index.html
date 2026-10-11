@@ -343,10 +343,10 @@ select:disabled{opacity:.5;cursor:not-allowed}
 /* ── MOBILE tweaks (< 480px) ── */
 @media(max-width:480px){
   .features-grid{grid-template-columns:1fr 1fr;gap:10px}
-  .feat-card{padding:22px 10px 14px}
+  .feat-card{padding:22px 10px 14px;height:100%}
   .feat-icon{font-size:26px}
   .feat-short{font-size:15px;letter-spacing:0}
-  .feat-sub{font-size:13px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .feat-sub{font-size:13px;line-height:1.4;white-space:normal;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;max-width:100%}
   .feat-tap{font-size:12px}
   .feat-num{width:26px;height:26px;font-size:10px;top:-13px;left:-13px}
   .ti-group{flex-direction:column}
@@ -481,7 +481,7 @@ select:disabled{opacity:.5;cursor:not-allowed}
       <span class="feat-num">04</span>
       <div class="feat-icon">✈️</div>
       <div class="feat-short">不便險項目<br>高達18項</div>
-      <div class="feat-sub">班機延誤、旅程取消、行李延誤等多項保障</div>
+      <div class="feat-sub">班機延誤、旅程取消等多項保障</div>
       <div class="feat-tap">了解更多 →</div>
     </div>
     <div class="feat-card" onclick="openModal('m6')">
@@ -2170,7 +2170,7 @@ const MODALS={
   m1:{icon:'🏥',title:'突發疾病觀察期最短',body:'安達旅平險的海外突發疾病觀察期僅 <strong>90天</strong>，遠低於業界常見的180天。<br><br>只要出發前90天內未曾就診的疾病，即可列為突發疾病保障。若疾病已完全治癒後再度發生，亦視同突發疾病，保障更完整。'},
   m2:{icon:'🚁',title:'緊急醫療運送額度業界最高',body:'安達提供高達 <strong>美金 $120,000（約新台幣380萬）</strong> 的緊急醫療轉送及遺體骨灰運回服務，為業界最高水準。<br><br>無論身在世界何處，都能安心享有最完整的緊急援助。'},
   m3:{icon:'⚖️',title:'第三人責任險額度業界最高',body:'尊榮型不便險附加的第三人責任保險最高達 <strong>新台幣 600萬</strong>，超值型亦有300萬，遠超同業水準。<br><br>旅遊期間若不慎造成他人人身傷害或財物損失，可獲得充分的法律責任保障。'},
-  m4:{icon:'🍱',title:'食物中毒定額慰問保險金',body:'旅遊期間若不幸發生食物中毒，安達提供 <strong>定額新台幣3,000元</strong> 的慰問保險金，保險期間內最高給付2次。<br><br>這是許多保險公司沒有的特色保障，讓您吃得安心、玩得放心。'},
+  m4:{icon:'✈️',title:'不便險項目高達18項',body:'安達旅綜險不便險保障項目業界最多，共 <strong>高達18項</strong>，涵蓋班機延誤、旅程取消、旅程更改、行李延誤、行李損失、劫機、海外住院慰問金等多種情境。<br><br>一張保單，全方位守護您的旅程，讓出發更無後顧之憂。'},
   m5:{icon:'🦠',title:'含法定傳染病完整保障',body:'安達旅平險的海外突發疾病保障 <strong>含新冠肺炎併發重症、猴痘等法定傳染病</strong>。<br><br>旅程取消、旅程更改及等待返國住宿費用亦包含法定傳染病所致的保險事故，後疫情時代出遊更安心。'},
   m6:{icon:'📋',title:'海外單據無需翻譯即可理賠',body:'在海外就醫取得的醫療收據，<strong>無需翻譯成中文或英文</strong>，即可直接申請理賠。<br><br>相較於部分同業要求將外文單據翻譯成英文才受理，安達大幅簡化理賠流程，節省您的時間與翻譯費用。'},
   m7:{icon:'💳',title:'理賠免健保局核退手續',body:'申請海外突發疾病醫療保險金時，<strong>無需先向健保局申請核退</strong>，可直接向安達申請理賠。<br><br>許多保險公司要求必須先取得健保局的核退文件才能理賠，安達省去此繁瑣手續，讓您迅速取得理賠款。'},
