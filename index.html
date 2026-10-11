@@ -342,13 +342,13 @@ select:disabled{opacity:.5;cursor:not-allowed}
 
 /* ── MOBILE tweaks (< 480px) ── */
 @media(max-width:480px){
-  .features-grid{grid-template-columns:repeat(3,1fr);gap:8px}
-  .feat-card{padding:20px 6px 10px}
-  .feat-icon{font-size:22px}
-  .feat-short{font-size:9.5px;letter-spacing:0}
-  .feat-sub{font-size:8px;line-height:1.4}
-  .feat-tap{font-size:7.5px}
-  .feat-num{width:24px;height:24px;font-size:9px;top:-12px;left:-12px}
+  .features-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .feat-card{padding:22px 10px 14px}
+  .feat-icon{font-size:26px}
+  .feat-short{font-size:12px;letter-spacing:0}
+  .feat-sub{font-size:10px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .feat-tap{font-size:9px}
+  .feat-num{width:26px;height:26px;font-size:10px;top:-13px;left:-13px}
   .ti-group{flex-direction:column}
   .total-price{font-size:22px}
   .ct td,.ct th{padding:6px 8px; font-size:11.5px}
@@ -460,7 +460,7 @@ select:disabled{opacity:.5;cursor:not-allowed}
       <span class="feat-num">01</span>
       <div class="feat-icon">🏥</div>
       <div class="feat-short">突發疾病<br>觀察期最短</div>
-      <div class="feat-sub">保障升級，傳染病也在保障範圍內</div>
+      <div class="feat-sub">傳染病也在保障範圍內</div>
       <div class="feat-tap">了解更多 →</div>
     </div>
     <div class="feat-card" onclick="openModal('m2')">
