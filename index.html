@@ -342,7 +342,13 @@ select:disabled{opacity:.5;cursor:not-allowed}
 
 /* ── MOBILE tweaks (< 480px) ── */
 @media(max-width:480px){
-  .features-grid{grid-template-columns:1fr 1fr}
+  .features-grid{grid-template-columns:repeat(3,1fr);gap:8px}
+  .feat-card{padding:20px 6px 10px}
+  .feat-icon{font-size:22px}
+  .feat-short{font-size:9.5px;letter-spacing:0}
+  .feat-sub{font-size:8px;line-height:1.4}
+  .feat-tap{font-size:7.5px}
+  .feat-num{width:24px;height:24px;font-size:9px;top:-12px;left:-12px}
   .ti-group{flex-direction:column}
   .total-price{font-size:22px}
   .ct td,.ct th{padding:6px 8px; font-size:11.5px}
