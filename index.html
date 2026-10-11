@@ -1150,7 +1150,7 @@ function syncGroupDisplay(id){
     // Restore adult options if coming back from u15
     const opts = [200,300,500,1000,1500,2000];
     if(!opts.map(String).includes(addSel.value)){
-      addSel.innerHTML = opts.map(v=>`<option value="${v}">${v>=1000?(v/1000+'千萬'):v+' 萬'}</option>`).join('');
+      addSel.innerHTML = opts.map(v=>`<option value="${v}">${v+' 萬'}</option>`).join('');
       addSel.value = '500';
       g.add = 500;
     }
@@ -1170,7 +1170,7 @@ function onGroupAgeChange(id){
     // Restore adult options
     const configs = {a15:[200,300,500,1000,1500,2000],a75:[200,300],a80:[100]};
     const vals = configs[ag]||configs.a15;
-    addSel.innerHTML = vals.map(v=>`<option value="${v}">${v>=1000?(v/1000)+'千萬':v+' 萬'}</option>`).join('');
+    addSel.innerHTML = vals.map(v=>`<option value="${v}">${v+' 萬'}</option>`).join('');
     if(vals.includes(500)) addSel.value='500'; else addSel.value=String(vals[0]);
     g.add = parseInt(addSel.value)||vals[0];
   }
@@ -2034,7 +2034,7 @@ function buildResult(days, ti){
 
   groups.forEach((g, idx)=>{
     const isU15 = g.ag==='u15';
-    const emrWan = isU15?(g.mr||100):Math.min((g.add||0)*0.2,200);
+    const emrWan = isU15?(g.mr||100):Math.min((g.add||0)*0.1,200);
     const mrWan  = emrWan;
     const premTotal = isU15?lookup(days,g.add,ti,g.mr||100):lookup(days,g.add,ti);
     const premBase  = isU15?lookup(days,g.add,'none',g.mr||100):lookup(days,g.add,'none');
